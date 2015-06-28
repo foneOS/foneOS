@@ -17,6 +17,7 @@ It may seem like there are lots of applications missing. This is because lots of
 ### For all builds
 * freetype2
 * SQLite
+
 #### Already included (no additional download required)
 * pugixml
 
