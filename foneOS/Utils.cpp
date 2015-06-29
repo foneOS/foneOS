@@ -29,7 +29,7 @@ char* Utils::FoneOSStringToCharArray(FoneOSString str)
 #ifdef UNICODE
 	return Utils::WCharArrayToChar(str.c_str());
 #else
-	return (char *) str.c_str();
+	return strdup(str.c_str());
 #endif
 }
 

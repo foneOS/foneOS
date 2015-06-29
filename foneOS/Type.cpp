@@ -29,10 +29,14 @@ bool Type::Init()
 bool Type::ForceFontLoad(FoneFontDesc desc)
 {
 	fonts.insert(std::pair<FoneFontDesc, FT_Face>(desc, NULL));
+	FoneOSString basePath = FoneOSString(STR("fonts/")) + desc.Name + FoneOSString(STR("/")) + desc.Style + FoneOSString(STR(".ttf"));
+	FoneOSString fullPath = Storage::GetFullPath(basePath);
+	char * fullPath_c = Utils::FoneOSStringToCharArray(fullPath);
 	FT_Error err = FT_New_Face(library,
-		Utils::FoneOSStringToCharArray(Storage::GetFullPath(FoneOSString(STR("fonts/")) + desc.Name + FoneOSString(STR("/")) + desc.Style + FoneOSString(STR(".ttf")))),
+		fullPath_c,
 		0,
 		&fonts[desc]);
+	free(fullPath_c);
 	return (err == 0);
 }
 
@@ -171,5 +175,6 @@ std::vector<std::vector<unsigned char>> Type::GetBitmap(FoneFontDesc desc, int s
 
 	*WIDTHout = WIDTH;
 	*HEIGHTout = HEIGHT;
+	free((void *)text);
 	return image;
 }

@@ -74,27 +74,6 @@ bool Display::DrawImage(FoneOSString filename, int x, int y)
 	return true;
 }
 
-void Display::DrawCharacter(FoneOSChar character, int x, int y, int size, FoneOSColor color)
-{
-	// TODO: replace GPL code
-	char ascii = character;
-	if ((ascii < 0x20) || (ascii > 0x7e))//Unsupported char.
-	{
-		ascii = '?';
-	}
-	for (unsigned char i = 0; i<8; i++)
-	{
-		unsigned char temp = font[ascii - 0x20][i];
-		for (unsigned char f = 0; f<8; f++)
-		{
-			if ((temp >> f) & 0x01)
-			{
-				Display::FillRectangle(x + i*size, y + f*size, size, size, color);
-			}
-		}
-	}
-}
-
 void Display::DrawString(FoneOSString string, int x, int y, FoneFontDesc font, int size, FoneOSColor color, FoneOSColor bg)
 {
 	int HEIGHT, WIDTH = 0;

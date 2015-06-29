@@ -10,7 +10,7 @@ public:
 	// Converts a wchar array into a char array.
 	static char * WCharArrayToChar(const wchar_t * arr);
 
-	// Converts a FoneOSString into a char array.
+	// Converts a FoneOSString into a char array. IT IS THE CALLEE'S RESPONSIBILTY TO FREE THE RETURNED MEMORY.
 	static char * FoneOSStringToCharArray(FoneOSString str);
 
 	// Converts a char array into a FoneOSString.

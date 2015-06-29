@@ -17,9 +17,6 @@ public:
 	// Draws an image to the specified position. Returns true on success.
 	static bool DrawImage(FoneOSString filename, int x, int y);
 
-	// Draws a character to the specified position.
-	static void DrawCharacter(FoneOSChar character, int x, int y, int size, FoneOSColor color);
-
 	// Draws a string of characters to the specified position.
 	static void DrawString(FoneOSString string, int x, int y, FoneFontDesc font, int size, FoneOSColor color, FoneOSColor bg);
 
