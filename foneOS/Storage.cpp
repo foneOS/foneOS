@@ -11,12 +11,8 @@ FoneOSString Storage::GetBasePath()
 {
 	char * prefPath = SDL_GetPrefPath("Flippers", "foneOS");
 	FoneOSString prefPathStr;
-	// TODO: Make less hacky
-#ifdef UNICODE	
-	prefPathStr = FoneOSString(Utils::CharArrayToWChar(prefPath));
-#else
-	prefPathStr = FoneOSString(prefPath);
-#endif
+
+	prefPathStr = Utils::CharArrayToFoneOSString(prefPath);
 
 	return prefPathStr;
 }

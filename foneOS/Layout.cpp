@@ -77,7 +77,9 @@ void FoneOSButton::Draw(FoneOSContainer * scr)
 }
 void FoneOSButton::Create()
 {
-	FT_Vector dims = Type::GetDimensions(DEFAULT_FONT, Utils::FoneOSStringToCharArray(this->text), this->fontSize * 12);
+	char* cText = Utils::FoneOSStringToCharArray(this->text);
+	FT_Vector dims = Type::GetDimensions(DEFAULT_FONT, cText, this->fontSize * 12);
+	free((void*)cText);
 	this->width = dims.x + 20;
 	this->height = dims.y + 20;
 }

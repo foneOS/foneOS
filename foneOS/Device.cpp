@@ -54,22 +54,31 @@ FoneOSString Device::GetCPUArchitecture()
 	switch (systemInfo->wProcessorArchitecture)
 	{
 	case PROCESSOR_ARCHITECTURE_ALPHA:
+		delete systemInfo;
 		return STR("Alpha");
 	case PROCESSOR_ARCHITECTURE_ALPHA64:
+		delete systemInfo;
 		return STR("Alpha 64-bit");
 	case PROCESSOR_ARCHITECTURE_AMD64:
+		delete systemInfo;
 		return STR("x64");
 	case PROCESSOR_ARCHITECTURE_ARM:
+		delete systemInfo;
 		return STR("ARM");
 	case PROCESSOR_ARCHITECTURE_IA64:
+		delete systemInfo;
 		return STR("Itanium-based");
 	case PROCESSOR_ARCHITECTURE_INTEL:
+		delete systemInfo;
 		return STR("x86");
 	case PROCESSOR_ARCHITECTURE_MIPS:
+		delete systemInfo;
 		return STR("MIPS");
 	case PROCESSOR_ARCHITECTURE_PPC:
+		delete systemInfo;
 		return STR("PPC");
 	default:
+		delete systemInfo;
 		return STR("Unknown");
 	}
 }

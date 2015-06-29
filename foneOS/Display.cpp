@@ -70,6 +70,7 @@ bool Display::DrawImage(FoneOSString filename, int x, int y)
 	SDL_RenderCopy(_renderer, texture, NULL, &dst);
 	SDL_DestroyTexture(texture);
 	SDL_FreeSurface(image);
+	free((void*)filePath);
 
 	return true;
 }

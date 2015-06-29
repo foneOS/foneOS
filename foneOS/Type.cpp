@@ -108,6 +108,7 @@ FT_Vector Type::GetDimensions(FoneFontDesc desc, const char * text, int size)
 		{
 			stringHeight = bbox.yMax - bbox.yMin;
 		}
+		FT_Done_Glyph(glyph);
 		previous = glyph_index;
 	}
 
