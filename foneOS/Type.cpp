@@ -77,7 +77,7 @@ FT_Vector Type::GetDimensions(FoneFontDesc desc, const char * text, int size)
 	int stringHeight = 0;
 	FT_UInt previous = 0;
 	int newlines = 0;
-	for (int n = 0; n < strlen(text); n++)
+	for (unsigned int n = 0; n < strlen(text); n++)
 	{
 		if (text[n] == '\n')
 		{

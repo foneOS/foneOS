@@ -76,7 +76,7 @@ FoneOSString Utils::CondenseString(FoneOSString text)
 int Utils::NumberOfNewlines(FoneOSString text)
 {
 	int number = 0;
-	for (int i = 0; i < text.length(); i++)
+	for (unsigned int i = 0; i < text.length(); i++)
 	{
 		if (text[i] == '\n')
 		{

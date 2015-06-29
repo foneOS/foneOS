@@ -555,7 +555,7 @@ void Layout::DrawActionBar()
 	if (Modem::GetEnabled())
 	{
 		int rssi = Modem::GetRSSI();
-		int rssiPerc = (((double)rssi) / 31) * 100;
+		int rssiPerc = (int)((((double)rssi) / 31) * 100);
 
 		int grade = 0;
 		if (rssiPerc == 0) {
