@@ -11,7 +11,7 @@ wchar_t * Utils::CharArrayToWChar(char * arr)
 	size_t size = strlen(arr) + 1;
 	size_t charsConverted = 0;
 	wchar_t * ws = new wchar_t[size];
-	mbstowcs_s(&charsConverted, ws, size, arr, _TRUNCATE);
+	mbstowcs(ws, arr, size);//mbstowcs_s(&charsConverted, ws, size, arr, _TRUNCATE);
 	return ws;
 }
 
@@ -20,7 +20,7 @@ char * Utils::WCharArrayToChar(const wchar_t * arr)
 	size_t size = wcslen(arr) + 1;
 	size_t charsConverted = 0;
 	char * ws = new char[size];
-	wcstombs_s(&charsConverted, ws, size, arr, _TRUNCATE);
+	wcstombs(ws, arr, size); //wcstombs_s(&charsConverted, ws, size, arr, _TRUNCATE);
 	return ws;
 }
 
@@ -29,7 +29,7 @@ char* Utils::FoneOSStringToCharArray(FoneOSString str)
 #ifdef UNICODE
 	return Utils::WCharArrayToChar(str.c_str());
 #else
-	return str.c_str();
+	return (char *) str.c_str();
 #endif
 }
 

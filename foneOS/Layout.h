@@ -23,8 +23,8 @@ private:
 
 class FoneOSLabel : public FoneOSContainer {
 public:
-	FoneOSLabel::FoneOSLabel();
-	FoneOSLabel::FoneOSLabel(FoneOSString str, int xPos, int yPos);
+	FoneOSLabel();
+	FoneOSLabel(FoneOSString str, int xPos, int yPos);
 
 	virtual void Draw(FoneOSContainer * scr);
 

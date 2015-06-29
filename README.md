@@ -1,5 +1,6 @@
 # foneOS
 A simple phone "operating system", designed to run on the Intel Edison.
+
 Technically, this is *not* an operating system due to the fact that it runs on top of Linux (or Windows, if using the simulator), so it does not handle low-level tasks.
 
 ## Features

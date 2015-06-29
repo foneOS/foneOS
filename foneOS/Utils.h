@@ -26,6 +26,6 @@ public:
 	static FoneOSString CondenseString(FoneOSString text);
 
 	// Counts the number of newlines in a string.
-	static int Utils::NumberOfNewlines(FoneOSString text);
+	static int NumberOfNewlines(FoneOSString text);
 };
 

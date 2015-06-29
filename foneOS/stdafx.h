@@ -5,10 +5,15 @@
 
 #pragma once
 
+#include "FoneOSConfig.h"
+
 #include "targetver.h"
 
 #include <stdio.h>
+
+#ifdef _MSVC_VER
 #include <tchar.h>
+#endif
 
 #include <sys/types.h>
 
@@ -22,8 +27,6 @@
 #include <vector>
 
 #include "windows.h"
-
-#define VERSION STR("v0.1.2d")
 
 #define _WINDOWS
 #define _USRDLL
@@ -45,8 +48,8 @@ typedef std::wstring FoneOSString;
 #else
 typedef std::string FoneOSString;
 #define FoneOSChar char
-#define FoneOSOut cout
-#define FoneOSIn cin
+#define FoneOSOut std::cout
+#define FoneOSIn std::cin
 #define FoneOSIStringStream std::istringstream
 #define FoneOSOStringStream std::ostringstream
 #define FoneOSIFileStream std::ifstream
@@ -61,7 +64,7 @@ typedef std::string FoneOSString;
 
 #include "ft2build.h"
 #include FT_FREETYPE_H
-#include <freetype\ftglyph.h>
+#include "ftglyph.h"
 
 #include "pugiconfig.h"
 #include "pugixml.h"
@@ -69,10 +72,10 @@ typedef std::string FoneOSString;
 #include "FoneOSColor.h"
 #include "FoneOSPoint.h"
 
-#define COLOR_BLACK FoneOSColor::FoneOSColor(0, 0, 0, 255)
-#define COLOR_GRAY2 FoneOSColor::FoneOSColor(40, 40, 40, 255) //0x4208
-#define COLOR_RED FoneOSColor::FoneOSColor(255, 0, 0, 255)
-#define COLOR_WHITE FoneOSColor::FoneOSColor(255, 255, 255, 255)
+#define COLOR_BLACK FoneOSColor(0, 0, 0, 255)
+#define COLOR_GRAY2 FoneOSColor(40, 40, 40, 255) //0x4208
+#define COLOR_RED FoneOSColor(255, 0, 0, 255)
+#define COLOR_WHITE FoneOSColor(255, 255, 255, 255)
 
 #include "Logging.h"
 #include "Utils.h"

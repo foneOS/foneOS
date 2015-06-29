@@ -45,7 +45,7 @@ bool Storage::RemoveFile(FoneOSString fileName)
 	{
 		return false;
 	}
-	return _unlink(Utils::FoneOSStringToCharArray(Storage::GetFullPath(fileName))) == 0;
+	return remove(Utils::FoneOSStringToCharArray(Storage::GetFullPath(fileName))) == 0;
 }
 
 

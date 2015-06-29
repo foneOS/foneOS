@@ -194,3 +194,12 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+# Using CMake....
+Makefile
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+
+# Binaries
+foneOS.exe

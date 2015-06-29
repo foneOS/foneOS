@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char **argv)
 {
 	Core::Init();
 	while (true)
@@ -11,4 +11,16 @@ int _tmain(int argc, _TCHAR* argv[])
 		Core::Update();
 	}
 	return 0;
+}
+
+#ifdef WIN32
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+	main(0, NULL);
+}
+#endif
+
+int _tmain(int argc, FoneOSChar* argv[])
+{
+	main(0, NULL);
 }

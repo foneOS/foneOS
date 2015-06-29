@@ -34,7 +34,7 @@ FoneOSString getRegKey(const FoneOSString location, const FoneOSString name)
 	/*while (i > 0 && strVal[i - 1] == '\0') {
 		--i;
 	}*/
-	return strVal.substr(0, strVal.find(L'\0'));
+	return strVal.substr(0, strVal.find_first_of(STR("\0")));
 }
 
 FoneOSString Device::GetCPUName()
