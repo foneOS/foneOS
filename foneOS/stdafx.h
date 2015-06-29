@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 
-#ifdef _MSVC_VER
+#ifdef _MSC_VER
 #include <tchar.h>
 #endif
 
@@ -28,7 +28,6 @@
 
 #include "windows.h"
 
-#define _WINDOWS
 #define _USRDLL
 #define USE_TCL
 #define _CRT_SECURE_NO_DEPRECATE

@@ -16,11 +16,15 @@ int main(int argc, char **argv)
 #ifdef WIN32
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	main(0, NULL);
+	return main(0, NULL);
 }
 #endif
 
+#ifdef _MSC_VER
+#undef main
 int _tmain(int argc, FoneOSChar* argv[])
 {
-	main(0, NULL);
+	#define main SDL_main
+	return main(0, NULL);
 }
+#endif
