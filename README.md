@@ -9,7 +9,7 @@ Technically, this is *not* an operating system due to the fact that it runs on t
 * Basic settings page
 * Basic dialer
 * Simulator 
-* (soon) App support (using Mono)
+* (soon) App support (using LuaJIT)
 
 ### Sidenote
 It may seem like there are lots of applications missing. This is because lots of the planned internal apps (SMS, FM Radio, etc.) are all waiting on the app system to be working before they are developed.
