@@ -68,6 +68,8 @@ typedef std::string FoneOSString;
 #include "pugiconfig.h"
 #include "pugixml.h"
 
+#include "lua.hpp"
+
 #include "FoneOSColor.h"
 #include "FoneOSPoint.h"
 
@@ -90,5 +92,7 @@ typedef std::string FoneOSString;
 #include "Modem.h"
 
 #include "Layout.h"
+
+#include "App.h"
 
 #include "Core.h"

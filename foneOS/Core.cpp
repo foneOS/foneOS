@@ -76,6 +76,9 @@ void Core::Init()
 	Display::Flush();
 
 	Layout::Draw();
+	App app = App();
+	app.Start();
+	app.Stop();
 }
 
 void Core::Update()
