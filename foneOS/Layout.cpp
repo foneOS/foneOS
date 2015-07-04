@@ -588,6 +588,11 @@ void Layout::DrawActionBar()
 	}
 }
 
+FoneOSScreen * Layout::GetCurrentLayout(FoneOSScreen * layout)
+{
+	return CurrentLayout;
+}
+
 void Layout::SetCurrentLayout(FoneOSScreen * layout, bool addLastToStack)
 {
 	if (addLastToStack)

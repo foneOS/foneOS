@@ -124,6 +124,9 @@ public:
 	// Updates the layout.
 	static void Update();
 
+	// Gets the current layout.
+	static FoneOSScreen * GetCurrentLayout(FoneOSScreen * layout);
+
 	// Changes the current layout.
 	static void SetCurrentLayout(FoneOSScreen * layout, bool addLastToStack);
 private:

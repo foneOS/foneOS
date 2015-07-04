@@ -15,9 +15,11 @@ App::~App()
 int test(lua_State * _L)
 {
 	luaL_checkstring(_L, -1);
+
 	const char * str = lua_tostring(_L, -1);
 	Logging::LogMessage(Utils::CharArrayToFoneOSString((char*)str));
 	lua_pop(_L, -1);
+
 	return 0;
 }
 
