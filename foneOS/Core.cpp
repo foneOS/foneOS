@@ -18,30 +18,30 @@ void Core::Init()
 		Logging::LogMessage(STR("FREETYPE FAILURE"));
 	}
 
-	Logging::LogMessage(STR("Initializing display..."));
-	Display::Init();
+	Logging::LogMessage(STR("Initializing hardware manager..."));
+	HardwareManager::Init();
 
 	// boot screen
-	Display::Clear(COLOR_WHITE);
+	HardwareManager::GetDisplay()->Clear(COLOR_WHITE);
 
 	if (ack)
 	{
-		Display::FillRectangle(20, 20, 50, 50, COLOR_RED);
-		Display::FillRectangle(100, 100, 50, 50, COLOR_RED);
-		Display::FillRectangle(20, 180, 50, 50, COLOR_RED);
-		Display::FillRectangle(100, 260, 50, 50, COLOR_RED);
-		Display::Flush();
+		HardwareManager::GetDisplay()->FillRectangle(20, 20, 50, 50, COLOR_RED);
+		HardwareManager::GetDisplay()->FillRectangle(100, 100, 50, 50, COLOR_RED);
+		HardwareManager::GetDisplay()->FillRectangle(20, 180, 50, 50, COLOR_RED);
+		HardwareManager::GetDisplay()->FillRectangle(100, 260, 50, 50, COLOR_RED);
+		HardwareManager::GetDisplay()->Flush();
 		while (true) {}
 	}
 
-	Display::DrawImage(STR("boot.bmp"), 0, 0);
-	Display::DrawImage(STR("logo.bmp"), 0, 0);
-	Display::DrawString(VERSION, 0, 0, 1, COLOR_BLACK, COLOR_WHITE);
+	HardwareManager::GetDisplay()->DrawImage(STR("boot.bmp"), 0, 0);
+	HardwareManager::GetDisplay()->DrawImage(STR("logo.bmp"), 0, 0);
+	HardwareManager::GetDisplay()->DrawString(VERSION, 0, 0, 1, COLOR_BLACK, COLOR_WHITE);
 
-	Display::FillRectangle(0, 305, 240, 15, COLOR_WHITE);
-	Display::DrawString(STR("Loading, please wait..."), 2, 307, 1, COLOR_BLACK, COLOR_WHITE);
+	HardwareManager::GetDisplay()->FillRectangle(0, 305, 240, 15, COLOR_WHITE);
+	HardwareManager::GetDisplay()->DrawString(STR("Loading, please wait..."), 2, 307, 1, COLOR_BLACK, COLOR_WHITE);
 
-	Display::Flush();
+	HardwareManager::GetDisplay()->Flush();
 
 	Input::Init();
 	Modem::Init();
@@ -52,8 +52,8 @@ void Core::Init()
 
 	if (!Storage::FileExists(STR("dbsetup.txt")))
 	{
-		Display::FillRectangle(0, 305, 240, 12, COLOR_WHITE);
-		Display::DrawString(STR("Setting up databases..."), 1, 307, 1, COLOR_BLACK, COLOR_WHITE);
+		HardwareManager::GetDisplay()->FillRectangle(0, 305, 240, 12, COLOR_WHITE);
+		HardwareManager::GetDisplay()->DrawString(STR("Setting up databases..."), 1, 307, 1, COLOR_BLACK, COLOR_WHITE);
 
 		if (!Storage::FileExists(STR("callLog.sqlite3")))
 		{
@@ -62,9 +62,9 @@ void Core::Init()
 				
 				)
 			{
-				Display::FillRectangle(0, 305, 240, 12, COLOR_WHITE);
-				Display::DrawString(STR("DB setup error!"), 1, 307, 1, COLOR_BLACK, COLOR_WHITE);
-				Display::Flush();
+				HardwareManager::GetDisplay()->FillRectangle(0, 305, 240, 12, COLOR_WHITE);
+				HardwareManager::GetDisplay()->DrawString(STR("DB setup error!"), 1, 307, 1, COLOR_BLACK, COLOR_WHITE);
+				HardwareManager::GetDisplay()->Flush();
 				while (true)
 				{
 					Utils::Delay(1);
@@ -73,7 +73,7 @@ void Core::Init()
 		}
 	}
 
-	Display::Flush();
+	HardwareManager::GetDisplay()->Flush();
 
 	Layout::Draw();
 	App app = App();
@@ -83,7 +83,7 @@ void Core::Init()
 
 void Core::Update()
 {
-	Display::Update();
+	HardwareManager::GetDisplay()->Update();
 
 	Layout::Update();
 

@@ -91,6 +91,8 @@ typedef std::string FoneOSString;
 #include "Input.h"
 #include "Modem.h"
 
+#include "HardwareManager.h"
+
 #include "Layout.h"
 
 #include "App.h"

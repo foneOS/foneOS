@@ -11,7 +11,7 @@ static SDL_Renderer * _renderer;
 
 template <typename T> FoneOSString ToString(const T& t);
 
-void Display::Init()
+void Display_SDL::Init()
 {
 	// TODO: Handle error- SDL_GetError()
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -19,13 +19,13 @@ void Display::Init()
 	_renderer = SDL_CreateRenderer(_window, -1, 0);
 }
 
-void Display::Clear(FoneOSColor color)
+void Display_SDL::Clear(FoneOSColor color)
 {
 	SDL_SetRenderDrawColor(_renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(_renderer);
 }
 
-void Display::DrawRectangle(int x, int y, int w, int h, FoneOSColor color)
+void Display_SDL::DrawRectangle(int x, int y, int w, int h, FoneOSColor color)
 {
 	SDL_SetRenderDrawColor(_renderer, color.r, color.g, color.b, color.a);
 	SDL_Rect rect;
@@ -36,7 +36,7 @@ void Display::DrawRectangle(int x, int y, int w, int h, FoneOSColor color)
 	SDL_RenderDrawRect(_renderer, &rect);
 }
 
-void Display::FillRectangle(int x, int y, int w, int h, FoneOSColor color)
+void Display_SDL::FillRectangle(int x, int y, int w, int h, FoneOSColor color)
 {
 	SDL_SetRenderDrawColor(_renderer, color.r, color.g, color.b, color.a);
 	SDL_Rect rect;
@@ -48,7 +48,7 @@ void Display::FillRectangle(int x, int y, int w, int h, FoneOSColor color)
 }
 
 
-bool Display::DrawImage(FoneOSString filename, int x, int y)
+bool Display_SDL::DrawImage(FoneOSString filename, int x, int y)
 {
 	FoneOSString filePathStr = Storage::GetFullPath(filename);
 	char * filePath = Utils::FoneOSStringToCharArray(filePathStr);
@@ -75,7 +75,7 @@ bool Display::DrawImage(FoneOSString filename, int x, int y)
 	return true;
 }
 
-void Display::DrawString(FoneOSString string, int x, int y, FoneFontDesc font, int size, FoneOSColor color, FoneOSColor bg)
+void Display_SDL::DrawString(FoneOSString string, int x, int y, FoneFontDesc font, int size, FoneOSColor color, FoneOSColor bg)
 {
 	int HEIGHT, WIDTH = 0;
 	std::vector<std::vector<unsigned char>> image = Type::GetBitmap(font, size, string, &WIDTH, &HEIGHT);
@@ -101,50 +101,26 @@ void Display::DrawString(FoneOSString string, int x, int y, FoneFontDesc font, i
 			drawColor.g = bg.g + (imgColor*gdiff) / (colorIsBlack ? 1 : (NUM_GRAYS - 1));
 			drawColor.b = bg.b + (imgColor*bdiff) / (colorIsBlack ? 1 : (NUM_GRAYS - 1));
 
-			Display::FillRectangle(x + j, y + i, 1, 1, drawColor);// { 255 - color, 255 - color, 255 - color, 255 });
+			this->FillRectangle(x + j, y + i, 1, 1, drawColor);// { 255 - color, 255 - color, 255 - color, 255 });
 			count++;
 		}
 	}
-	// TODO: replace GPL code
-	/*
-	int origX = x;
-	const FoneOSChar * str = string.c_str();
-	while (*str)
-	{
-		for (FoneOSChar i = 0; i<8; i++)
-		{
-			if (*str != '\n')
-			{
-				Display::DrawCharacter(*str, x, y, size, color);
-			}
-		}
-		if (*str == '\n')
-		{
-			y += 8 * size;
-			x = origX;
-		}
-		else
-		{
-			x += 8 * size;
-		}
-		*str++;
-	}*/
 }
 
-void Display::DrawString(FoneOSString string, int x, int y, int size, FoneOSColor color, FoneOSColor bg)
+void Display_SDL::DrawString(FoneOSString string, int x, int y, int size, FoneOSColor color, FoneOSColor bg)
 {
-	Display::DrawString(string, x, y, DEFAULT_FONT, size * 12, color, bg);
+	this->DrawString(string, x, y, DEFAULT_FONT, size * 12, color, bg);
 }
 
-void Display::Flush()
+void Display_SDL::Flush()
 {
 	SDL_UpdateWindowSurface(_window);
 	SDL_RenderPresent(_renderer);
 }
 
-void Display::Update()
+void Display_SDL::Update()
 {
-	Display::Flush();
+	this->Flush();
 
 	SDL_Event event;
 	if (SDL_PollEvent(&event) != 0)
@@ -166,8 +142,18 @@ void Display::Update()
 	}
 }
 
-void Display::Cleanup()
+void Display_SDL::Cleanup()
 {
 	SDL_DestroyRenderer(_renderer);
 	SDL_DestroyWindow(_window);
+}
+
+int Display_SDL::GetHorizDPI()
+{
+	return 72;
+}
+
+int Display_SDL::GetVertDPI()
+{
+	return 72;
 }

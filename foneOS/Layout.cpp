@@ -18,7 +18,7 @@ FoneOSLabel::FoneOSLabel(FoneOSString str, int xPos, int yPos)
 void FoneOSLabel::Draw(FoneOSContainer * scr)
 {
 	FoneOSScreen * scrscr = (FoneOSScreen *)scr;
-	Display::DrawString(this->text, this->x, this->y, this->font, this->fontSize * 12, this->fgColor, scrscr->bgColor);
+	HardwareManager::GetDisplay()->DrawString(this->text, this->x, this->y, this->font, this->fontSize * 12, this->fgColor, scrscr->bgColor);
 }
 
 
@@ -28,8 +28,8 @@ void FoneOSLabel::Draw(FoneOSContainer * scr)
 ////
 void FoneOSTitle::Draw(FoneOSContainer * scr)
 {
-	Display::FillRectangle(this->x, this->y, this->width, this->height, this->bgColor);
-	Display::DrawString(this->text, this->x + 2, this->y + 4, 2, this->fgColor, this->bgColor);
+	HardwareManager::GetDisplay()->FillRectangle(this->x, this->y, this->width, this->height, this->bgColor);
+	HardwareManager::GetDisplay()->DrawString(this->text, this->x + 2, this->y + 4, 2, this->fgColor, this->bgColor);
 }
 
 
@@ -48,17 +48,17 @@ FoneOSButton::FoneOSButton(FoneOSString caption, int xPosition, int yPosition)
 }
 void FoneOSButton::handleTouch(FoneOSPoint p)
 {
-	Display::FillRectangle(this->x, this->y, this->width + 2, 2, COLOR_WHITE);
-	Display::FillRectangle(this->x, this->y, 2, this->height + 2, COLOR_WHITE);
-	Display::FillRectangle(this->x + 2, this->y + 2, this->width, this->height, this->fgColor);
-	Display::DrawRectangle(this->x + 2, this->y + 2, this->width, this->height, this->bgColor);
-	Display::DrawString(this->text, this->x + 10 + 2, this->y + 10 + 2, this->fontSize, this->bgColor, this->fgColor);
+	HardwareManager::GetDisplay()->FillRectangle(this->x, this->y, this->width + 2, 2, COLOR_WHITE);
+	HardwareManager::GetDisplay()->FillRectangle(this->x, this->y, 2, this->height + 2, COLOR_WHITE);
+	HardwareManager::GetDisplay()->FillRectangle(this->x + 2, this->y + 2, this->width, this->height, this->fgColor);
+	HardwareManager::GetDisplay()->DrawRectangle(this->x + 2, this->y + 2, this->width, this->height, this->bgColor);
+	HardwareManager::GetDisplay()->DrawString(this->text, this->x + 10 + 2, this->y + 10 + 2, this->fontSize, this->bgColor, this->fgColor);
 
-	Display::Flush();
+	HardwareManager::GetDisplay()->Flush();
 	Utils::Delay(125);
 
-	Display::FillRectangle(this->x, this->y + this->height, this->width + 3, 3, COLOR_WHITE);
-	Display::FillRectangle(this->x + this->width, this->y, 3, this->height + 3, COLOR_WHITE);
+	HardwareManager::GetDisplay()->FillRectangle(this->x, this->y + this->height, this->width + 3, 3, COLOR_WHITE);
+	HardwareManager::GetDisplay()->FillRectangle(this->x + this->width, this->y, 3, this->height + 3, COLOR_WHITE);
 
 	this->Draw(NULL);
 
@@ -69,11 +69,11 @@ void FoneOSButton::handleTouch(FoneOSPoint p)
 }
 void FoneOSButton::Draw(FoneOSContainer * scr)
 {
-	Display::FillRectangle(this->x + 2, this->y + 2, this->width, this->height, this->fgColor);
-	Display::FillRectangle(this->x, this->y, this->width, this->height, this->bgColor);
-	Display::DrawRectangle(this->x, this->y, this->width, this->height, this->fgColor);
+	HardwareManager::GetDisplay()->FillRectangle(this->x + 2, this->y + 2, this->width, this->height, this->fgColor);
+	HardwareManager::GetDisplay()->FillRectangle(this->x, this->y, this->width, this->height, this->bgColor);
+	HardwareManager::GetDisplay()->DrawRectangle(this->x, this->y, this->width, this->height, this->fgColor);
 
-	Display::DrawString(this->text, this->x + 10, this->y + 10, this->fontSize, this->fgColor, this->bgColor);
+	HardwareManager::GetDisplay()->DrawString(this->text, this->x + 10, this->y + 10, this->fontSize, this->fgColor, this->bgColor);
 }
 void FoneOSButton::Create()
 {
@@ -90,10 +90,10 @@ void FoneOSButton::Create()
 ////
 void FoneOSImage::Draw(FoneOSContainer * scr)
 {
-	if (!Display::DrawImage(this->path, this->x, this->y))
+	if (!HardwareManager::GetDisplay()->DrawImage(this->path, this->x, this->y))
 	{
-		Display::DrawRectangle(this->x, this->y, this->width, this->height, this->fgColor);
-		Display::DrawString(STR("Image error"), this->x, this->y, 1, this->fgColor, this->bgColor);
+		HardwareManager::GetDisplay()->DrawRectangle(this->x, this->y, this->width, this->height, this->fgColor);
+		HardwareManager::GetDisplay()->DrawString(STR("Image error"), this->x, this->y, 1, this->fgColor, this->bgColor);
 	}
 }
 
@@ -118,7 +118,7 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 }
 void FoneOSKeyboard::Draw(FoneOSContainer * scr)
 {
-	Display::FillRectangle(this->x, this->y, this->width, this->height, COLOR_RED);
+	HardwareManager::GetDisplay()->FillRectangle(this->x, this->y, this->width, this->height, COLOR_RED);
 
 	/*Serial.print("TEST TEXT: ");
 	Serial.println(this->topRow[0].text());
@@ -182,7 +182,7 @@ void FoneOSScreen::handleTouch(FoneOSPoint p)
 
 void FoneOSScreen::Draw()
 {
-	Display::Clear(this->bgColor);
+	HardwareManager::GetDisplay()->Clear(this->bgColor);
 
 	DrawAllOfType(FoneOSImage, this->images);
 	DrawAllOfType(FoneOSTitle, this->titles);
@@ -542,17 +542,17 @@ void Layout::DrawActionBar()
 {
 	if (CurrentLayout != &LockScreen)
 	{
-		Display::FillRectangle(0, 280, 240, 40, COLOR_BLACK);
+		HardwareManager::GetDisplay()->FillRectangle(0, 280, 240, 40, COLOR_BLACK);
 		if (!Core::Stack.empty())
 		{
-			Display::DrawImage(STR("icons/back.bmp"), 5, 282);
+			HardwareManager::GetDisplay()->DrawImage(STR("icons/back.bmp"), 5, 282);
 		}
-		Display::DrawImage(STR("icons/home.bmp"), 104, 282);
-		Display::DrawImage(STR("icons/more.bmp"), 208, 282);
+		HardwareManager::GetDisplay()->DrawImage(STR("icons/home.bmp"), 104, 282);
+		HardwareManager::GetDisplay()->DrawImage(STR("icons/more.bmp"), 208, 282);
 	}
 	else
 	{
-		Display::FillRectangle(0, 305, 240, 15, COLOR_BLACK);
+		HardwareManager::GetDisplay()->FillRectangle(0, 305, 240, 15, COLOR_BLACK);
 	}
 	if (Modem::GetEnabled())
 	{
@@ -578,13 +578,13 @@ void Layout::DrawActionBar()
 		else {
 			grade = 5;
 		}
-		Display::DrawImage(FoneOSString(STR("bars/")) + Utils::IntToString(grade) + FoneOSString(STR(".bmp")), 2, 308);
-		Display::DrawString(Modem::GetOperator(), 25, 308, 1, COLOR_WHITE, COLOR_BLACK);
+		HardwareManager::GetDisplay()->DrawImage(FoneOSString(STR("bars/")) + Utils::IntToString(grade) + FoneOSString(STR(".bmp")), 2, 308);
+		HardwareManager::GetDisplay()->DrawString(Modem::GetOperator(), 25, 308, 1, COLOR_WHITE, COLOR_BLACK);
 	}
 	else
 	{
-		Display::DrawImage(STR("bars/0.bmp"), 2, 308);
-		Display::DrawString(STR("Modem error"), 25, 308, 1, COLOR_WHITE, COLOR_BLACK);
+		HardwareManager::GetDisplay()->DrawImage(STR("bars/0.bmp"), 2, 308);
+		HardwareManager::GetDisplay()->DrawString(STR("Modem error"), 25, 308, 1, COLOR_WHITE, COLOR_BLACK);
 	}
 }
 

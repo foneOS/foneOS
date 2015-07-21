@@ -70,8 +70,8 @@ FT_Vector Type::GetDimensions(FoneFontDesc desc, const char * text, int size)
 		face,		 /* handle to face object */
 		0,			 /* char_width in 1/64th of points */
 		size * 64,	 /* char_height in 1/64th of points */
-		Display::HorizDPI,		 /* horizontal device resolution */
-		Display::VertDPI);		 /* vertical device resolution */
+		HardwareManager::GetDisplay()->GetHorizDPI(),		 /* horizontal device resolution */
+		HardwareManager::GetDisplay()->GetVertDPI());		 /* vertical device resolution */
 
 	int stringWidth = 0;
 	int stringHeight = 0;
@@ -126,8 +126,8 @@ std::vector<std::vector<unsigned char>> Type::GetBitmap(FoneFontDesc desc, int s
 		face,		 /* handle to face object */
 		0,			 /* char_width in 1/64th of points */
 		size * 64,	 /* char_height in 1/64th of points */
-		Display::HorizDPI,		 /* horizontal device resolution */
-		Display::VertDPI);		 /* vertical device resolution */
+		HardwareManager::GetDisplay()->GetHorizDPI(),		 /* horizontal device resolution */
+		HardwareManager::GetDisplay()->GetVertDPI());		 /* vertical device resolution */
 
 	FT_GlyphSlot	slot = face->glyph;  /* a small shortcut */
 	int				pen_x, pen_y, n;
