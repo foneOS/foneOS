@@ -16,6 +16,8 @@ Logging::~Logging()
 void Logging::LogMessage(FoneOSString msg)
 {
 	FoneOSOut << msg.c_str() << FoneOSEndL;
+#ifdef WINDOWS
 	OutputDebugString(msg.c_str());
 	OutputDebugString(FoneOSEndL);
+#endif
 }

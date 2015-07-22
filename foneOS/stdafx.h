@@ -3,6 +3,10 @@
 // are changed infrequently
 //
 
+// TODO: There's no one place for this TODO, so here it is.
+//		 Find all the places using Utils::FoneOSStringToCharArray() and change them to not memory leak on non-Unicode platforms.
+//		 (because FoneOSStringToCharArray uses strdup if no Unicode)
+
 #pragma once
 
 #include "FoneOSConfig.h"
@@ -18,6 +22,19 @@
 			   // So, this uses an oddly specific amount of defines in the hopes that there's something unique about that GCC.
 			   // It doesn't work very well.
 #endif
+
+// These defines try and sort out if you want simulator or production automagically.
+
+#ifdef WINDOWS
+#define SIMULATOR_BUILD
+#endif
+#ifdef EDISON
+#define PRODUCTION_BUILD
+#endif
+
+// To override that, comment them out and uncomment one of the following lines.
+// #define SIMULATOR_BUILD
+// #define PRODUCTION_BUILD
 
 #include "targetver.h"
 
@@ -69,9 +86,15 @@ typedef std::string FoneOSString;
 #define STR(s) s
 #endif
 
+#ifdef WINDOWS
 #define FoneOSEndL STR("\r\n")
+#else
+#define FoneOSEndL STR("\n")
+#endif
 
+#ifdef SIMULATOR_BUILD
 #include "SDL.h"
+#endif
 
 #include "sqlite3.h"
 
