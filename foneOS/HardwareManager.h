@@ -8,4 +8,7 @@ public:
 
 	// Gets the current display.
 	static Display * GetDisplay();
+
+	// Frees memory of the hardware manager and its associated hardware.
+	static void Cleanup();
 };

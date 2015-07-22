@@ -1,5 +1,1 @@
 #define VERSION STR("@FONEOSVERSION@")
-
-#ifdef CYGWIN
-#define WIN32
-#endif

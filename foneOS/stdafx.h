@@ -7,6 +7,18 @@
 
 #include "FoneOSConfig.h"
 
+#if defined(WIN32) || defined(WIN64) || defined(CYGWIN)
+#define WINDOWS
+#endif
+#if defined(linux) || defined(__linux) || defined(__linux__)
+#define LINUX
+#endif
+#if defined(LINUX) && defined(__i586) && defined(__GNUC__) && defined(__pentium)
+#define EDISON // You see, the `i586-poky-linux-gcc` cross-compiler the Edison SDK comes with doesn't have a specific define for Edison.
+			   // So, this uses an oddly specific amount of defines in the hopes that there's something unique about that GCC.
+			   // It doesn't work very well.
+#endif
+
 #include "targetver.h"
 
 #include <stdio.h>
@@ -26,7 +38,9 @@
 #include <string>
 #include <vector>
 
+#ifdef WINDOWS
 #include "windows.h"
+#endif
 
 #define _USRDLL
 #define USE_TCL

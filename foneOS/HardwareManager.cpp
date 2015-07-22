@@ -13,3 +13,10 @@ Display * HardwareManager::GetDisplay()
 {
 	return _display;
 }
+
+void HardwareManager::Cleanup()
+{
+	_display->Cleanup();
+
+	delete _display;
+}
