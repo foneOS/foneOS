@@ -9,6 +9,6 @@ find_package(Sqlite3 REQUIRED)
 find_package(LuaJIT REQUIRED)
 
 # The version number.
-set (FONEOSVERSION "v0.1.2d")
+#set (FONEOSVERSION "v0.1.2d")
 
 add_subdirectory(foneOS)

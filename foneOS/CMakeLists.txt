@@ -5,10 +5,10 @@ set(CORELIBS ${FREETYPE_LIBRARY} ${SQLITE3_LIBRARY} ${SDL2_LIBRARY})
  
 # configure a header file to pass some of the CMake settings
 # to the source code
-configure_file (
-  "${PROJECT_SOURCE_DIR}/foneOS/FoneOSConfig.h.in"
-  "${PROJECT_BINARY_DIR}/foneOS/FoneOSConfig.h"
-  )
+#configure_file (
+#  "${PROJECT_SOURCE_DIR}/foneOS/FoneOSConfig.h.in"
+#  "${PROJECT_BINARY_DIR}/foneOS/FoneOSConfig.h"
+#  )
   
 file(GLOB foneOS_src
     "*.h"
