@@ -42,6 +42,7 @@
 #endif
 
 #include <stdio.h>
+#include <unistd.h>
 
 #ifdef _MSC_VER
 #include <tchar.h>

@@ -436,6 +436,7 @@ void Layout::Init()
 		title.Create();
 		Fonts.titles.push_back(title);
 		
+#ifdef WINDOWS
 		// TODO: portability
 		WIN32_FIND_DATA findFileData;
 		HANDLE search = FindFirstFile(Storage::GetFullPath(STR("fonts\\*")).c_str(), &findFileData);
@@ -455,6 +456,7 @@ void Layout::Init()
 				fontNum++;
 			}
 		} while (FindNextFile(search, &findFileData));
+#endif
 	}
 	{
 		FoneOSTitle title = FoneOSTitle();

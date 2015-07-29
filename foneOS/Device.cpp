@@ -11,6 +11,7 @@ FoneOSString Device::GetCPUSerialNumber()
 	return STR("ABCD1234EFGH5678");
 }
 
+#ifdef WINDOWS
 FoneOSString getRegKey(const FoneOSString location, const FoneOSString name)
 {
 	HKEY key;
@@ -36,19 +37,26 @@ FoneOSString getRegKey(const FoneOSString location, const FoneOSString name)
 	}*/
 	return strVal.substr(0, strVal.find_first_of(STR("\0")));
 }
+#endif
 
 FoneOSString Device::GetCPUName()
 {
-	FoneOSString regVal = getRegKey(STR("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"), STR("ProcessorNameString"));
-	if (regVal == STR(""))
+    FoneOSString cpuVal;
+#ifdef WINDOWS
+    cpuVal = getRegKey(STR("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"), STR("ProcessorNameString"));
+#elif defined(EDISON)
+    cpuVal = "Intel Edison";
+#endif
+    if (cpuVal == STR(""))
 	{
 		return STR("Unknown CPU");
 	}
-	return Utils::CondenseString(regVal);
+    return Utils::CondenseString(cpuVal);
 }
 
 FoneOSString Device::GetCPUArchitecture()
 {
+#ifdef WINDOWS
 	LPSYSTEM_INFO systemInfo = new _SYSTEM_INFO();
 	GetNativeSystemInfo(systemInfo);
 	switch (systemInfo->wProcessorArchitecture)
@@ -81,4 +89,7 @@ FoneOSString Device::GetCPUArchitecture()
 		delete systemInfo;
 		return STR("Unknown");
 	}
+#elif defined(EDISON)
+    return STR("Pentium-compatible");
+#endif
 }

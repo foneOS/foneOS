@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Display.h"
 
+#ifdef SIMULATOR_BUILD
+
 /* TODO: Right now, it's assumed that the grayscale renderer for FreeType
 supports 256 shades of gray, but this should instead key off of num_grays
 in the FT_Bitmap after the FT_Render_Glyph() call. */
@@ -157,3 +159,5 @@ int Display_SDL::GetVertDPI()
 {
 	return 72;
 }
+
+#endif

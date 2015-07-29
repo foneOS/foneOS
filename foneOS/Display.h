@@ -44,6 +44,7 @@ public:
 	static const int VertDPI = 72;*/
 };
 
+#ifdef SIMULATOR_BUILD
 class Display_SDL : public Display
 {
 	virtual void Init();
@@ -59,3 +60,4 @@ class Display_SDL : public Display
 	virtual int GetHorizDPI();
 	virtual int GetVertDPI();
 };
+#endif
