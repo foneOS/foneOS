@@ -28,3 +28,8 @@ include_directories("${SDL2_INCLUDE_DIR};${SQLITE3_INCLUDE_DIR};${FREETYPE_INCLU
 # target_compile_options(foneOS "${SDL2_CFLAGS_OTHERS} ${SQLITE3_CFLAGS_OTHERS} ${FREETYPE_CFLAGS_OTHERS}")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+if (EDISON_BUILD)
+file(RELATIVE_PATH relativeDir ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}/foneOS)
+add_deployment_file(${relativeDir} ${deploymentFolderAbsolutPath})
+endif(EDISON_BUILD)

@@ -206,3 +206,5 @@ gen/
 
 # Binaries
 foneOS.exe
+*.cbp
+QtCreatorDeployment.txt

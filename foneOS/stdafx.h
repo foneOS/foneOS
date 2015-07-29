@@ -21,6 +21,7 @@
 #define EDISON // You see, the `i586-poky-linux-gcc` cross-compiler the Edison SDK comes with doesn't have a specific define for Edison.
 			   // So, this uses an oddly specific amount of defines in the hopes that there's something unique about that GCC.
 			   // It doesn't work very well.
+			   // TODO: Replace this with CMake magic.
 #endif
 
 // These defines try and sort out if you want simulator or production automagically.
@@ -36,7 +37,9 @@
 // #define SIMULATOR_BUILD
 // #define PRODUCTION_BUILD
 
-#include "targetver.h"
+#ifdef WINDOWS
+    #include "targetver.h"
+#endif
 
 #include <stdio.h>
 
