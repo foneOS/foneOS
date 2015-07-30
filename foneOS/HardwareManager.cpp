@@ -7,8 +7,10 @@ void HardwareManager::Init()
 {
 #ifdef SIMULATOR_BUILD
 	_display = new Display_SDL();
-#elsif PRODUCTION_BUILD
-    //_display = new Display_
+#elif defined(PRODUCTION_BUILD)
+    _display = new Display_ST7781R();
+#else
+    #error Unknown display
 #endif
 	HardwareManager::GetDisplay()->Init();
 }

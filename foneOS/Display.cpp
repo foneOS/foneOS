@@ -1,6 +1,351 @@
 #include "stdafx.h"
 #include "Display.h"
 
+#ifdef EDISON
+#define LOW 0
+#define HIGH 1
+
+#define INPUT MRAA_GPIO_IN
+#define OUTPUT MRAA_GPIO_OUT
+
+#define CS_PIN    10
+#define CS_OUTPUT {this->SetPin(CS_PIN, OUTPUT);}
+#define CS_HIGH   {this->DigitalWrite(CS_PIN, HIGH);}
+#define CS_LOW    {this->DigitalWrite(CS_PIN, LOW);}
+
+#define RS_PIN    11
+#define RS_OUTPUT {this->SetPin(RS_PIN, OUTPUT);}
+#define RS_HIGH   {this->DigitalWrite(RS_PIN, HIGH);}
+#define RS_LOW    {this->DigitalWrite(RS_PIN, LOW);}
+
+#define WR_PIN    11
+#define WR_OUTPUT {this->SetPin(WR_PIN, OUTPUT);}
+#define WR_HIGH   {this->DigitalWrite(WR_PIN, HIGH);}
+#define WR_LOW    {this->DigitalWrite(WR_PIN, LOW);}
+
+#define RD_PIN    11
+#define RD_OUTPUT {this->SetPin(RD_PIN, OUTPUT);}
+#define RD_HIGH   {this->DigitalWrite(RD_PIN, HIGH);}
+#define RD_LOW    {this->DigitalWrite(RD_PIN, LOW);}
+
+void Display_ST7781R::SetPin(unsigned int pin, mraa_gpio_dir_t dir)
+{
+    if (this->pins.find(pin) == this->pins.end())
+    {
+        this->pins[pin] = mraa_gpio_init(pin);
+        mraa_gpio_use_mmaped(this->pins[pin], 1);
+    }
+    mraa_gpio_dir(this->pins[pin], dir);
+}
+
+void Display_ST7781R::DigitalWrite(unsigned int pin, unsigned int value)
+{
+    mraa_gpio_write(this->pins[pin], value);
+}
+
+int Display_ST7781R::DigitalRead(unsigned int pin)
+{
+    return mraa_gpio_read(this->pins[pin]);
+}
+
+void Display_ST7781R::AllPinLow()
+{
+    this->DigitalWrite(2, LOW);
+    this->DigitalWrite(3, LOW);
+    this->DigitalWrite(4, LOW);
+    this->DigitalWrite(5, LOW);
+    this->DigitalWrite(6, LOW);
+    this->DigitalWrite(7, LOW);
+    this->DigitalWrite(8, LOW);
+    this->DigitalWrite(9, LOW);
+}
+
+void Display_ST7781R::AllPinOutput()
+{
+    this->SetPin(2, OUTPUT);
+    this->SetPin(3, OUTPUT);
+    this->SetPin(4, OUTPUT);
+    this->SetPin(5, OUTPUT);
+    this->SetPin(6, OUTPUT);
+    this->SetPin(7, OUTPUT);
+    this->SetPin(8, OUTPUT);
+    this->SetPin(9, OUTPUT);
+}
+
+void Display_ST7781R::PushData(unsigned char data)
+{
+    this->AllPinLow();
+    unsigned char shifted = (data<<2);
+    unsigned char shiftedsix = (data>>6);
+
+    unsigned char nine = ((shiftedsix >> 1)  & 0x01);
+    unsigned char eight = ((shiftedsix >> 0)  & 0x01);
+    unsigned char seven = ((shifted >> 7)  & 0x01);
+    unsigned char six = ((shifted >> 6)  & 0x01);
+    unsigned char five = ((shifted >> 5)  & 0x01);
+    unsigned char four = ((shifted >> 4)  & 0x01);
+    unsigned char three = ((shifted >> 3)  & 0x01);
+    unsigned char two = ((shifted >> 2)  & 0x01);
+
+    this->DigitalWrite(2, two);
+    this->DigitalWrite(3, three);
+    this->DigitalWrite(4, four);
+    this->DigitalWrite(5, five);
+    this->DigitalWrite(6, six);
+    this->DigitalWrite(7, seven);
+    this->DigitalWrite(8, eight);
+    this->DigitalWrite(9, nine);
+}
+
+unsigned char Display_ST7781R::GetData()
+{
+    unsigned char data=0;
+    Utils::Delay(1);
+    data |= this->DigitalRead(2) << 0;
+    data |= this->DigitalRead(3) << 1;
+    data |= this->DigitalRead(4) << 2;
+    data |= this->DigitalRead(5) << 3;
+    data |= this->DigitalRead(6) << 4;
+    data |= this->DigitalRead(7) << 5;
+    data |= this->DigitalRead(8) << 6;
+    data |= this->DigitalRead(9) << 7;
+    return data;
+}
+
+void Display_ST7781R::SendCommand(unsigned int index)
+{
+    CS_LOW;
+    RS_LOW;
+    RD_HIGH;
+    WR_HIGH;
+
+    WR_LOW;
+    this->PushData(0);
+    WR_HIGH;
+    WR_LOW;
+    this->PushData(index&0xff);
+    WR_HIGH;
+
+    CS_HIGH;
+}
+
+void Display_ST7781R::SendData(unsigned int data)
+{
+    CS_LOW;
+    RS_HIGH;
+    RD_HIGH;
+
+    WR_LOW;
+    this->PushData((data&0xff00)>>8);
+    WR_HIGH;
+
+    WR_LOW;
+    this->PushData(data&0xff);
+    WR_HIGH;
+
+    CS_HIGH;
+}
+
+void Display_ST7781R::ExitStandBy()
+{
+    this->SendCommand(0x0010);
+    this->SendData(0x14E0);
+
+    Utils::Delay(100);
+
+    this->SendCommand(0x0007);
+    this->SendData(0x0133);
+}
+
+uint8_t Display_ST7781R::CreateColor(FoneOSColor color)
+{
+    return ((color.r & 0xF8) << 8) | ((color.g & 0xFC) << 3) | (color.b >> 3);
+}
+
+void Display_ST7781R::Init()
+{
+    this->pins = std::map<unsigned int, mraa_gpio_context>();
+
+    CS_OUTPUT;
+    RD_OUTPUT;
+    WR_OUTPUT;
+    RS_OUTPUT;
+
+    this->AllPinOutput();
+    this->AllPinLow();
+
+    Utils::Delay(100);
+
+    this->SendCommand(0x0001);
+    this->SendData(0x0100);
+    this->SendCommand(0x0002);
+    this->SendData(0x0700);
+    this->SendCommand(0x0003);
+    this->SendData(0x1030);
+    this->SendCommand(0x0004);
+    this->SendData(0x0000);
+    this->SendCommand(0x0008);
+    this->SendData(0x0302);
+    this->SendCommand(0x000A);
+    this->SendData(0x0000);
+    this->SendCommand(0x000C);
+    this->SendData(0x0000);
+    this->SendCommand(0x000D);
+    this->SendData(0x0000);
+    this->SendCommand(0x000F);
+    this->SendData(0x0000);
+
+    Utils::Delay(100);
+
+    this->SendCommand(0x0030);
+    this->SendData(0x0000);
+    this->SendCommand(0x0031);
+    this->SendData(0x0405);
+    this->SendCommand(0x0032);
+    this->SendData(0x0203);
+    this->SendCommand(0x0035);
+    this->SendData(0x0004);
+    this->SendCommand(0x0036);
+    this->SendData(0x0B07);
+    this->SendCommand(0x0037);
+    this->SendData(0x0000);
+    this->SendCommand(0x0038);
+    this->SendData(0x0405);
+    this->SendCommand(0x0039);
+    this->SendData(0x0203);
+    this->SendCommand(0x003c);
+    this->SendData(0x0004);
+    this->SendCommand(0x003d);
+    this->SendData(0x0B07);
+    this->SendCommand(0x0020);
+    this->SendData(0x0000);
+    this->SendCommand(0x0021);
+    this->SendData(0x0000);
+    this->SendCommand(0x0050);
+    this->SendData(0x0000);
+    this->SendCommand(0x0051);
+    this->SendData(0x00ef);
+    this->SendCommand(0x0052);
+    this->SendData(0x0000);
+    this->SendCommand(0x0053);
+    this->SendData(0x013f);
+
+    Utils::Delay(100);
+
+    this->SendCommand(0x0060);
+    this->SendData(0xa700);
+    this->SendCommand(0x0061);
+    this->SendData(0x0001);
+    this->SendCommand(0x0090);
+    this->SendData(0x003A);
+    this->SendCommand(0x0095);
+    this->SendData(0x021E);
+    this->SendCommand(0x0080);
+    this->SendData(0x0000);
+    this->SendCommand(0x0081);
+    this->SendData(0x0000);
+    this->SendCommand(0x0082);
+    this->SendData(0x0000);
+    this->SendCommand(0x0083);
+    this->SendData(0x0000);
+    this->SendCommand(0x0084);
+    this->SendData(0x0000);
+    this->SendCommand(0x0085);
+    this->SendData(0x0000);
+    this->SendCommand(0x00FF);
+    this->SendData(0x0001);
+    this->SendCommand(0x00B0);
+    this->SendData(0x140D);
+    this->SendCommand(0x00FF);
+    this->SendData(0x0000);
+
+    Utils::Delay(100);
+
+    this->SendCommand(0x0007);
+    this->SendData(0x0133);
+
+    Utils::Delay(50);
+
+    this->ExitStandBy();
+
+    this->SendCommand(0x0022);
+
+    //paint screen black
+    this->Clear(COLOR_BLACK);
+}
+
+void Display_ST7781R::Clear(FoneOSColor color)
+{
+    uint8_t color8 = this->CreateColor(color);
+    for (unsigned char i = 0; i < 2; i++)
+    {
+        for (unsigned int f = 0; f < 38400; f++)
+        {
+            this->SendData(color8);
+        }
+    }
+}
+
+void Display_ST7781R::DrawHorizontalLine(unsigned int x, unsigned int y, unsigned int length, FoneOSColor color)
+{
+
+}
+
+void Display_ST7781R::DrawRectangle(int x, int y, int w, int h, FoneOSColor color)
+{
+
+}
+
+void Display_ST7781R::FillRectangle(int x, int y, int w, int h, FoneOSColor color)
+{
+    for(unsigned int i=0;i<w;i++)
+    {
+        this->DrawHorizontalLine(x, y+i, h, color);
+    }
+}
+
+bool Display_ST7781R::DrawImage(FoneOSString filename, int x, int y)
+{
+    return true;
+}
+
+void Display_ST7781R::DrawString(FoneOSString string, int x, int y, FoneFontDesc font, int size, FoneOSColor color, FoneOSColor bg)
+{
+
+}
+
+void Display_ST7781R::DrawString(FoneOSString string, int x, int y, int size, FoneOSColor color, FoneOSColor bg)
+{
+
+}
+
+void Display_ST7781R::Flush()
+{
+    // no-op
+}
+
+void Display_ST7781R::Update()
+{
+
+}
+
+void Display_ST7781R::Cleanup()
+{
+
+}
+
+int Display_ST7781R::GetHorizDPI()
+{
+    return 72;
+}
+
+int Display_ST7781R::GetVertDPI()
+{
+    return 72;
+}
+
+#endif
+
 #ifdef SIMULATOR_BUILD
 
 /* TODO: Right now, it's assumed that the grayscale renderer for FreeType

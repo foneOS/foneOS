@@ -51,8 +51,11 @@ FoneOSString Utils::IntToString(int t)
 
 void Utils::Delay(int millis)
 {
-    //SDL_Delay(millis);
-    sleep(millis);
+#ifdef SIMULATOR_BUILD
+    SDL_Delay(millis);
+#else
+    usleep(millis);
+#endif
 }
 
 FoneOSString Utils::CondenseString(FoneOSString text)

@@ -61,3 +61,43 @@ class Display_SDL : public Display
 	virtual int GetVertDPI();
 };
 #endif
+
+
+class Display_ST7781R : public Display
+{
+public:
+    virtual void Init();
+    virtual void Clear(FoneOSColor color);
+    virtual void DrawRectangle(int x, int y, int w, int h, FoneOSColor color);
+    virtual void FillRectangle(int x, int y, int w, int h, FoneOSColor color);
+    virtual bool DrawImage(FoneOSString filename, int x, int y);
+    virtual void DrawString(FoneOSString string, int x, int y, FoneFontDesc font, int size, FoneOSColor color, FoneOSColor bg);
+    virtual void DrawString(FoneOSString string, int x, int y, int size, FoneOSColor color, FoneOSColor bg);
+    virtual void Flush();
+    virtual void Update();
+    virtual void Cleanup();
+    virtual int GetHorizDPI();
+    virtual int GetVertDPI();
+private:
+    std::map<unsigned int, mraa_gpio_context> pins;
+
+    void SetPin(unsigned int pin, mraa_gpio_dir_t dir);
+    void DigitalWrite(unsigned int pin, unsigned int value);
+    int DigitalRead(unsigned int pin);
+
+    void AllPinLow();
+    void AllPinOutput();
+
+    void PushData(unsigned char data);
+    unsigned char GetData();
+    void SendCommand(unsigned int index);
+    void SendData(unsigned int data);
+    unsigned int ReadRegister(unsigned int index);
+
+    void ExitStandBy();
+
+    uint8_t CreateColor(FoneOSColor color);
+
+    void DrawHorizontalLine(unsigned int x, unsigned int y, unsigned int length, FoneOSColor color);
+    void DrawVerticalLine(unsigned int x, unsigned int y, unsigned int length, FoneOSColor color);
+};

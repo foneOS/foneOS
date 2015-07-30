@@ -100,6 +100,10 @@ typedef std::string FoneOSString;
 #include "SDL.h"
 #endif
 
+#ifdef PRODUCTION_BUILD
+#include "mraa.h"
+#endif
+
 #include "sqlite3.h"
 
 #include "ft2build.h"
