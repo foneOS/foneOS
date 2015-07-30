@@ -288,19 +288,48 @@ void Display_ST7781R::Clear(FoneOSColor color)
 
 void Display_ST7781R::DrawHorizontalLine(unsigned int x, unsigned int y, unsigned int length, FoneOSColor color)
 {
+    unsigned char color8 = this->CreateColor(color);
+    this->SetXY(x,x);
+    this->SetOrientation(0);
+    if(length + x > this->GetWidth())
+    {
+        length = this->GetWidth() - x;
+    }
+    for(unsigned int i=0;i<length;i++)
+    {
+        this->SendData(color8);
+    }
+}
 
+void Display_ST7781R::DrawVerticalLine(unsigned int x, unsigned int y, unsigned int length, FoneOSColor color)
+{
+    unsigned char color8 = this->CreateColor(color);
+    this->SetXY(x,y);
+    this->SetOrientation(1);
+    if(length + x > this->GetHeight())
+    {
+        length = this->GetHeight() - x;
+    }
+    for(unsigned int i=0;i<length;i++)
+    {
+        this->SendData(color8);
+    }
 }
 
 void Display_ST7781R::DrawRectangle(int x, int y, int w, int h, FoneOSColor color)
 {
+    this->DrawHorizontalLine(x, y, l, color);
+    this->DrawHorizontalLine(x, y + w, l, color);
 
+    this->DrawVerticalLine(x, y, w, color);
+    this->DrawVerticalLine(x + l, y, w, color);
 }
 
 void Display_ST7781R::FillRectangle(int x, int y, int w, int h, FoneOSColor color)
 {
     for(unsigned int i=0;i<w;i++)
     {
-        this->DrawHorizontalLine(x, y+i, h, color);
+        this->DrawHorizontalLine(x, y + i, h, color);
     }
 }
 
@@ -342,6 +371,16 @@ int Display_ST7781R::GetHorizDPI()
 int Display_ST7781R::GetVertDPI()
 {
     return 72;
+}
+
+int Display_ST7781R::GetWidth()
+{
+    return 240;
+}
+
+int Display_ST7781R::GetHeight()
+{
+    return 320;
 }
 
 #endif
@@ -503,6 +542,16 @@ int Display_SDL::GetHorizDPI()
 int Display_SDL::GetVertDPI()
 {
 	return 72;
+}
+
+int Display_SDL::GetWidth()
+{
+    return 240;
+}
+
+int Display_SDL::GetHeight()
+{
+    return 320;
 }
 
 #endif

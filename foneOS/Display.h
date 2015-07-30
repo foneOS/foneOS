@@ -34,11 +34,17 @@ public:
 	// Frees memory associated with the display.
 	virtual void Cleanup() = 0;
 
-	// Get's the display's horizontal dots-per-inch.
+    // Gets the display's horizontal dots-per-inch.
 	virtual int GetHorizDPI() = 0;
 
-	// Get's the display's vertical dots-per-inch.
+    // Gets the display's vertical dots-per-inch.
 	virtual int GetVertDPI() = 0;
+
+    // Gets the display's width in pixels.
+    virtual int GetWidth();
+
+    // Gets the display's height in pixels.
+    virtual int GetHeight();
 
 	/*static const int HorizDPI = 72;
 	static const int VertDPI = 72;*/
@@ -59,6 +65,8 @@ class Display_SDL : public Display
 	virtual void Cleanup();
 	virtual int GetHorizDPI();
 	virtual int GetVertDPI();
+    virtual int GetWidth();
+    virtual int GetHeight();
 };
 #endif
 
@@ -78,6 +86,8 @@ public:
     virtual void Cleanup();
     virtual int GetHorizDPI();
     virtual int GetVertDPI();
+    virtual int GetWidth();
+    virtual int GetHeight();
 private:
     std::map<unsigned int, mraa_gpio_context> pins;
 
@@ -100,4 +110,7 @@ private:
 
     void DrawHorizontalLine(unsigned int x, unsigned int y, unsigned int length, FoneOSColor color);
     void DrawVerticalLine(unsigned int x, unsigned int y, unsigned int length, FoneOSColor color);
+
+    void SetXY(unsigned int x, unsigned int y);
+    void SetOrientation(unsigned int orientation);
 };
