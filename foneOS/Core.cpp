@@ -44,9 +44,7 @@ void Core::Init()
 	HardwareManager::GetDisplay()->Flush();
 
 	Input::Init();
-	Modem::Init();
-
-	Layout::Init();
+    Modem::Init();
 
 	Utils::Delay(2000); // TODO: Actually load.
 
@@ -55,7 +53,7 @@ void Core::Init()
 		HardwareManager::GetDisplay()->FillRectangle(0, 305, 240, 12, COLOR_WHITE);
 		HardwareManager::GetDisplay()->DrawString(STR("Setting up databases..."), 1, 307, 1, COLOR_BLACK, COLOR_WHITE);
 
-		if (!Storage::FileExists(STR("callLog.sqlite3")))
+        if (!Storage::FileExists(STR("db/callLog.sqlite3")))
 		{
 			if (
 				!Database::ProvDB(STR("db/callLog.sqlite3"), STR("provscripts/db/callLog.sql"))
@@ -71,11 +69,13 @@ void Core::Init()
 				}
 			}
 		}
-	}
+    }
 
-	HardwareManager::GetDisplay()->Flush();
+    Layout::Init(); // Late init because Layout also draws.
+    //Layout::Draw();
 
-	Layout::Draw();
+    HardwareManager::GetDisplay()->Flush();
+
 	App app = App();
 	app.Start();
 	app.Stop();

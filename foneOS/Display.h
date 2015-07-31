@@ -41,10 +41,10 @@ public:
 	virtual int GetVertDPI() = 0;
 
     // Gets the display's width in pixels.
-    virtual int GetWidth();
+    virtual int GetWidth() = 0;
 
     // Gets the display's height in pixels.
-    virtual int GetHeight();
+    virtual int GetHeight() = 0;
 
 	/*static const int HorizDPI = 72;
 	static const int VertDPI = 72;*/
@@ -90,10 +90,14 @@ public:
     virtual int GetHeight();
 private:
     std::map<unsigned int, mraa_gpio_context> pins;
+    std::map<unsigned int, mraa_aio_context> apins;
 
     void SetPin(unsigned int pin, mraa_gpio_dir_t dir);
+    void SetAPin(unsigned int pin);
+
     void DigitalWrite(unsigned int pin, unsigned int value);
     int DigitalRead(unsigned int pin);
+    int AnalogRead(unsigned int pin);
 
     void AllPinLow();
     void AllPinOutput();
@@ -106,11 +110,13 @@ private:
 
     void ExitStandBy();
 
-    uint8_t CreateColor(FoneOSColor color);
+    uint16_t CreateColor(FoneOSColor color);
 
     void DrawHorizontalLine(unsigned int x, unsigned int y, unsigned int length, FoneOSColor color);
     void DrawVerticalLine(unsigned int x, unsigned int y, unsigned int length, FoneOSColor color);
 
     void SetXY(unsigned int x, unsigned int y);
     void SetOrientation(unsigned int orientation);
+
+    void bmpdraw(std::ifstream * bmpFile, int x, int y);
 };

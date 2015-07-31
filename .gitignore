@@ -208,3 +208,4 @@ gen/
 foneOS.exe
 *.cbp
 QtCreatorDeployment.txt
+*.autosave
