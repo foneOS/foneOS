@@ -78,7 +78,7 @@ void FoneOSButton::Draw(FoneOSContainer * scr)
 void FoneOSButton::Create()
 {
 	char* cText = Utils::FoneOSStringToCharArray(this->text);
-	FT_Vector dims = Type::GetDimensions(DEFAULT_FONT, cText, this->fontSize * 12);
+    FT_Vector dims = Type::GetDimensions(DEFAULT_FONT, cText, this->fontSize * 12);
 	free((void*)cText);
 	this->width = dims.x + 20;
 	this->height = dims.y + 20;
@@ -92,7 +92,7 @@ void FoneOSImage::Draw(FoneOSContainer * scr)
 {
 	if (!HardwareManager::GetDisplay()->DrawImage(this->path, this->x, this->y))
 	{
-		HardwareManager::GetDisplay()->DrawRectangle(this->x, this->y, this->width, this->height, this->fgColor);
+        HardwareManager::GetDisplay()->DrawRectangle(this->x, this->y, this->width, this->height, this->fgColor);
 		HardwareManager::GetDisplay()->DrawString(STR("Image error"), this->x, this->y, 1, this->fgColor, this->bgColor);
 	}
 }
