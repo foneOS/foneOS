@@ -485,11 +485,11 @@ void Layout::Init()
 
 		deviceInfoStr += STR("\nModem");
 		deviceInfoStr += STR("\n   FW rev: ");
-		deviceInfoStr += Modem::GetFWRev();
+        deviceInfoStr += HardwareManager::GetModem()->GetFWRev();
 		deviceInfoStr += STR("\n   IMEI: ");
-		deviceInfoStr += Modem::GetIMEI();
+        deviceInfoStr += HardwareManager::GetModem()->GetIMEI();
 		deviceInfoStr += STR("\n   CCID: ");
-		deviceInfoStr += Modem::GetCCID();
+        deviceInfoStr += HardwareManager::GetModem()->GetCCID();
 
 		FoneOSLabel deviceInfo = FoneOSLabel(deviceInfoStr, 5, 70);
 		deviceInfo.fontSize = 1;
@@ -556,9 +556,9 @@ void Layout::DrawActionBar()
 	{
 		HardwareManager::GetDisplay()->FillRectangle(0, 305, 240, 15, COLOR_BLACK);
 	}
-	if (Modem::GetEnabled())
+    if (HardwareManager::GetModem()->GetEnabled())
 	{
-		int rssi = Modem::GetRSSI();
+        int rssi = HardwareManager::GetModem()->GetRSSI();
 		int rssiPerc = (int)((((double)rssi) / 31) * 100);
 
 		int grade = 0;
@@ -581,7 +581,7 @@ void Layout::DrawActionBar()
 			grade = 5;
 		}
 		HardwareManager::GetDisplay()->DrawImage(FoneOSString(STR("bars/")) + Utils::IntToString(grade) + FoneOSString(STR(".bmp")), 2, 308);
-		HardwareManager::GetDisplay()->DrawString(Modem::GetOperator(), 25, 308, 1, COLOR_WHITE, COLOR_BLACK);
+        HardwareManager::GetDisplay()->DrawString(HardwareManager::GetModem()->GetOperator(), 25, 308, 1, COLOR_WHITE, COLOR_BLACK);
 	}
 	else
 	{

@@ -36,8 +36,8 @@ in the FT_Bitmap after the FT_Render_Glyph() call. */
 
 #define YP 16   // must be an analog pin, use "An" notation!
 #define XM 15   // must be an analog pin, use "An" notation!
-#define YPa 1   // must be an analog pin, use "An" notation!
-#define XMa 2   // must be an analog pin, use "An" notation!
+#define YPa 2   // must be an analog pin, use "An" notation!
+#define XMa 1   // must be an analog pin, use "An" notation!
 #define YM 14   // can be a digital pin, this is A0
 #define XP 17   // can be a digital pin, this is A3
 #define RXPLATE 300
@@ -626,7 +626,7 @@ void Display_ST7781R::Update()
 
     FoneOSPoint point;
     point.x = (x - TS_MINX) * (240 - 0) / (TS_MAXX - TS_MINX) + 0; //x;
-    point.y = (y - TS_MINY) * (320 - 0) / (TS_MAXY - TS_MINY) + 0;;
+    point.y = (y - TS_MINY) * (320 - 0) / (TS_MAXY - TS_MINY) + 0;
     point.z = z;
     if (point.z > 0)
     {
