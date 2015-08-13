@@ -28,27 +28,36 @@ in the FT_Bitmap after the FT_Render_Glyph() call. */
 
 void Display_ILI9341::Init()
 {
+    Logging::LogMessage(STR("INIT YAY"));
     this->pins = std::map<unsigned int, mraa_gpio_context>();
 
+    Logging::LogMessage(STR("asdfasdf"));
+
     // hardware SPI and pinout is always assumed
-    _cs   = 9;//cs;
-    _dc   = 10;//dc;
+    _cs   = 10;//cs;
+    _dc   = 9;//dc;
     _rst  = 0;
+
+
+    Logging::LogMessage(STR("READY SPI"));
 
     // TODO: Error handling
     _spi = mraa_spi_init(1);
 
-    if (_rst > 0) {
+
+    Logging::LogMessage(STR("READY RST"));
+
+    if (_rst != 0) {
+        Logging::LogMessage(STR("YES RST"));
         this->SetPin(_rst, OUTPUT);
         this->DigitalWrite(_rst, LOW);
     }
 
+    Logging::LogMessage(STR("READY SET"));
     this->SetPin(_dc, OUTPUT);
+    Logging::LogMessage(STR("HALF SET"));
     this->SetPin(_cs, OUTPUT);
-
-    mraa_spi_lsbmode(_spi, 0);
-    mraa_spi_mode(_spi, MRAA_SPI_MODE0);
-    mraa_spi_frequency(_spi, 8000000); // maybe fool with a faster setting to see if it speeds up display?
+    Logging::LogMessage(STR("DONE SET"));
 
     if (_rst > 0) {
         this->DigitalWrite(_rst, HIGH);
@@ -239,8 +248,8 @@ void Display_ILI9341::FillRectangle(int x, int y, int w, int h, FoneOSColor colo
 
     for(y=h; y>0; y--) {
         for(x=w; x>0; x--) {
-            this->SPIWrite(lo);
             this->SPIWrite(hi);
+            this->SPIWrite(lo);
         }
     }
     this->DigitalWrite(_cs, HIGH);
@@ -341,7 +350,7 @@ void Display_ILI9341::bmpdraw(std::ifstream * bmpFile, int x, int y)
 
     for (i=0; i< ibmpHeight; i++) {
 
-        this->SetAddrWindow(x, y+ibmpHeight-i, ibmpWidth, ibmpHeight-i);
+        this->SetAddrWindow(x, y+(ibmpHeight-i), ibmpWidth, 1);
 
         for (j=0; j<ibmpWidth; j++) {
             // read more pixels
@@ -531,7 +540,10 @@ uint16_t Display_ILI9341::CreateColor(FoneOSColor color)
 
 void Display_ILI9341::SPIBegin()
 {
-    // MRAA doesn't seem to have SPI transaction support, so this function doesn't do anything.
+    // MRAA doesn't seem to have SPI transaction support, so this function doesn't do anything except set mode parameters.
+    mraa_spi_frequency(_spi, 8000000);
+    mraa_spi_lsbmode(_spi, false);
+    mraa_spi_mode(_spi, MRAA_SPI_MODE0);
 }
 
 void Display_ILI9341::SPIEnd()
@@ -541,34 +553,38 @@ void Display_ILI9341::SPIEnd()
 
 void Display_ILI9341::SetPin(unsigned int pin, mraa_gpio_dir_t dir)
 {
-    return;
+    Logging::LogMessage(STR("SETPINB"));
     if (this->pins.find(pin) == this->pins.end())
     {
+        Logging::LogMessage(STR("NO PIN ASD"));
         this->pins[pin] = mraa_gpio_init(pin);
+        Logging::LogMessage(STR("INIT YAY"));
         mraa_gpio_use_mmaped(this->pins[pin], 1);
+        Logging::LogMessage(STR("MMAP YAY"));
     }
+    Logging::LogMessage(STR("SETDIR"));
     mraa_gpio_dir(this->pins[pin], dir);
+    Logging::LogMessage(STR("SETPINE"));
 }
 
 void Display_ILI9341::DigitalWrite(unsigned int pin, unsigned int value)
 {
-    return;
     mraa_gpio_write(this->pins[pin], value);
 }
 
 void Display_ILI9341::SetAddrWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
 {
     this->WriteCommand(ILI9341_CASET); // Column addr set
-    this->WriteData(x0 & 0xFF);     // XSTART
     this->WriteData(x0 >> 8);
-    this->WriteData(x1 & 0xFF);     // XEND
+    this->WriteData(x0 & 0xFF);     // XSTART
     this->WriteData(x1 >> 8);
+    this->WriteData(x1 & 0xFF);     // XEND
 
     this->WriteCommand(ILI9341_PASET); // Row addr set
-    this->WriteData(y0);     // YSTART
     this->WriteData(y0>>8);
-    this->WriteData(y1);     // YEND
+    this->WriteData(y0);     // YSTART
     this->WriteData(y1>>8);
+    this->WriteData(y1);     // YEND
 
     this->WriteCommand(ILI9341_RAMWR); // write to RAM
 }
@@ -579,8 +595,8 @@ void Display_ILI9341::PushColor(uint16_t color)
     this->DigitalWrite(_dc, HIGH);
     this->DigitalWrite(_cs, LOW);
 
-    this->SPIWrite(color);
     this->SPIWrite(color >> 8);
+    this->SPIWrite(color);
 
     this->DigitalWrite(_cs, HIGH);
     this->SPIEnd();
@@ -589,17 +605,11 @@ void Display_ILI9341::PushColor(uint16_t color)
 void Display_ILI9341::SPIWrite(uint8_t c)
 {
     //_spi = mraa_spi_init(0);
-    mraa_spi_lsbmode(_spi, 0);
-    mraa_spi_mode(_spi, MRAA_SPI_MODE0);
-    mraa_spi_frequency(_spi, 8000000); // maybe fool with a faster setting to see if it speeds up display?
     mraa_spi_write(_spi, c);
 }
 
 uint8_t Display_ILI9341::SPIRead()
 {
-    mraa_spi_lsbmode(_spi, 0);
-    mraa_spi_mode(_spi, MRAA_SPI_MODE0);
-    mraa_spi_frequency(_spi, 8000000); // maybe fool with a faster setting to see if it speeds up display?
     /*uint8_t rxbuf = 0x00;
     uint8_t txbuf = 0x00;
     mraa_spi_transfer_buf(_spi, &txbuf, &rxbuf, 1);*/
@@ -632,16 +642,22 @@ uint8_t Display_ILI9341::readcommand8(uint8_t c, uint8_t index)
 
 void Display_ILI9341::WriteCommand(uint8_t c)
 {
+    Logging::LogMessage(STR("WRITECMDS"));
     this->DigitalWrite(_dc, LOW);
+    Logging::LogMessage(STR("WRITECMDY"));
 
     //*clkport &= ~clkpinmask; // clkport is a NULL pointer when hwSPI==true
     //digitalWrite(_sclk, LOW);
 
+    Logging::LogMessage(STR("WRITECMDQQQQ"));
     this->DigitalWrite(_cs, LOW);
+    Logging::LogMessage(STR("WRITECMDT"));
 
     this->SPIWrite(c);
 
+    Logging::LogMessage(STR("WRITECMDI"));
     this->DigitalWrite(_cs, HIGH);
+    Logging::LogMessage(STR("WRITECMDA"));
 }
 
 void Display_ILI9341::WriteData(uint8_t c)
