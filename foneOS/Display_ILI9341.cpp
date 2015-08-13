@@ -239,8 +239,8 @@ void Display_ILI9341::FillRectangle(int x, int y, int w, int h, FoneOSColor colo
 
     for(y=h; y>0; y--) {
         for(x=w; x>0; x--) {
-            this->SPIWrite(hi);
             this->SPIWrite(lo);
+            this->SPIWrite(hi);
         }
     }
     this->DigitalWrite(_cs, HIGH);
@@ -341,7 +341,7 @@ void Display_ILI9341::bmpdraw(std::ifstream * bmpFile, int x, int y)
 
     for (i=0; i< ibmpHeight; i++) {
 
-        this->SetAddrWindow(x, y+ibmpHeight-i, ibmpWidth, ibmpHeight);
+        this->SetAddrWindow(x, y+ibmpHeight-i, ibmpWidth, ibmpHeight-i);
 
         for (j=0; j<ibmpWidth; j++) {
             // read more pixels
@@ -559,16 +559,16 @@ void Display_ILI9341::DigitalWrite(unsigned int pin, unsigned int value)
 void Display_ILI9341::SetAddrWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
 {
     this->WriteCommand(ILI9341_CASET); // Column addr set
-    this->WriteData(x0 >> 8);
     this->WriteData(x0 & 0xFF);     // XSTART
-    this->WriteData(x1 >> 8);
+    this->WriteData(x0 >> 8);
     this->WriteData(x1 & 0xFF);     // XEND
+    this->WriteData(x1 >> 8);
 
     this->WriteCommand(ILI9341_PASET); // Row addr set
-    this->WriteData(y0>>8);
     this->WriteData(y0);     // YSTART
-    this->WriteData(y1>>8);
+    this->WriteData(y0>>8);
     this->WriteData(y1);     // YEND
+    this->WriteData(y1>>8);
 
     this->WriteCommand(ILI9341_RAMWR); // write to RAM
 }
@@ -579,8 +579,8 @@ void Display_ILI9341::PushColor(uint16_t color)
     this->DigitalWrite(_dc, HIGH);
     this->DigitalWrite(_cs, LOW);
 
-    this->SPIWrite(color >> 8);
     this->SPIWrite(color);
+    this->SPIWrite(color >> 8);
 
     this->DigitalWrite(_cs, HIGH);
     this->SPIEnd();
