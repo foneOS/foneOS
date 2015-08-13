@@ -350,7 +350,7 @@ void Display_ILI9341::bmpdraw(std::ifstream * bmpFile, int x, int y)
 
     for (i=0; i< ibmpHeight; i++) {
 
-        this->SetAddrWindow(x, y+(ibmpHeight-i), ibmpWidth, 1);
+        this->SetAddrWindow(x, y+(ibmpHeight-i), ibmpWidth, ibmpHeight-i);
 
         for (j=0; j<ibmpWidth; j++) {
             // read more pixels
