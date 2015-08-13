@@ -9,7 +9,7 @@ void HardwareManager::Init()
 #ifdef SIMULATOR_BUILD
 	_display = new Display_SDL();
 #elif defined(PRODUCTION_BUILD)
-    _display = new Display_ST7781R();
+    _display = new Display_ILI9341();
 #else
     #error Unknown display
 #endif
