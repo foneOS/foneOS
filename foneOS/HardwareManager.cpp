@@ -23,7 +23,7 @@ void HardwareManager::Init()
 #endif
 
     HardwareManager::GetDisplay()->Init();
-    HardwareManager::GetModem()->Init();
+    //HardwareManager::GetModem()->Init(); // handled later in init process
 }
 
 Display * HardwareManager::GetDisplay()

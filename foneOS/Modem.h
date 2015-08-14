@@ -53,4 +53,12 @@ public:
     virtual FoneOSString GetIMEI();
     virtual FoneOSString GetCCID();
     virtual void Cleanup();
+private:
+    mraa_uart_context _serial;
+
+    char replybuffer[512];
+
+    std::string Read();
+    void WriteLine(std::string line);
+    bool CheckReply(std::string line, std::string reply);
 };
