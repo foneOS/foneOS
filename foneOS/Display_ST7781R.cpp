@@ -6,7 +6,7 @@ supports 256 shades of gray, but this should instead key off of num_grays
 in the FT_Bitmap after the FT_Render_Glyph() call. */
 #define NUM_GRAYS 256
 
-#ifdef EDISON
+#ifdef PRODUCTION_BUILD
 #define LOW 0
 #define HIGH 1
 
@@ -32,26 +32,6 @@ in the FT_Bitmap after the FT_Render_Glyph() call. */
 #define RD_OUTPUT {this->SetPin(RD_PIN, OUTPUT);}
 #define RD_HIGH   {this->DigitalWrite(RD_PIN, HIGH);}
 #define RD_LOW    {this->DigitalWrite(RD_PIN, LOW);}
-
-#define YP 16   // must be an analog pin, use "An" notation!
-#define XM 15   // must be an analog pin, use "An" notation!
-#define YPa 2   // must be an analog pin, use "An" notation!
-#define XMa 1   // must be an analog pin, use "An" notation!
-#define YM 14   // can be a digital pin, this is A0
-#define XP 17   // can be a digital pin, this is A3
-#define RXPLATE 300
-
-//Measured ADC values for (0,0) and (210-1,320-1)
-//TS_MINX corresponds to ADC value when X = 0
-//TS_MINY corresponds to ADC value when Y = 0
-//TS_MAXX corresponds to ADC value when X = 240 -1
-//TS_MAXY corresponds to ADC value when Y = 320 -1
-
-#define TS_MINX 140
-#define TS_MAXX 900
-
-#define TS_MINY 120
-#define TS_MAXY 940
 
 void Display_ST7781R::SetPin(unsigned int pin, mraa_gpio_dir_t dir)
 {
@@ -561,76 +541,7 @@ void Display_ST7781R::Flush()
 
 void Display_ST7781R::Update()
 {
-    this->SetAPin(YPa);
-    this->SetAPin(XMa);
 
-    this->SetPin(YP, OUTPUT);
-    this->SetPin(YM, OUTPUT);
-
-    this->DigitalWrite(YP, LOW);
-    this->DigitalWrite(YM, LOW);
-
-    this->SetPin(XP, OUTPUT);
-    this->SetPin(XM, OUTPUT);
-
-    this->DigitalWrite(XP, HIGH);
-    this->DigitalWrite(XM, LOW);
-
-    int sample = this->AnalogRead(YPa);
-
-    int x = (1023-sample);
-
-    this->SetPin(XP, INPUT);
-    this->SetPin(XM, INPUT);
-
-    this->DigitalWrite(XP, LOW);
-
-    this->SetPin(YP, OUTPUT);
-
-    this->DigitalWrite(YP, HIGH);
-    this->DigitalWrite(YM, HIGH);
-
-    this->SetPin(YM, OUTPUT);
-
-    sample = this->AnalogRead(XMa);
-
-    int y = (1023-sample);
-
-    this->SetPin(XP, OUTPUT);
-    this->DigitalWrite(XP, LOW);
-
-    this->DigitalWrite(YM, HIGH);
-
-    this->DigitalWrite(YP, LOW);
-    this->SetAPin(YPa);
-
-    int z1 = this->AnalogRead(XMa);
-    int z2 = this->AnalogRead(YPa);
-
-    int z = 0;
-    if (RXPLATE != 0) {
-        // now read the x
-        float rtouch;
-        rtouch = z2;
-        rtouch /= z1;
-        rtouch -= 1;
-        rtouch *= x;
-        rtouch *= RXPLATE;
-        rtouch /= 1024;
-
-        z = rtouch;
-    } else {
-        z = (1023-(z2-z1));
-    }
-
-    FoneOSPoint point;
-    point.x = (x - TS_MINX) * (240 - 0) / (TS_MAXX - TS_MINX) + 0; //x;
-    point.y = (y - TS_MINY) * (320 - 0) / (TS_MAXY - TS_MINY) + 0;
-    point.z = z;
-    if (point.z > 0)
-    {
-        Input::SendTouch(point);
-    }
 }
 
 void Display_ST7781R::Cleanup()

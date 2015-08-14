@@ -83,7 +83,8 @@ void Core::Init()
 
 void Core::Update()
 {
-	HardwareManager::GetDisplay()->Update();
+    HardwareManager::GetDisplay()->Update();
+    HardwareManager::GetTouchInput()->Update();
 
 	Layout::Update();
 

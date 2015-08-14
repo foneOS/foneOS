@@ -12,6 +12,9 @@ public:
     // Gets the current modem.
     static Modem * GetModem();
 
+    // Gets the current touch input device.
+    static TouchInput * GetTouchInput();
+
 	// Frees memory of the hardware manager and its associated hardware.
 	static void Cleanup();
 };

@@ -2,6 +2,7 @@
 #include "HardwareManager.h"
 
 Display * _display;
+TouchInput * _touchInput;
 Modem * _modem;
 
 void HardwareManager::Init()
@@ -15,6 +16,14 @@ void HardwareManager::Init()
 #endif
 
 #ifdef SIMULATOR_BUILD
+    _touchInput = new TouchInput_SDL();
+#elif defined(PRODUCTION_BUILD)
+    _touchInput = new TouchInput_FT6206();
+#else
+    #error Unknown touch input
+#endif
+
+#ifdef SIMULATOR_BUILD
     _modem = new Modem_Fake();
 #elif defined(PRODUCTION_BUILD)
     _modem = new Modem_SIM800();
@@ -23,12 +32,19 @@ void HardwareManager::Init()
 #endif
 
     HardwareManager::GetDisplay()->Init();
+    HardwareManager::GetTouchInput()->Init();
+
     //HardwareManager::GetModem()->Init(); // handled later in init process
 }
 
 Display * HardwareManager::GetDisplay()
 {
     return _display;
+}
+
+TouchInput * HardwareManager::GetTouchInput()
+{
+    return _touchInput;
 }
 
 Modem * HardwareManager::GetModem()
@@ -39,8 +55,12 @@ Modem * HardwareManager::GetModem()
 void HardwareManager::Cleanup()
 {
     _display->Cleanup();
+    _touchInput->Cleanup();
+
     _modem->Cleanup();
 
     delete _display;
+    delete _touchInput;
+
     delete _modem;
 }

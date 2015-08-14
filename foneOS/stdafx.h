@@ -134,6 +134,7 @@ typedef std::string FoneOSString;
 
 #include "Display.h"
 #include "Input.h"
+#include "TouchInput.h"
 #include "Modem.h"
 
 #include "HardwareManager.h"
