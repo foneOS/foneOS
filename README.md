@@ -15,14 +15,24 @@ Technically, this is *not* an operating system due to the fact that it runs on t
 It may seem like there are lots of applications missing. This is because lots of the planned internal apps (SMS, FM Radio, etc.) are all waiting on the app system to be working before they are developed.
 
 ## Hardware
-Currently, FoneOS can only be run in a simulator powered by SDL.
+FoneOS currently supports the following hardware:
+### On Windows
+* A simulated touch screen (240x320, powered by SDL)
+* A simulated modem that can't really do anything
 
-However, work is being done to support it on an actual device with the following hardware:
-* [Intel Edison (with Arduino breakout)](https://www.sparkfun.com/products/13097)
-* [Adafruit FONA 800](http://www.adafruit.com/product/1946)
-* [SeeedStudio 2.8" TFT Touch Shield v1](http://www.seeedstudio.com/depot/28-tft-touch-shield-p-864.html)
+### On [Intel Edison (with Arduino breakout)](https://www.sparkfun.com/products/13097)
+#### Modems
+* [Adafruit FONA 800 (SIM800)](http://www.adafruit.com/product/1946)
 
-Note that support for another touch shield may be added in the future because the current one has been discontinued by Seeed.
+#### Displays
+* [SeeedStudio 2.8" TFT Touch Shield v1 (ST8891R)](http://www.seeedstudio.com/depot/28-tft-touch-shield-p-864.html)
+* [Adafruit 2.8" TFT Touch Shield for Arduino with Capacitive Touch Screen (ILI9341)](https://www.adafruit.com/products/1947)
+
+#### Touch screens
+* [SeeedStudio 2.8" TFT Touch Shield v1 (4-wire generic resistive)](http://www.seeedstudio.com/depot/28-tft-touch-shield-p-864.html)
+* [Adafruit 2.8" TFT Touch Shield for Arduino with Capacitive Touch Screen (FT6206)](https://www.adafruit.com/products/1947)
+
+Note that while foneOS has been tested working on the Intel Edison, it should technically probably maybe work on anything that supports MRAA, assuming you wire everything correctly.
 
 ## Dependencies
 ### For all builds
@@ -36,3 +46,5 @@ Note that support for another touch shield may be added in the future because th
 ### For simulator builds
 * SDL2
 
+### For production builds
+* [MRAA](https://github.com/intel-iot-devkit/mraa)
