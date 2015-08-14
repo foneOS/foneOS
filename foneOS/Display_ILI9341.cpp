@@ -28,36 +28,23 @@ in the FT_Bitmap after the FT_Render_Glyph() call. */
 
 void Display_ILI9341::Init()
 {
-    Logging::LogMessage(STR("INIT YAY"));
     this->pins = std::map<unsigned int, mraa_gpio_context>();
-
-    Logging::LogMessage(STR("asdfasdf"));
 
     // hardware SPI and pinout is always assumed
     _cs   = 10;//cs;
     _dc   = 9;//dc;
     _rst  = 0;
 
-
-    Logging::LogMessage(STR("READY SPI"));
-
     // TODO: Error handling
     _spi = mraa_spi_init(1);
 
-
-    Logging::LogMessage(STR("READY RST"));
-
     if (_rst != 0) {
-        Logging::LogMessage(STR("YES RST"));
         this->SetPin(_rst, OUTPUT);
         this->DigitalWrite(_rst, LOW);
     }
 
-    Logging::LogMessage(STR("READY SET"));
     this->SetPin(_dc, OUTPUT);
-    Logging::LogMessage(STR("HALF SET"));
     this->SetPin(_cs, OUTPUT);
-    Logging::LogMessage(STR("DONE SET"));
 
     if (_rst > 0) {
         this->DigitalWrite(_rst, HIGH);
@@ -175,15 +162,11 @@ void Display_ILI9341::Init()
     this->WriteCommand(ILI9341_SLPOUT);    //Exit Sleep
     this->SPIEnd();
 
-    Logging::LogMessage(STR("EXIT SLEEP"));
-
     Utils::Delay(120);
 
     this->SPIBegin();
     this->WriteCommand(ILI9341_DISPON);    //Display on
     this->SPIEnd();
-
-    Logging::LogMessage(STR("DISPLAY ON"));
 
     uint8_t x = this->readcommand8(ILI9341_RDMODE);
     printf("%02X\n", x);
@@ -195,15 +178,11 @@ void Display_ILI9341::Init()
     printf("%02X\n", x);
     x = this->readcommand8(ILI9341_RDSELFDIAG);
     printf("%02X\n", x);
-
-    this->Clear(COLOR_RED);
 }
 
 void Display_ILI9341::Clear(FoneOSColor color)
 {
-    Logging::LogMessage(STR("CLEAR"));
     this->FillRectangle(0, 0, this->GetWidth(), this->GetHeight(), color);
-    Logging::LogMessage(STR("CLEARDONE"));
 }
 
 void Display_ILI9341::DrawRectangle(int x, int y, int w, int h, FoneOSColor color)
@@ -231,17 +210,10 @@ void Display_ILI9341::FillRectangle(int x, int y, int w, int h, FoneOSColor colo
         h = this->GetHeight() - y;
     }
 
-
-    Logging::LogMessage(STR("CLIPYAY"));
-
     this->SPIBegin();
     this->SetAddrWindow(x, y, x+w-1, y+h-1);
-    Logging::LogMessage(STR("ADDRHAPPY"));
 
     uint8_t hi = this->CreateColor(color) >> 8, lo = this->CreateColor(color);
-
-
-    Logging::LogMessage(STR("STARTWRITE"));
 
     this->DigitalWrite(_dc, HIGH);
     this->DigitalWrite(_cs, LOW);
@@ -255,13 +227,10 @@ void Display_ILI9341::FillRectangle(int x, int y, int w, int h, FoneOSColor colo
     this->DigitalWrite(_cs, HIGH);
 
     this->SPIEnd();
-
-
-    Logging::LogMessage(STR("RECTDONE"));
 }
 
 
-int ibmpWidth, ibmpHeight;
+unsigned int ibmpWidth, ibmpHeight;
 uint8_t ibmpDepth, ibmpImageoffset;
 
 uint8_t Display_ILI9341::readByte(std::ifstream * f)
@@ -343,14 +312,16 @@ void Display_ILI9341::bmpdraw(std::ifstream * bmpFile, int x, int y)
 
     uint16_t p;
     uint8_t g, b;
-    int i, j;
+    unsigned int i, j;
 
     char sdbuffer[3 * BUFFPIXEL];  // 3 * pixels to buffer
     uint8_t buffidx = 3*BUFFPIXEL;
 
-    for (i=0; i< ibmpHeight; i++) {
-
-        this->SetAddrWindow(x, y+(ibmpHeight-i), ibmpWidth, ibmpHeight-i);
+    for (i=0; i< ibmpHeight; i++)
+    {
+        int yayPos = y+(ibmpHeight-i);
+        std::cout << yayPos << std::endl;
+        this->SetAddrWindow(x, yayPos, ibmpWidth, ibmpHeight-i);
 
         for (j=0; j<ibmpWidth; j++) {
             // read more pixels
@@ -390,7 +361,7 @@ bool Display_ILI9341::DrawImage(FoneOSString filename, int x, int y)
 
     if (!bmpReadHeader(&bmpFile))
     {
-        Logging::LogMessage("bad bmp");
+        Logging::LogMessage(STR("bad bmp"));
         return false;
     }
 
@@ -553,18 +524,12 @@ void Display_ILI9341::SPIEnd()
 
 void Display_ILI9341::SetPin(unsigned int pin, mraa_gpio_dir_t dir)
 {
-    Logging::LogMessage(STR("SETPINB"));
     if (this->pins.find(pin) == this->pins.end())
     {
-        Logging::LogMessage(STR("NO PIN ASD"));
         this->pins[pin] = mraa_gpio_init(pin);
-        Logging::LogMessage(STR("INIT YAY"));
         mraa_gpio_use_mmaped(this->pins[pin], 1);
-        Logging::LogMessage(STR("MMAP YAY"));
     }
-    Logging::LogMessage(STR("SETDIR"));
     mraa_gpio_dir(this->pins[pin], dir);
-    Logging::LogMessage(STR("SETPINE"));
 }
 
 void Display_ILI9341::DigitalWrite(unsigned int pin, unsigned int value)
@@ -642,22 +607,16 @@ uint8_t Display_ILI9341::readcommand8(uint8_t c, uint8_t index)
 
 void Display_ILI9341::WriteCommand(uint8_t c)
 {
-    Logging::LogMessage(STR("WRITECMDS"));
     this->DigitalWrite(_dc, LOW);
-    Logging::LogMessage(STR("WRITECMDY"));
 
     //*clkport &= ~clkpinmask; // clkport is a NULL pointer when hwSPI==true
     //digitalWrite(_sclk, LOW);
 
-    Logging::LogMessage(STR("WRITECMDQQQQ"));
     this->DigitalWrite(_cs, LOW);
-    Logging::LogMessage(STR("WRITECMDT"));
 
     this->SPIWrite(c);
 
-    Logging::LogMessage(STR("WRITECMDI"));
     this->DigitalWrite(_cs, HIGH);
-    Logging::LogMessage(STR("WRITECMDA"));
 }
 
 void Display_ILI9341::WriteData(uint8_t c)
