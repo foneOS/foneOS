@@ -60,6 +60,8 @@
 
 #ifdef WINDOWS
 #include "windows.h"
+#else
+#include <dirent.h>
 #endif
 
 #define _USRDLL

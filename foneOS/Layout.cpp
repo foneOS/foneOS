@@ -78,7 +78,7 @@ void FoneOSButton::Draw(FoneOSContainer * scr)
 void FoneOSButton::Create()
 {
 	char* cText = Utils::FoneOSStringToCharArray(this->text);
-    FT_Vector dims = Type::GetDimensions(DEFAULT_FONT, cText, this->fontSize * 12);
+	FT_Vector dims = Type::GetDimensions(DEFAULT_FONT, cText, this->fontSize * 12);
 	free((void*)cText);
 	this->width = dims.x + 20;
 	this->height = dims.y + 20;
@@ -92,7 +92,7 @@ void FoneOSImage::Draw(FoneOSContainer * scr)
 {
 	if (!HardwareManager::GetDisplay()->DrawImage(this->path, this->x, this->y))
 	{
-        HardwareManager::GetDisplay()->DrawRectangle(this->x, this->y, this->width, this->height, this->fgColor);
+		HardwareManager::GetDisplay()->DrawRectangle(this->x, this->y, this->width, this->height, this->fgColor);
 		HardwareManager::GetDisplay()->DrawString(STR("Image error"), this->x, this->y, 1, this->fgColor, this->bgColor);
 	}
 }
@@ -207,7 +207,7 @@ static FoneOSScreen About = FoneOSScreen();
 void HandleLaunchpadTap(FoneOSContainer * cont)
 {
 	FoneOSButton * button = (FoneOSButton *)cont;
-	
+
 	if (button->text == STR("Dialer"))
 	{
 		Layout::SetCurrentLayout(&Dialer, true);
@@ -435,7 +435,7 @@ void Layout::Init()
 		title.text = STR("Fonts");
 		title.Create();
 		Fonts.titles.push_back(title);
-		
+
 #ifdef WINDOWS
 		// TODO: portability
 		WIN32_FIND_DATA findFileData;
@@ -456,6 +456,32 @@ void Layout::Init()
 				fontNum++;
 			}
 		} while (FindNextFile(search, &findFileData));
+#else
+		struct dirent ** searchDir;
+		int entries = scandir(Storage::GetFullPath(STR("fonts/")).c_str(), &searchDir, 0, alphasort);
+		int fontNum = 0;
+		int i;
+
+		for (i = 0; i < entries; i++)
+		{
+			// TODO: Unify this with the Windows version.
+
+			if (FoneOSString(searchDir[i]->d_name) != STR(".") && FoneOSString(searchDir[i]->d_name) != STR(".."))
+                        {
+                                FoneOSLabel fontLabel = FoneOSLabel();
+                                fontLabel.text = FoneOSString(searchDir[i]->d_name);
+                                fontLabel.x = 5;
+                                fontLabel.y = (fontNum * 25) + 30;
+                                fontLabel.font = { FoneOSString(searchDir[i]->d_name), STR("Regular") };
+                                fontLabel.Create();
+                                Fonts.labels.push_back(fontLabel);
+
+                                fontNum++;
+				free(searchDir[i]);
+                        }
+
+		}
+		free(searchDir);
 #endif
 	}
 	{
