@@ -485,11 +485,11 @@ void Layout::Init()
 
 		deviceInfoStr += STR("\nModem");
 		deviceInfoStr += STR("\n   FW rev: ");
-        deviceInfoStr += HardwareManager::GetModem()->GetFWRev();
+		deviceInfoStr += HardwareManager::GetModem()->GetFWRev();
 		deviceInfoStr += STR("\n   IMEI: ");
-        deviceInfoStr += HardwareManager::GetModem()->GetIMEI();
+		deviceInfoStr += HardwareManager::GetModem()->GetIMEI();
 		deviceInfoStr += STR("\n   CCID: ");
-        deviceInfoStr += HardwareManager::GetModem()->GetCCID();
+		deviceInfoStr += HardwareManager::GetModem()->GetCCID();
 
 		FoneOSLabel deviceInfo = FoneOSLabel(deviceInfoStr, 5, 70);
 		deviceInfo.fontSize = 1;

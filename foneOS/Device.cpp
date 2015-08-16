@@ -41,7 +41,7 @@ FoneOSString getRegKey(const FoneOSString location, const FoneOSString name)
 
 FoneOSString Device::GetCPUName()
 {
-    FoneOSString cpuVal;
+    FoneOSString cpuVal = STR("Unknown CPU");
 #ifdef WINDOWS
     cpuVal = getRegKey(STR("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"), STR("ProcessorNameString"));
 #elif defined(EDISON)
@@ -90,6 +90,8 @@ FoneOSString Device::GetCPUArchitecture()
 		return STR("Unknown");
 	}
 #elif defined(EDISON)
-    return STR("Pentium-compatible");
+	return STR("Pentium-compatible");
+#else
+	return STR("Unknown architecture");
 #endif
 }

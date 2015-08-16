@@ -19,7 +19,7 @@ else()
 	set(SDL2_LIBRARY_RELEASE )
 	find_package(MRAA REQUIRED)
 endif()
-find_package(freetype REQUIRED)
+find_package(FreeType REQUIRED)
 find_package(Sqlite3 REQUIRED)
 find_package(LuaJIT REQUIRED)
 
