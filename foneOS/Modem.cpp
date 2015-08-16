@@ -43,6 +43,7 @@ void Modem_Fake::Cleanup()
     _enabled = false;
 }
 
+#ifdef PRODUCTION_BUILD
 static bool _senabled = false;
 
 void Modem_SIM800::Init()
@@ -172,3 +173,5 @@ void Modem_SIM800::Cleanup()
 {
     _senabled = false;
 }
+
+#endif

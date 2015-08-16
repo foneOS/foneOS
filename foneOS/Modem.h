@@ -42,6 +42,7 @@ public:
     virtual void Cleanup();
 };
 
+#ifdef PRODUCTION_BUILD
 class Modem_SIM800 : public Modem
 {
 public:
@@ -62,3 +63,4 @@ private:
     void WriteLine(std::string line);
     bool CheckReply(std::string line, std::string reply);
 };
+#endif

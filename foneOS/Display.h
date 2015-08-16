@@ -70,6 +70,7 @@ class Display_SDL : public Display
 };
 #endif
 
+#ifdef PRODUCTION_BUILD
 class Display_ST7781R : public Display
 {
 public:
@@ -238,3 +239,4 @@ private:
 
     void bmpdraw(std::ifstream * bmpFile, int x, int y);
 };
+#endif

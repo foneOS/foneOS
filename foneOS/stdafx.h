@@ -26,11 +26,10 @@
 
 // These defines try and sort out if you want simulator or production automagically.
 
-#ifdef WINDOWS
-#define SIMULATOR_BUILD
-#endif
 #ifdef EDISON
 #define PRODUCTION_BUILD
+#else
+#define SIMULATOR_BUILD
 #endif
 
 // To override that, comment them out and uncomment one of the following lines.

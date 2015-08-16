@@ -23,6 +23,7 @@ class TouchInput_SDL : public TouchInput
 };
 #endif
 
+#ifdef PRODUCTION_BUILD
 class TouchInput_Resistive : public TouchInput
 {
 public:
@@ -87,3 +88,4 @@ private:
 
     void bmpdraw(std::ifstream * bmpFile, int x, int y);*/
 };
+#endif
