@@ -527,7 +527,6 @@ void Layout::Init()
 		deviceInfo.y = 70;
 		deviceInfo.fontSize = 1;
 		About.labels.push_back(deviceInfo);
-		printf(deviceInfoStr.c_str());
 	}
 
 	Layout::SetCurrentLayout(&LockScreen, false);
