@@ -10,6 +10,7 @@ FoneOSLabel::FoneOSLabel()
 }
 FoneOSLabel::FoneOSLabel(FoneOSString str, int xPos, int yPos)
 {
+	this->font = DEFAULT_FONT;
 	this->text = str;
 	this->x = xPos;
 	this->y = yPos;
@@ -490,7 +491,10 @@ void Layout::Init()
 		title.Create();
 		About.titles.push_back(title);
 
-		FoneOSLabel info = FoneOSLabel(FoneOSString(STR("foneOS\n")) + FoneOSString(VERSION), 5, 30);
+		FoneOSLabel info = FoneOSLabel();
+		info.text = FoneOSString(STR("foneOS\n") + FoneOSString(VERSION));
+		info.x = 5;
+		info.y = 30;
 		About.labels.push_back(info);
 
 		FoneOSString deviceInfoStr;
@@ -517,9 +521,13 @@ void Layout::Init()
 		deviceInfoStr += STR("\n   CCID: ");
 		deviceInfoStr += HardwareManager::GetModem()->GetCCID();
 
-		FoneOSLabel deviceInfo = FoneOSLabel(deviceInfoStr, 5, 70);
+		FoneOSLabel deviceInfo = FoneOSLabel();
+		deviceInfo.text = deviceInfoStr;
+		deviceInfo.x = 5;
+		deviceInfo.y = 70;
 		deviceInfo.fontSize = 1;
 		About.labels.push_back(deviceInfo);
+		printf(deviceInfoStr.c_str());
 	}
 
 	Layout::SetCurrentLayout(&LockScreen, false);
