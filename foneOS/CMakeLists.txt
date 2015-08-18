@@ -13,6 +13,7 @@ set(CORELIBS ${FREETYPE_LIBRARY} ${SQLITE3_LIBRARY} ${SDL2_LIBRARY} ${MRAA_LIBRA
 file(GLOB foneOS_src
     "*.h"
     "*.cpp"
+    "*.hpp"
 )
 
 add_executable(foneOS ${foneOS_src})

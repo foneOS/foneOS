@@ -72,7 +72,7 @@
 #define SQLITE_MAX_EXPR_DEPTH 0
 
 #ifdef UNICODE
-typedef std::wstring FoneOSString;
+#define FoneOSString std::wstring
 #define FoneOSChar wchar_t
 #define FoneOSOut std::wcout
 #define FoneOSIn std::wcin
@@ -81,7 +81,7 @@ typedef std::wstring FoneOSString;
 #define FoneOSIFileStream std::wifstream
 #define STR(s) L ## s
 #else
-typedef std::string FoneOSString;
+#define FoneOSString std::string
 #define FoneOSChar char
 #define FoneOSOut std::cout
 #define FoneOSIn std::cin
@@ -115,6 +115,8 @@ typedef std::string FoneOSString;
 #include "pugixml.h"
 
 #include "lua.hpp"
+#include "luawrapper.hpp"
+#include "luawrapperutil.hpp"
 
 #include "FoneOSColor.h"
 #include "FoneOSPoint.h"
@@ -126,6 +128,9 @@ typedef std::string FoneOSString;
 
 #include "Logging.h"
 #include "Utils.h"
+
+#include "LuaCustomTypes.hpp"
+#include "LuaLayout.h"
 
 #include "Storage.h"
 #include "Database.h"

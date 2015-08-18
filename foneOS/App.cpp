@@ -23,7 +23,6 @@ int test(lua_State * _L)
 	return 0;
 }
 
-
 void App::Start()
 {
 	Logging::LogMessage(STR("Starting app..."));
@@ -43,10 +42,21 @@ void App::Start()
 
 	lua_setglobal(_L, "fone"); /* globalize fone table */
 
+	luaopen_Layout(_L);
+
+	char * path = (char *)Storage::GetFullPath(STR("apps/foneOS.demoApp/lua/main.lua")).c_str();
+	int ret = luaL_dofile(_L,  path);
+
+	if (ret != 0)
+	{
+		Logging::LogMessage(STR("Error occured in app!"));
+		Logging::LogMessage(Utils::CharArrayToFoneOSString((char*)lua_tostring(_L, -1)));
+	}
+/*
 	if (luaL_dostring(_L, "fone.layout.test('Hello from lua!')") == 1)
 	{
 		Logging::LogMessage(Utils::CharArrayToFoneOSString((char*)lua_tostring(_L, -1)));
-	}
+	}*/
 }
 
 

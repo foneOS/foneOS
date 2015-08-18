@@ -143,7 +143,7 @@ void FoneOSKeyboard::Draw(FoneOSContainer * scr)
 ////
 void FoneOSContainer::handleTouch(FoneOSPoint p)
 {
-	
+
 }
 void FoneOSContainer::Draw(FoneOSContainer * scr)
 {
@@ -153,7 +153,6 @@ void FoneOSContainer::Create()
 {
 
 }
-
 
 ////
 //// FoneOSScreen
