@@ -41,7 +41,10 @@
 #endif
 
 #include <stdio.h>
+
+#ifndef WINDOWS
 #include <unistd.h>
+#endif
 
 #ifdef _MSC_VER
 #include <tchar.h>
