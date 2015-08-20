@@ -3,6 +3,14 @@
 #include "LuaCustomTypes.hpp"
 #include "LuaLayout.h"
 
+int Lua_FoneOSScreen_AddLabel(lua_State * _L)
+{
+	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
+	FoneOSLabel* lbl = luaW_check<FoneOSLabel>(_L, 2);
+	obj->labels.push_back(*lbl);
+	return 0;
+}
+
 int Lua_FoneOSScreen_Draw(lua_State * _L)
 {
 	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
@@ -30,6 +38,7 @@ static luaL_Reg FoneOSLabel_metatable[] =
 
 static luaL_Reg FoneOSScreen_metatable[] =
 {
+	{ "addLabel", Lua_FoneOSScreen_AddLabel },
 	{ "draw", Lua_FoneOSScreen_Draw },
 	{ NULL, NULL }
 };
