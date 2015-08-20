@@ -44,8 +44,8 @@ void App::Start()
 
 	luaopen_Layout(_L);
 
-	char * path = (char *)Storage::GetFullPath(STR("apps/foneOS.demoApp/lua/main.lua")).c_str();
-	int ret = luaL_dofile(_L,  path);
+	FoneOSString path = Storage::GetFullPath(STR("apps/foneOS.demoApp/lua/main.lua"));
+	int ret = luaL_dofile(_L,  (char*)path.c_str());
 
 	if (ret != 0)
 	{
