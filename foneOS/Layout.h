@@ -125,7 +125,7 @@ public:
 	static void Update();
 
 	// Gets the current layout.
-	static FoneOSScreen * GetCurrentLayout(FoneOSScreen * layout);
+	static FoneOSScreen * GetCurrentLayout();
 
 	// Changes the current layout.
 	static void SetCurrentLayout(FoneOSScreen * layout, bool addLastToStack);

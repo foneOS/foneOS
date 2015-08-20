@@ -23,6 +23,34 @@ int test(lua_State * _L)
 	return 0;
 }
 
+int Lua_layout_current(lua_State * _L)
+{
+	if (lua_gettop(_L) == 0)
+	{
+		// No arguments means return current
+		luaW_push<FoneOSScreen>(_L, Layout::GetCurrentLayout());
+
+		return 1;
+	}
+	FoneOSScreen* scr = luaW_check<FoneOSScreen>(_L, 1);
+	bool addLast = true;
+	if (lua_gettop(_L) >= 2)
+	{
+		addLast = luaW_check<bool>(_L, 2);
+	}
+
+	Layout::SetCurrentLayout(scr, addLast);
+
+	return 0;
+}
+
+int Lua_layout_draw(lua_State * _L)
+{
+	Layout::Draw();
+
+	return 0;
+}
+
 void App::Start()
 {
 	Logging::LogMessage(STR("Starting app..."));
@@ -37,6 +65,12 @@ void App::Start()
 
 			lua_pushcfunction(_L, &test);
 			lua_setfield(_L, -2, "test");
+
+			lua_pushcfunction(_L, &Lua_layout_current);
+			lua_setfield(_L, -2, "current");
+
+			lua_pushcfunction(_L, &Lua_layout_draw);
+			lua_setfield(_L, -2, "draw");
 
 		lua_setfield(_L, -2, "layout"); /* add layout table */
 

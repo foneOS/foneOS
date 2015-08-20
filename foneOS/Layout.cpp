@@ -622,7 +622,7 @@ void Layout::DrawActionBar()
 	}
 }
 
-FoneOSScreen * Layout::GetCurrentLayout(FoneOSScreen * layout)
+FoneOSScreen * Layout::GetCurrentLayout()
 {
 	return CurrentLayout;
 }
