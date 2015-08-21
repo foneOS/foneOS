@@ -36,7 +36,7 @@ int Lua_layout_current(lua_State * _L)
 	bool addLast = true;
 	if (lua_gettop(_L) >= 2)
 	{
-		addLast = luaW_check<bool>(_L, 2);
+		addLast = *luaW_check<bool>(_L, 2);
 	}
 
 	Layout::SetCurrentLayout(scr, addLast);

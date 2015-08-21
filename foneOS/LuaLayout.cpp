@@ -36,6 +36,12 @@ static luaL_Reg FoneOSLabel_metatable[] =
 	{ NULL, NULL }
 };
 
+static luaL_Reg FoneOSTitle_metatable[] =
+{
+	{ "text", luaU_getset<FoneOSTitle, FoneOSString, &FoneOSTitle::text> },
+	{ NULL, NULL }
+};
+
 static luaL_Reg FoneOSScreen_metatable[] =
 {
 	{ "addLabel", Lua_FoneOSScreen_AddLabel },
@@ -55,6 +61,9 @@ int luaopen_Layout(lua_State* L)
 
 	luaW_register<FoneOSLabel>(L, "FoneOSLabel", FoneOSContainer_table, FoneOSLabel_metatable);
 	luaW_extend<FoneOSLabel, FoneOSContainer>(L); // Informs the wrapper that FoneOSLabel inherits from the class FoneOSContainer
+
+	luaW_register<FoneOSTitle>(L, "FoneOSTitle", FoneOSContainer_table, FoneOSTitle_metatable);
+	luaW_extend<FoneOSTitle, FoneOSContainer>(L); // Informs the wrapper that FoneOSTitle inherits from the class FoneOSContainer
 
 	luaW_register<FoneOSScreen>(L, "FoneOSScreen", FoneOSContainer_table, FoneOSScreen_metatable);
 
