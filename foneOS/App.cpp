@@ -2,15 +2,20 @@
 #include "App.h"
 
 
-App::App()
+App::App(FoneOSString id)
 {
-}
+	this->id = id;
 
+	// TODO: error handling
+	char * path = Utils::FoneOSStringToCharArray(Storage::GetFullPath(FoneOSString(STR("apps/")) + this->id + FoneOSString(STR("/desc.xml"))));
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(path);
+	this->name = Utils::CharArrayToFoneOSString((char *)doc.child("appDesc").child_value("name"));
+}
 
 App::~App()
 {
 }
-
 
 int test(lua_State * _L)
 {
@@ -78,7 +83,7 @@ void App::Start()
 
 	luaopen_Layout(_L);
 
-	FoneOSString path = Storage::GetFullPath(STR("apps/foneOS.demoApp/lua/main.lua"));
+	FoneOSString path = Storage::GetFullPath(FoneOSString(STR("apps/")) + this->id + FoneOSString(STR("/lua/main.lua")));
 	int ret = luaL_dofile(_L,  (char*)path.c_str());
 
 	if (ret != 0)

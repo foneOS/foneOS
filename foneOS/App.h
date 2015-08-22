@@ -2,7 +2,7 @@
 class App
 {
 public:
-	App();
+	App(FoneOSString id);
 	~App();
 
 	// Starts the application.
@@ -11,9 +11,10 @@ public:
 	// Stops the application.
 	void Stop();
 
-	FoneOSString Name;
+	FoneOSString name;
+	FoneOSString id;
 	std::map<FoneOSString, FoneOSScreen> Layouts = {};
+        std::stack<FoneOSScreen *> Stack;
 private:
 	lua_State * _L;
 };
-
