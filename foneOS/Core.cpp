@@ -44,7 +44,7 @@ void Core::Init()
 	HardwareManager::GetDisplay()->Flush();
 
 	Input::Init();
-    HardwareManager::GetModem()->Init();
+	HardwareManager::GetModem()->Init();
 
 	Utils::Delay(2000); // TODO: Actually load.
 

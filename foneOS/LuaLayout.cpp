@@ -11,6 +11,14 @@ int Lua_FoneOSScreen_AddLabel(lua_State * _L)
 	return 0;
 }
 
+int Lua_FoneOSScreen_AddTitle(lua_State * _L)
+{
+        FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
+        FoneOSTitle* title = luaW_check<FoneOSTitle>(_L, 2);
+        obj->titles.push_back(*title);
+        return 0;
+}
+
 int Lua_FoneOSScreen_Draw(lua_State * _L)
 {
 	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
@@ -45,6 +53,7 @@ static luaL_Reg FoneOSTitle_metatable[] =
 static luaL_Reg FoneOSScreen_metatable[] =
 {
 	{ "addLabel", Lua_FoneOSScreen_AddLabel },
+	{ "addTitle", Lua_FoneOSScreen_AddTitle },
 	{ "draw", Lua_FoneOSScreen_Draw },
 	{ NULL, NULL }
 };
