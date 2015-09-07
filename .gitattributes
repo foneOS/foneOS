@@ -63,4 +63,4 @@
 #*.RTF   diff=astextplain
 
 # Set up linguist so it doesn't think there's C code.
-*.h linguist-language=C++
+*.h linguist-language=cpp
