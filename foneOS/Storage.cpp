@@ -11,7 +11,7 @@ FoneOSString Storage::GetBasePath()
 {
     char * prefPath;
 #ifdef SIMULATOR_BUILD
-    prefPath = SDL_GetPrefPath("Flippers", "foneOS");
+    prefPath = SDL_GetPrefPath("foneOS", "foneOS");
 #else
     prefPath = "/fone/";
 #endif
