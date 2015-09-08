@@ -11,6 +11,8 @@ public:
 	FoneOSColor bgColor = COLOR_WHITE;
 	FoneOSColor fgColor = COLOR_BLACK;
 
+	std::map<std::string, void*> metadata = std::map<std::string, void*>();
+
 	void(*onActivate)(FoneOSContainer * cont) = 0;
 
 	virtual void handleTouch(FoneOSPoint point);
@@ -22,8 +24,7 @@ private:
 };
 
 class FoneOSLabel : public FoneOSContainer {
-public:
-	FoneOSLabel();
+public:	FoneOSLabel();
 	FoneOSLabel(FoneOSString str, int xPos, int yPos);
 
 	virtual void Draw(FoneOSContainer * scr);

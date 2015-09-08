@@ -159,8 +159,19 @@ void FoneOSContainer::Create()
 ////
 void FoneOSScreen::handleTouch(FoneOSPoint p)
 {
+	if (this->buttons.size() == 0)
+	{
+		return;
+	}
+	std::cout << ("aaaa") << std::endl;
+	std::cout << this->buttons[0].text << std::endl;
+	std::cout << "gggg" << std::endl;
 	std::vector<FoneOSButton> childrenPointer = this->buttons;
+	std::cout << ("vvvv") << std::endl;
+	std::cout << childrenPointer[0].text << std::endl;
+	std::cout << "hi" << std::endl;
 	for (std::vector<FoneOSButton>::iterator it = childrenPointer.begin(); it != childrenPointer.end(); ++it) {
+ 		Logging::LogMessage("hi");
 		FoneOSButton thingy = *it;
 		if (
 			p.x > thingy.x &&
