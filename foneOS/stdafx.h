@@ -11,7 +11,7 @@
 
 #include "FoneOSConfig.h"
 
-#if defined(WIN32) || defined(WIN64) || defined(CYGWIN)
+#if defined(WIN32) || defined(WIN64) || defined(CYGWIN) || defined(_MSC_VER)
 #define WINDOWS
 #endif
 #if defined(linux) || defined(__linux) || defined(__linux__)
