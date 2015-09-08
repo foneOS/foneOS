@@ -2,6 +2,8 @@
 
 class FoneOSContainer {
 public:
+	FoneOSString id = STR("");
+
 	int x = 0;
 	int y = 0;
 

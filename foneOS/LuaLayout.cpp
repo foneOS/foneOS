@@ -35,6 +35,32 @@ int Lua_FoneOSScreen_Draw(lua_State * _L)
 	return 0;
 }
 
+#define SearchAllOfType(t, a) \
+	do { \
+		std::vector<t> pointer = a; \
+		int i = 0; \
+		for (i = 0; i < pointer.size(); i++) { \
+			t it = pointer[i]; \
+			if (it.id == id) { \
+				luaW_push<t>(_L, &it); \
+				return 1; \
+			}\
+		} \
+	} while (0)
+int Lua_FoneOSScreen_GetId(lua_State * _L)
+{
+	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
+	std::string id = luaL_checkstring(_L, 2);
+
+	SearchAllOfType(FoneOSImage, obj->images);
+	SearchAllOfType(FoneOSTitle, obj->titles);
+	SearchAllOfType(FoneOSLabel, obj->labels);
+	SearchAllOfType(FoneOSButton, obj->buttons);
+
+	lua_pushnil(_L);
+	return 1;
+}
+
 int Lua_FoneOSContainer_Create(lua_State * _L)
 {
 	FoneOSContainer* obj = luaW_check<FoneOSContainer>(_L, 1);
@@ -47,7 +73,12 @@ void Lua_FoneOSButton_callbackHandler(FoneOSContainer* cont)
 	FoneOSButton* btn = (FoneOSButton*)cont;
 	lua_State * _L = (lua_State*)btn->metadata["state"];
 	lua_rawgeti(_L, LUA_REGISTRYINDEX, *(int*)btn->metadata["onActivate"]); // retrieve the function
-	lua_pcall(_L, 0, 0, 0);
+	int ret = lua_pcall(_L, 0, 0, 0);
+	if (ret != 0)
+	{
+		Logging::LogMessage(STR("Error occurred in app!"));
+		Logging::LogMessage(Utils::CharArrayToFoneOSString((char*)lua_tostring(_L, -1)));
+	}
 }
 
 int Lua_FoneOSButton_onActivate(lua_State * _L)
@@ -70,6 +101,7 @@ static luaL_Reg FoneOSContainer_metatable[] =
 {
 	{ "x", luaU_getset<FoneOSContainer, int, &FoneOSContainer::x> },
 	{ "y", luaU_getset<FoneOSContainer, int, &FoneOSContainer::y> },
+	{ "id", luaU_getset<FoneOSContainer, FoneOSString, &FoneOSContainer::id> },
 	{ "create", Lua_FoneOSContainer_Create },
 	{ NULL, NULL }
 };
@@ -100,6 +132,8 @@ static luaL_Reg FoneOSScreen_metatable[] =
 	{ "addButton", Lua_FoneOSScreen_AddButton },
 
 	{ "draw", Lua_FoneOSScreen_Draw },
+
+	{ "getId", Lua_FoneOSScreen_GetId },
 
 	{ NULL, NULL }
 };

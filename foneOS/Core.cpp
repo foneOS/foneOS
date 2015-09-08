@@ -76,7 +76,7 @@ void Core::Init()
 
 	HardwareManager::GetDisplay()->Flush();
 
-	App app = App(STR("foneOS.demoApp"));
+	App app = App(STR("foneOS.dialer"));
 	app.Start();
 	//app.Stop();
 }

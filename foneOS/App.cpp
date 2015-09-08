@@ -92,7 +92,7 @@ void App::Start()
 
 	if (ret != 0)
 	{
-		Logging::LogMessage(STR("Error occured in app!"));
+		Logging::LogMessage(STR("Error occurred in app!"));
 		Logging::LogMessage(Utils::CharArrayToFoneOSString((char*)lua_tostring(_L, -1)));
 	}
 /*
