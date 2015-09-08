@@ -101,7 +101,12 @@ static luaL_Reg FoneOSContainer_metatable[] =
 {
 	{ "x", luaU_getset<FoneOSContainer, int, &FoneOSContainer::x> },
 	{ "y", luaU_getset<FoneOSContainer, int, &FoneOSContainer::y> },
+
+	{ "width", luaU_getset<FoneOSContainer, int, &FoneOSContainer::width> },
+	{ "height", luaU_getset<FoneOSContainer, int, &FoneOSContainer::height> },
+
 	{ "id", luaU_getset<FoneOSContainer, FoneOSString, &FoneOSContainer::id> },
+
 	{ "create", Lua_FoneOSContainer_Create },
 	{ NULL, NULL }
 };
@@ -134,6 +139,9 @@ static luaL_Reg FoneOSScreen_metatable[] =
 	{ "draw", Lua_FoneOSScreen_Draw },
 
 	{ "getId", Lua_FoneOSScreen_GetId },
+
+	{ "width", luaU_getset<FoneOSScreen, int, &FoneOSScreen::width> },
+	{ "height", luaU_getset<FoneOSScreen, int, &FoneOSScreen::height> },
 
 	{ NULL, NULL }
 };

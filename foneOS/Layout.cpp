@@ -21,6 +21,14 @@ void FoneOSLabel::Draw(FoneOSContainer * scr)
 	FoneOSScreen * scrscr = (FoneOSScreen *)scr;
 	HardwareManager::GetDisplay()->DrawString(this->text, this->x, this->y, this->font, this->fontSize * 12, this->fgColor, scrscr->bgColor);
 }
+void FoneOSLabel::Create()
+{
+	char* cText = Utils::FoneOSStringToCharArray(this->text);
+	FT_Vector dims = Type::GetDimensions(DEFAULT_FONT, cText, this->fontSize * 12);
+	free((void*)cText);
+	width = dims.x;
+	height = dims.y;
+}
 
 
 
@@ -157,6 +165,12 @@ void FoneOSContainer::Create()
 ////
 //// FoneOSScreen
 ////
+FoneOSScreen::FoneOSScreen()
+{
+	this->width = HardwareManager::GetDisplay()->GetWidth();
+	this->height = HardwareManager::GetDisplay()->GetWidth();
+}
+
 void FoneOSScreen::handleTouch(FoneOSPoint p)
 {
 	if (this->buttons.size() == 0)
@@ -176,6 +190,7 @@ void FoneOSScreen::handleTouch(FoneOSPoint p)
 		}
 	}
 }
+
 #define DrawAllOfType(t, a) \
 	do { \
 		std::vector<t*> pointer = a; \
@@ -199,14 +214,14 @@ int count = 0;
 // The current layout.
 static FoneOSScreen * CurrentLayout;
 
-static FoneOSScreen LockScreen = FoneOSScreen();
-static FoneOSScreen Launchpad = FoneOSScreen();
-static FoneOSScreen Dialer = FoneOSScreen();
-static FoneOSScreen SMS = FoneOSScreen();
-static FoneOSScreen More = FoneOSScreen();
-static FoneOSScreen Settings = FoneOSScreen();
-static FoneOSScreen Fonts = FoneOSScreen();
-static FoneOSScreen About = FoneOSScreen();
+static FoneOSScreen LockScreen;
+static FoneOSScreen Launchpad;
+static FoneOSScreen Dialer;
+static FoneOSScreen SMS;
+static FoneOSScreen More;
+static FoneOSScreen Settings;
+static FoneOSScreen Fonts;
+static FoneOSScreen About;
 
 void HandleLaunchpadTap(FoneOSContainer * cont)
 {
@@ -295,6 +310,16 @@ void LockPhone(FoneOSContainer * cont)
 
 void Layout::Init()
 {
+	{
+		LockScreen = FoneOSScreen();
+		Launchpad = FoneOSScreen();
+		Dialer = FoneOSScreen();
+		SMS = FoneOSScreen();
+		More = FoneOSScreen();
+		Settings = FoneOSScreen();
+		Fonts = FoneOSScreen();
+		About = FoneOSScreen();
+	}
 	{
 		FoneOSImage * bg = new FoneOSImage();
 		bg->path = STR("purple.bmp");

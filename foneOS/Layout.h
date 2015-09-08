@@ -31,6 +31,8 @@ public:	FoneOSLabel();
 
 	virtual void Draw(FoneOSContainer * scr);
 
+	virtual void Create();
+
 	int fontSize = 2;
 	FoneFontDesc font;
 
@@ -99,6 +101,8 @@ private:
 
 class FoneOSScreen {
 public:
+	FoneOSScreen();
+
 	FoneOSColor bgColor = COLOR_WHITE;
 	FoneOSColor fgColor = COLOR_BLACK;
 
@@ -107,6 +111,9 @@ public:
 	void Draw();
 
 	FoneOSContainer root = FoneOSContainer();
+
+	int width = 0;
+	int height = 0;
 
 	std::vector<FoneOSButton *> buttons = {};
 	std::vector<FoneOSTitle *> titles = {};
