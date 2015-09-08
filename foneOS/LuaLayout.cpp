@@ -14,10 +14,10 @@ int Lua_FoneOSScreen_AddLabel(lua_State * _L)
 
 int Lua_FoneOSScreen_AddTitle(lua_State * _L)
 {
-        FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
-        FoneOSTitle* title = luaW_check<FoneOSTitle>(_L, 2);
-        obj->titles.push_back(*title);
-        return 0;
+	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
+	FoneOSTitle* title = luaW_check<FoneOSTitle>(_L, 2);
+	obj->titles.push_back(*title);
+	return 0;
 }
 
 int Lua_FoneOSScreen_AddButton(lua_State * _L)
@@ -25,8 +25,6 @@ int Lua_FoneOSScreen_AddButton(lua_State * _L)
 	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
 	FoneOSButton* btn = luaW_check<FoneOSButton>(_L, 2);
 	obj->buttons.push_back(*btn);
-	std::cout << "Printing btn" << std::endl;
-	std::cout << obj->buttons[0].text<< std::endl;
 	return 0;
 }
 

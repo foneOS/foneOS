@@ -45,8 +45,6 @@ int Lua_layout_current(lua_State * _L)
 	}
 
 	Layout::SetCurrentLayout(scr, addLast);
-	std::cout << "Ok" << std::endl;
-	std::cout << scr->buttons[0].text << std::endl;
 
 	FoneOSPoint p = FoneOSPoint();
 	p.x = 0;

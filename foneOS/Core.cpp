@@ -78,7 +78,7 @@ void Core::Init()
 
 	App app = App(STR("foneOS.demoApp"));
 	app.Start();
-	app.Stop();
+	//app.Stop();
 }
 
 void Core::Update()
