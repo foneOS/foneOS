@@ -108,10 +108,10 @@ public:
 
 	FoneOSContainer root = FoneOSContainer();
 
-	std::vector<FoneOSButton> buttons = {};
-	std::vector<FoneOSTitle> titles = {};
-	std::vector<FoneOSLabel> labels = {};
-	std::vector<FoneOSImage> images = {};
+	std::vector<FoneOSButton *> buttons = {};
+	std::vector<FoneOSTitle *> titles = {};
+	std::vector<FoneOSLabel *> labels = {};
+	std::vector<FoneOSImage *> images = {};
 private:
 };
 

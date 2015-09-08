@@ -163,24 +163,24 @@ void FoneOSScreen::handleTouch(FoneOSPoint p)
 	{
 		return;
 	}
-	std::vector<FoneOSButton> childrenPointer = this->buttons;
-	for (std::vector<FoneOSButton>::iterator it = childrenPointer.begin(); it != childrenPointer.end(); ++it) {
-		FoneOSButton thingy = *it;
+	std::vector<FoneOSButton*> childrenPointer = this->buttons;
+	for (std::vector<FoneOSButton*>::iterator it = childrenPointer.begin(); it != childrenPointer.end(); ++it) {
+		FoneOSButton * thingy = *it;
 		if (
-			p.x > thingy.x &&
-			p.x < (thingy.x + thingy.width) &&
-			p.y > thingy.y &&
-			p.y < (thingy.y + thingy.height)
+			p.x > thingy->x &&
+			p.x < (thingy->x + thingy->width) &&
+			p.y > thingy->y &&
+			p.y < (thingy->y + thingy->height)
 			) {
-			thingy.handleTouch(p);
+			thingy->handleTouch(p);
 		}
 	}
 }
 #define DrawAllOfType(t, a) \
 	do { \
-		std::vector<t> pointer = a; \
-		for (std::vector<t>::iterator it = pointer.begin(); it != pointer.end(); ++it) { \
-			it->Draw((FoneOSContainer *)this); \
+		std::vector<t*> pointer = a; \
+		for (std::vector<t*>::iterator it = pointer.begin(); it != pointer.end(); ++it) { \
+			(*it)->Draw((FoneOSContainer *)this); \
 		} \
 	} while (0)
 
@@ -232,11 +232,11 @@ void HandleDialerTap(FoneOSContainer * cont)
 
 	if (button->text != STR("Call") && button->text != STR("D"))
 	{
-		if (Dialer.labels[0].text == STR("Enter number..."))
+		if (Dialer.labels[0]->text == STR("Enter number..."))
 		{
-			Dialer.labels[0].text = STR("");
+			Dialer.labels[0]->text = STR("");
 		}
-		Dialer.labels[0].text += button->text;
+		Dialer.labels[0]->text += button->text;
 	}
 	else if (button->text == STR("Call"))
 	{
@@ -244,9 +244,9 @@ void HandleDialerTap(FoneOSContainer * cont)
 	}
 	else if (button->text == STR("D"))
 	{
-		if (Dialer.labels[0].text.length() > 0)
+		if (Dialer.labels[0]->text.length() > 0)
 		{
-			Dialer.labels[0].text = Dialer.labels[0].text.substr(0, Dialer.labels[0].text.length() - 1);
+			Dialer.labels[0]->text = Dialer.labels[0]->text.substr(0, Dialer.labels[0]->text.length() - 1);
 		}
 	}
 
@@ -296,16 +296,16 @@ void LockPhone(FoneOSContainer * cont)
 void Layout::Init()
 {
 	{
-		FoneOSImage bg = FoneOSImage();
-		bg.path = STR("purple.bmp");
-		bg.width = 240;
-		bg.height = 320;
-		bg.Create();
+		FoneOSImage * bg = new FoneOSImage();
+		bg->path = STR("purple.bmp");
+		bg->width = 240;
+		bg->height = 320;
+		bg->Create();
 		LockScreen.images.push_back(bg);
 
-		FoneOSTitle title = FoneOSTitle();
-		title.text = STR("Phone locked");
-		title.Create();
+		FoneOSTitle * title = new FoneOSTitle();
+		title->text = STR("Phone locked");
+		title->Create();
 		LockScreen.titles.push_back(title);
 
 		/*FoneOSButton unlock = FoneOSButton(STR("   Unlock   "), 14, 240);
@@ -313,69 +313,69 @@ void Layout::Init()
 		LockScreen.buttons.push_back(unlock);*/
 	}
 	{
-		FoneOSTitle title = FoneOSTitle();
-		title.text = STR("Launchpad");
-		title.Create();
+		FoneOSTitle * title = new FoneOSTitle();
+		title->text = STR("Launchpad");
+		title->Create();
 		Launchpad.titles.push_back(title);
 
-		FoneOSButton dialer = FoneOSButton(STR("Dialer"), 5, 30);
-		dialer.onActivate = &HandleLaunchpadTap;
+		FoneOSButton * dialer = new FoneOSButton(STR("Dialer"), 5, 30);
+		dialer->onActivate = &HandleLaunchpadTap;
 		Launchpad.buttons.push_back(dialer);
 
-		FoneOSButton sms = FoneOSButton(STR("SMS"), 5, 75);
-		sms.onActivate = &HandleLaunchpadTap;
+		FoneOSButton * sms = new FoneOSButton(STR("SMS"), 5, 75);
+		sms->onActivate = &HandleLaunchpadTap;
 		Launchpad.buttons.push_back(sms);
 
-		FoneOSButton more = FoneOSButton(STR("More"), 5, 120);
-		more.onActivate = &HandleLaunchpadTap;
+		FoneOSButton * more = new FoneOSButton(STR("More"), 5, 120);
+		more->onActivate = &HandleLaunchpadTap;
 		Launchpad.buttons.push_back(more);
 
-		FoneOSButton lock = FoneOSButton(STR("Lock phone"), 5, 240);
-		lock.onActivate = &LockPhone;
+		FoneOSButton * lock = new FoneOSButton(STR("Lock phone"), 5, 240);
+		lock->onActivate = &LockPhone;
 		Launchpad.buttons.push_back(lock);
 	}
 	{
-		FoneOSTitle title = FoneOSTitle();
-		title.text = STR("Dialer");
-		title.Create();
+		FoneOSTitle * title = new FoneOSTitle();
+		title->text = STR("Dialer");
+		title->Create();
 		Dialer.titles.push_back(title);
 
-		FoneOSLabel number = FoneOSLabel();
-		number.x = 0;
-		number.y = 30;
-		number.text = STR("Enter number...");
-		number.fontSize = 2;
+		FoneOSLabel * number = new FoneOSLabel();
+		number->x = 0;
+		number->y = 30;
+		number->text = STR("Enter number...");
+		number->fontSize = 2;
 		Dialer.labels.push_back(number);
 
 		int dialerOffsetX = 35;
 		int dialerOffsetY = 60;
 
-		FoneOSButton no1 = FoneOSButton(STR("1"), dialerOffsetX, dialerOffsetY);
-		FoneOSButton no2 = FoneOSButton(STR("2"), dialerOffsetX + 60, dialerOffsetY);
-		FoneOSButton no3 = FoneOSButton(STR("3"), dialerOffsetX + 120, dialerOffsetY);
+		FoneOSButton * no1 = new FoneOSButton(STR("1"), dialerOffsetX, dialerOffsetY);
+		FoneOSButton * no2 = new FoneOSButton(STR("2"), dialerOffsetX + 60, dialerOffsetY);
+		FoneOSButton * no3 = new FoneOSButton(STR("3"), dialerOffsetX + 120, dialerOffsetY);
+	   
+		FoneOSButton * no4 = new FoneOSButton(STR("4"), dialerOffsetX, dialerOffsetY + 45);
+		FoneOSButton * no5 = new FoneOSButton(STR("5"), dialerOffsetX + 60, dialerOffsetY + 45);
+		FoneOSButton * no6 = new FoneOSButton(STR("6"), dialerOffsetX + 120, dialerOffsetY + 45);
+	   
+		FoneOSButton * no7 = new FoneOSButton(STR("7"), dialerOffsetX, dialerOffsetY + 90);
+		FoneOSButton * no8 = new FoneOSButton(STR("8"), dialerOffsetX + 60, dialerOffsetY + 90);
+		FoneOSButton * no9 = new FoneOSButton(STR("9"), dialerOffsetX + 120, dialerOffsetY + 90);
 
-		FoneOSButton no4 = FoneOSButton(STR("4"), dialerOffsetX, dialerOffsetY + 45);
-		FoneOSButton no5 = FoneOSButton(STR("5"), dialerOffsetX + 60, dialerOffsetY + 45);
-		FoneOSButton no6 = FoneOSButton(STR("6"), dialerOffsetX + 120, dialerOffsetY + 45);
+		FoneOSButton * starBtn = new FoneOSButton(STR("*"), dialerOffsetX, dialerOffsetY + 135);
+		FoneOSButton * no0 = new FoneOSButton(STR("0"), dialerOffsetX + 60, dialerOffsetY + 135);
+		FoneOSButton * poundBtn = new FoneOSButton(STR("#"), dialerOffsetX + 120, dialerOffsetY + 135);
 
-		FoneOSButton no7 = FoneOSButton(STR("7"), dialerOffsetX, dialerOffsetY + 90);
-		FoneOSButton no8 = FoneOSButton(STR("8"), dialerOffsetX + 60, dialerOffsetY + 90);
-		FoneOSButton no9 = FoneOSButton(STR("9"), dialerOffsetX + 120, dialerOffsetY + 90);
+		FoneOSButton * callBtn = new FoneOSButton(STR("Call"), dialerOffsetX, dialerOffsetY + 180);
+		FoneOSButton * delBtn = new FoneOSButton(STR("D"), dialerOffsetX + 120, dialerOffsetY + 180);
 
-		FoneOSButton starBtn = FoneOSButton(STR("*"), dialerOffsetX, dialerOffsetY + 135);
-		FoneOSButton no0 = FoneOSButton(STR("0"), dialerOffsetX + 60, dialerOffsetY + 135);
-		FoneOSButton poundBtn = FoneOSButton(STR("#"), dialerOffsetX + 120, dialerOffsetY + 135);
+		callBtn->width = 96;
 
-		FoneOSButton callBtn = FoneOSButton(STR("Call"), dialerOffsetX, dialerOffsetY + 180);
-		FoneOSButton delBtn = FoneOSButton(STR("D"), dialerOffsetX + 120, dialerOffsetY + 180);
-
-		callBtn.width = 96;
-
-		no1.onActivate = no2.onActivate = no3.onActivate = &HandleDialerTap;
-		no4.onActivate = no5.onActivate = no6.onActivate = &HandleDialerTap;
-		no7.onActivate = no8.onActivate = no9.onActivate = &HandleDialerTap;
-		starBtn.onActivate = no0.onActivate = poundBtn.onActivate = &HandleDialerTap;
-		callBtn.onActivate = delBtn.onActivate = &HandleDialerTap;
+		no1->onActivate = no2->onActivate = no3->onActivate = &HandleDialerTap;
+		no4->onActivate = no5->onActivate = no6->onActivate = &HandleDialerTap;
+		no7->onActivate = no8->onActivate = no9->onActivate = &HandleDialerTap;
+		starBtn->onActivate = no0->onActivate = poundBtn->onActivate = &HandleDialerTap;
+		callBtn->onActivate = delBtn->onActivate = &HandleDialerTap;
 
 		Dialer.buttons.push_back(no1);
 		Dialer.buttons.push_back(no2);
@@ -397,47 +397,47 @@ void Layout::Init()
 		Dialer.buttons.push_back(delBtn);
 	}
 	{
-		FoneOSTitle title = FoneOSTitle();
-		title.text = STR("SMS");
-		title.Create();
+		FoneOSTitle * title = new FoneOSTitle();
+		title->text = STR("SMS");
+		title->Create();
 		SMS.titles.push_back(title);
 	}
 	{
-		FoneOSTitle title = FoneOSTitle();
-		title.text = STR("More");
-		title.Create();
+		FoneOSTitle * title = new FoneOSTitle();
+		title->text = STR("More");
+		title->Create();
 		More.titles.push_back(title);
 
-		FoneOSButton fmRadio = FoneOSButton(STR("FM Radio"), 5, 30);
-		fmRadio.onActivate = &HandleMoreTap;
+		FoneOSButton * fmRadio = new FoneOSButton(STR("FM Radio"), 5, 30);
+		fmRadio->onActivate = &HandleMoreTap;
 		More.buttons.push_back(fmRadio);
 
-		FoneOSButton settings = FoneOSButton(STR("Settings"), 5, 75);
-		settings.onActivate = &HandleMoreTap;
+		FoneOSButton * settings = new FoneOSButton(STR("Settings"), 5, 75);
+		settings->onActivate = &HandleMoreTap;
 		More.buttons.push_back(settings);
 	}
 	{
-		FoneOSTitle title = FoneOSTitle();
-		title.text = STR("Settings");
-		title.Create();
+		FoneOSTitle * title = new FoneOSTitle();
+		title->text = STR("Settings");
+		title->Create();
 		Settings.titles.push_back(title);
 
-		FoneOSButton fonts = FoneOSButton(STR("Fonts"), 5, 30);
-		fonts.onActivate = &HandleSettingsTap;
+		FoneOSButton * fonts = new FoneOSButton(STR("Fonts"), 5, 30);
+		fonts->onActivate = &HandleSettingsTap;
 		Settings.buttons.push_back(fonts);
 
-		FoneOSButton storage = FoneOSButton(STR("Storage"), 5, 75);
-		storage.onActivate = &HandleSettingsTap;
+		FoneOSButton * storage = new FoneOSButton(STR("Storage"), 5, 75);
+		storage->onActivate = &HandleSettingsTap;
 		Settings.buttons.push_back(storage);
 
-		FoneOSButton about = FoneOSButton(STR("About"), 5, 120);
-		about.onActivate = &HandleSettingsTap;
+		FoneOSButton * about = new FoneOSButton(STR("About"), 5, 120);
+		about->onActivate = &HandleSettingsTap;
 		Settings.buttons.push_back(about);
 	}
 	{
-		FoneOSTitle title = FoneOSTitle();
-		title.text = STR("Fonts");
-		title.Create();
+		FoneOSTitle * title = new FoneOSTitle();
+		title->text = STR("Fonts");
+		title->Create();
 		Fonts.titles.push_back(title);
 
 #ifdef WINDOWS
@@ -449,12 +449,12 @@ void Layout::Init()
 		{
 			if (FoneOSString(findFileData.cFileName) != STR(".") && FoneOSString(findFileData.cFileName) != STR(".."))
 			{
-				FoneOSLabel fontLabel = FoneOSLabel();
-				fontLabel.text = FoneOSString(findFileData.cFileName);
-				fontLabel.x = 5;
-				fontLabel.y = (fontNum * 25) + 30;
-				fontLabel.font = { FoneOSString(findFileData.cFileName), STR("Regular") };
-				fontLabel.Create();
+				FoneOSLabel * fontLabel = new FoneOSLabel();
+				fontLabel->text = FoneOSString(findFileData.cFileName);
+				fontLabel->x = 5;
+				fontLabel->y = (fontNum * 25) + 30;
+				fontLabel->font = { FoneOSString(findFileData.cFileName), STR("Regular") };
+				fontLabel->Create();
 				Fonts.labels.push_back(fontLabel);
 
 				fontNum++;
@@ -471,33 +471,33 @@ void Layout::Init()
 			// TODO: Unify this with the Windows version.
 
 			if (FoneOSString(searchDir[i]->d_name) != STR(".") && FoneOSString(searchDir[i]->d_name) != STR(".."))
-                        {
-                                FoneOSLabel fontLabel = FoneOSLabel();
-                                fontLabel.text = FoneOSString(searchDir[i]->d_name);
-                                fontLabel.x = 5;
-                                fontLabel.y = (fontNum * 25) + 30;
-                                fontLabel.font = { FoneOSString(searchDir[i]->d_name), STR("Regular") };
-                                fontLabel.Create();
-                                Fonts.labels.push_back(fontLabel);
+			{
+				FoneOSLabel * fontLabel = new FoneOSLabel();
+				fontLabel->text = FoneOSString(searchDir[i]->d_name);
+				fontLabel->x = 5;
+				fontLabel->y = (fontNum * 25) + 30;
+				fontLabel->font = { FoneOSString(searchDir[i]->d_name), STR("Regular") };
+				fontLabel->Create();
+				Fonts.labels.push_back(fontLabel);
 
-                                fontNum++;
+				fontNum++;
 				free(searchDir[i]);
-                        }
+			}
 
 		}
 		free(searchDir);
 #endif
 	}
 	{
-		FoneOSTitle title = FoneOSTitle();
-		title.text = STR("About fone");
-		title.Create();
+		FoneOSTitle * title = new FoneOSTitle();
+		title->text = STR("About fone");
+		title->Create();
 		About.titles.push_back(title);
 
-		FoneOSLabel info = FoneOSLabel();
-		info.text = FoneOSString(STR("foneOS\n") + FoneOSString(VERSION));
-		info.x = 5;
-		info.y = 30;
+		FoneOSLabel * info = new FoneOSLabel();
+		info->text = FoneOSString(STR("foneOS\n") + FoneOSString(VERSION));
+		info->x = 5;
+		info->y = 30;
 		About.labels.push_back(info);
 
 		FoneOSString deviceInfoStr;
@@ -524,11 +524,11 @@ void Layout::Init()
 		deviceInfoStr += STR("\n   CCID: ");
 		deviceInfoStr += HardwareManager::GetModem()->GetCCID();
 
-		FoneOSLabel deviceInfo = FoneOSLabel();
-		deviceInfo.text = deviceInfoStr;
-		deviceInfo.x = 5;
-		deviceInfo.y = 70;
-		deviceInfo.fontSize = 1;
+		FoneOSLabel * deviceInfo = new FoneOSLabel();
+		deviceInfo->text = deviceInfoStr;
+		deviceInfo->x = 5;
+		deviceInfo->y = 70;
+		deviceInfo->fontSize = 1;
 		About.labels.push_back(deviceInfo);
 	}
 

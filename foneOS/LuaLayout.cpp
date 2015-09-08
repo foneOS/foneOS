@@ -8,7 +8,7 @@ int Lua_FoneOSScreen_AddLabel(lua_State * _L)
 {
 	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
 	FoneOSLabel* lbl = luaW_check<FoneOSLabel>(_L, 2);
-	obj->labels.push_back(*lbl);
+	obj->labels.push_back(lbl);
 	return 0;
 }
 
@@ -16,7 +16,7 @@ int Lua_FoneOSScreen_AddTitle(lua_State * _L)
 {
 	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
 	FoneOSTitle* title = luaW_check<FoneOSTitle>(_L, 2);
-	obj->titles.push_back(*title);
+	obj->titles.push_back(title);
 	return 0;
 }
 
@@ -24,7 +24,7 @@ int Lua_FoneOSScreen_AddButton(lua_State * _L)
 {
 	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
 	FoneOSButton* btn = luaW_check<FoneOSButton>(_L, 2);
-	obj->buttons.push_back(*btn);
+	obj->buttons.push_back(btn);
 	return 0;
 }
 
@@ -37,12 +37,12 @@ int Lua_FoneOSScreen_Draw(lua_State * _L)
 
 #define SearchAllOfType(t, a) \
 	do { \
-		std::vector<t> pointer = a; \
+		std::vector<t*> pointer = a; \
 		int i = 0; \
 		for (i = 0; i < pointer.size(); i++) { \
-			t it = pointer[i]; \
-			if (it.id == id) { \
-				luaW_push<t>(_L, &it); \
+			t * it = pointer[i]; \
+			if (it->id == id) { \
+				luaW_push<t>(_L, it); \
 				return 1; \
 			}\
 		} \
