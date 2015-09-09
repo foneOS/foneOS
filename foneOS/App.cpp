@@ -60,6 +60,12 @@ int Lua_layout_draw(lua_State * _L)
 	return 0;
 }
 
+int Lua_modem_call(lua_State * _L)
+{
+
+	return 0;
+}
+
 void App::Start()
 {
 	Logging::LogMessage(STR("Starting app..."));
@@ -82,6 +88,13 @@ void App::Start()
 			lua_setfield(_L, -2, "draw");
 
 		lua_setfield(_L, -2, "layout"); /* add layout table */
+
+		lua_newtable(_L); /* fone.modem */
+
+			lua_pushcfunction(_L, &Lua_modem_call);
+			lua_setfield(_L, -2, "call");
+
+		lua_setfield(_L, -2, "modem"); /* add modem table */
 
 	lua_setglobal(_L, "fone"); /* globalize fone table */
 

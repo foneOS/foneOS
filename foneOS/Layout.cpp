@@ -214,14 +214,14 @@ int count = 0;
 // The current layout.
 static FoneOSScreen * CurrentLayout;
 
-static FoneOSScreen LockScreen;
-static FoneOSScreen Launchpad;
-static FoneOSScreen Dialer;
-static FoneOSScreen SMS;
-static FoneOSScreen More;
-static FoneOSScreen Settings;
-static FoneOSScreen Fonts;
-static FoneOSScreen About;
+static FoneOSScreen * LockScreen;
+static FoneOSScreen * Launchpad;
+static FoneOSScreen * Dialer;
+static FoneOSScreen * SMS;
+static FoneOSScreen * More;
+static FoneOSScreen * Settings;
+static FoneOSScreen * Fonts;
+static FoneOSScreen * About;
 
 void HandleLaunchpadTap(FoneOSContainer * cont)
 {
@@ -229,15 +229,15 @@ void HandleLaunchpadTap(FoneOSContainer * cont)
 
 	if (button->text == STR("Dialer"))
 	{
-		Layout::SetCurrentLayout(&Dialer, true);
+		Layout::SetCurrentLayout(Dialer, true);
 	}
 	else if (button->text == STR("SMS"))
 	{
-		Layout::SetCurrentLayout(&SMS, true);
+		Layout::SetCurrentLayout(SMS, true);
 	}
 	else if (button->text == STR("More"))
 	{
-		Layout::SetCurrentLayout(&More, true);
+		Layout::SetCurrentLayout(More, true);
 	}
 }
 
@@ -247,11 +247,11 @@ void HandleDialerTap(FoneOSContainer * cont)
 
 	if (button->text != STR("Call") && button->text != STR("D"))
 	{
-		if (Dialer.labels[0]->text == STR("Enter number..."))
+		if (Dialer->labels[0]->text == STR("Enter number..."))
 		{
-			Dialer.labels[0]->text = STR("");
+			Dialer->labels[0]->text = STR("");
 		}
-		Dialer.labels[0]->text += button->text;
+		Dialer->labels[0]->text += button->text;
 	}
 	else if (button->text == STR("Call"))
 	{
@@ -259,9 +259,9 @@ void HandleDialerTap(FoneOSContainer * cont)
 	}
 	else if (button->text == STR("D"))
 	{
-		if (Dialer.labels[0]->text.length() > 0)
+		if (Dialer->labels[0]->text.length() > 0)
 		{
-			Dialer.labels[0]->text = Dialer.labels[0]->text.substr(0, Dialer.labels[0]->text.length() - 1);
+			Dialer->labels[0]->text = Dialer->labels[0]->text.substr(0, Dialer->labels[0]->text.length() - 1);
 		}
 	}
 
@@ -278,7 +278,7 @@ void HandleMoreTap(FoneOSContainer * cont)
 	}
 	else if (button->text == STR("Settings"))
 	{
-		Layout::SetCurrentLayout(&Settings, true);
+		Layout::SetCurrentLayout(Settings, true);
 	}
 }
 
@@ -288,37 +288,37 @@ void HandleSettingsTap(FoneOSContainer * cont)
 
 	if (button->text == STR("Fonts"))
 	{
-		Layout::SetCurrentLayout(&Fonts, true);
+		Layout::SetCurrentLayout(Fonts, true);
 	}
 	else if (button->text == STR("About"))
 	{
-		Layout::SetCurrentLayout(&About, true);
+		Layout::SetCurrentLayout(About, true);
 	}
 }
 
 void UnlockPhone(FoneOSContainer * cont)
 {
 	Core::ClearStack();
-	Layout::SetCurrentLayout(&Launchpad, false);
+	Layout::SetCurrentLayout(Launchpad, false);
 }
 
 void LockPhone(FoneOSContainer * cont)
 {
 	Core::ClearStack();
-	Layout::SetCurrentLayout(&LockScreen, false);
+	Layout::SetCurrentLayout(LockScreen, false);
 }
 
 void Layout::Init()
 {
 	{
-		LockScreen = FoneOSScreen();
-		Launchpad = FoneOSScreen();
-		Dialer = FoneOSScreen();
-		SMS = FoneOSScreen();
-		More = FoneOSScreen();
-		Settings = FoneOSScreen();
-		Fonts = FoneOSScreen();
-		About = FoneOSScreen();
+		LockScreen = new FoneOSScreen();
+		Launchpad = new FoneOSScreen();
+		Dialer = new FoneOSScreen();
+		SMS = new FoneOSScreen();
+		More = new FoneOSScreen();
+		Settings = new FoneOSScreen();
+		Fonts = new FoneOSScreen();
+		About = new FoneOSScreen();
 	}
 	{
 		FoneOSImage * bg = new FoneOSImage();
@@ -326,12 +326,12 @@ void Layout::Init()
 		bg->width = 240;
 		bg->height = 320;
 		bg->Create();
-		LockScreen.images.push_back(bg);
+		LockScreen->images.push_back(bg);
 
 		FoneOSTitle * title = new FoneOSTitle();
 		title->text = STR("Phone locked");
 		title->Create();
-		LockScreen.titles.push_back(title);
+		LockScreen->titles.push_back(title);
 
 		/*FoneOSButton unlock = FoneOSButton(STR("   Unlock   "), 14, 240);
 		unlock.onActivate = &UnlockPhone;
@@ -341,36 +341,36 @@ void Layout::Init()
 		FoneOSTitle * title = new FoneOSTitle();
 		title->text = STR("Launchpad");
 		title->Create();
-		Launchpad.titles.push_back(title);
+		Launchpad->titles.push_back(title);
 
 		FoneOSButton * dialer = new FoneOSButton(STR("Dialer"), 5, 30);
 		dialer->onActivate = &HandleLaunchpadTap;
-		Launchpad.buttons.push_back(dialer);
+		Launchpad->buttons.push_back(dialer);
 
 		FoneOSButton * sms = new FoneOSButton(STR("SMS"), 5, 75);
 		sms->onActivate = &HandleLaunchpadTap;
-		Launchpad.buttons.push_back(sms);
+		Launchpad->buttons.push_back(sms);
 
 		FoneOSButton * more = new FoneOSButton(STR("More"), 5, 120);
 		more->onActivate = &HandleLaunchpadTap;
-		Launchpad.buttons.push_back(more);
+		Launchpad->buttons.push_back(more);
 
 		FoneOSButton * lock = new FoneOSButton(STR("Lock phone"), 5, 240);
 		lock->onActivate = &LockPhone;
-		Launchpad.buttons.push_back(lock);
+		Launchpad->buttons.push_back(lock);
 	}
 	{
 		FoneOSTitle * title = new FoneOSTitle();
 		title->text = STR("Dialer");
 		title->Create();
-		Dialer.titles.push_back(title);
+		Dialer->titles.push_back(title);
 
 		FoneOSLabel * number = new FoneOSLabel();
 		number->x = 0;
 		number->y = 30;
 		number->text = STR("Enter number...");
 		number->fontSize = 2;
-		Dialer.labels.push_back(number);
+		Dialer->labels.push_back(number);
 
 		int dialerOffsetX = 35;
 		int dialerOffsetY = 60;
@@ -402,68 +402,68 @@ void Layout::Init()
 		starBtn->onActivate = no0->onActivate = poundBtn->onActivate = &HandleDialerTap;
 		callBtn->onActivate = delBtn->onActivate = &HandleDialerTap;
 
-		Dialer.buttons.push_back(no1);
-		Dialer.buttons.push_back(no2);
-		Dialer.buttons.push_back(no3);
+		Dialer->buttons.push_back(no1);
+		Dialer->buttons.push_back(no2);
+		Dialer->buttons.push_back(no3);
 
-		Dialer.buttons.push_back(no4);
-		Dialer.buttons.push_back(no5);
-		Dialer.buttons.push_back(no6);
+		Dialer->buttons.push_back(no4);
+		Dialer->buttons.push_back(no5);
+		Dialer->buttons.push_back(no6);
 
-		Dialer.buttons.push_back(no7);
-		Dialer.buttons.push_back(no8);
-		Dialer.buttons.push_back(no9);
+		Dialer->buttons.push_back(no7);
+		Dialer->buttons.push_back(no8);
+		Dialer->buttons.push_back(no9);
 
-		Dialer.buttons.push_back(starBtn);
-		Dialer.buttons.push_back(no0);
-		Dialer.buttons.push_back(poundBtn);
+		Dialer->buttons.push_back(starBtn);
+		Dialer->buttons.push_back(no0);
+		Dialer->buttons.push_back(poundBtn);
 
-		Dialer.buttons.push_back(callBtn);
-		Dialer.buttons.push_back(delBtn);
+		Dialer->buttons.push_back(callBtn);
+		Dialer->buttons.push_back(delBtn);
 	}
 	{
 		FoneOSTitle * title = new FoneOSTitle();
 		title->text = STR("SMS");
 		title->Create();
-		SMS.titles.push_back(title);
+		SMS->titles.push_back(title);
 	}
 	{
 		FoneOSTitle * title = new FoneOSTitle();
 		title->text = STR("More");
 		title->Create();
-		More.titles.push_back(title);
+		More->titles.push_back(title);
 
 		FoneOSButton * fmRadio = new FoneOSButton(STR("FM Radio"), 5, 30);
 		fmRadio->onActivate = &HandleMoreTap;
-		More.buttons.push_back(fmRadio);
+		More->buttons.push_back(fmRadio);
 
 		FoneOSButton * settings = new FoneOSButton(STR("Settings"), 5, 75);
 		settings->onActivate = &HandleMoreTap;
-		More.buttons.push_back(settings);
+		More->buttons.push_back(settings);
 	}
 	{
 		FoneOSTitle * title = new FoneOSTitle();
 		title->text = STR("Settings");
 		title->Create();
-		Settings.titles.push_back(title);
+		Settings->titles.push_back(title);
 
 		FoneOSButton * fonts = new FoneOSButton(STR("Fonts"), 5, 30);
 		fonts->onActivate = &HandleSettingsTap;
-		Settings.buttons.push_back(fonts);
+		Settings->buttons.push_back(fonts);
 
 		FoneOSButton * storage = new FoneOSButton(STR("Storage"), 5, 75);
 		storage->onActivate = &HandleSettingsTap;
-		Settings.buttons.push_back(storage);
+		Settings->buttons.push_back(storage);
 
 		FoneOSButton * about = new FoneOSButton(STR("About"), 5, 120);
 		about->onActivate = &HandleSettingsTap;
-		Settings.buttons.push_back(about);
+		Settings->buttons.push_back(about);
 	}
 	{
 		FoneOSTitle * title = new FoneOSTitle();
 		title->text = STR("Fonts");
 		title->Create();
-		Fonts.titles.push_back(title);
+		Fonts->titles.push_back(title);
 
 #ifdef WINDOWS
 		// TODO: portability
@@ -480,7 +480,7 @@ void Layout::Init()
 				fontLabel->y = (fontNum * 25) + 30;
 				fontLabel->font = { FoneOSString(findFileData.cFileName), STR("Regular") };
 				fontLabel->Create();
-				Fonts.labels.push_back(fontLabel);
+				Fonts->labels.push_back(fontLabel);
 
 				fontNum++;
 			}
@@ -517,13 +517,13 @@ void Layout::Init()
 		FoneOSTitle * title = new FoneOSTitle();
 		title->text = STR("About fone");
 		title->Create();
-		About.titles.push_back(title);
+		About->titles.push_back(title);
 
 		FoneOSLabel * info = new FoneOSLabel();
 		info->text = FoneOSString(STR("foneOS\n") + FoneOSString(VERSION));
 		info->x = 5;
 		info->y = 30;
-		About.labels.push_back(info);
+		About->labels.push_back(info);
 
 		FoneOSString deviceInfoStr;
 		deviceInfoStr += STR("Device");
@@ -554,10 +554,10 @@ void Layout::Init()
 		deviceInfo->x = 5;
 		deviceInfo->y = 70;
 		deviceInfo->fontSize = 1;
-		About.labels.push_back(deviceInfo);
+		About->labels.push_back(deviceInfo);
 	}
 
-	Layout::SetCurrentLayout(&LockScreen, false);
+	Layout::SetCurrentLayout(LockScreen, false);
 }
 
 void Layout::Draw()
@@ -571,7 +571,7 @@ void Layout::Update()
 	FoneOSPoint p = Input::GetTouch();
 	while (p.z > 0)
 	{
-		if (CurrentLayout == &LockScreen)
+		if (CurrentLayout == LockScreen)
 		{
 			UnlockPhone(NULL);
 		}
@@ -591,9 +591,9 @@ void Layout::Update()
 				Core::Stack.pop();
 				Layout::Draw();
 			}
-			else if (CurrentLayout != &LockScreen && CurrentLayout != &Launchpad)
+			else if (CurrentLayout != LockScreen && CurrentLayout != Launchpad)
 			{
-				Layout::SetCurrentLayout(&Launchpad, true);
+				Layout::SetCurrentLayout(Launchpad, true);
 				Layout::Draw();			
 			}
 		}
@@ -603,7 +603,7 @@ void Layout::Update()
 
 void Layout::DrawActionBar()
 {
-	if (CurrentLayout != &LockScreen)
+	if (CurrentLayout != LockScreen)
 	{
 		HardwareManager::GetDisplay()->FillRectangle(0, 280, 240, 40, COLOR_BLACK);
 		if (!Core::Stack.empty())

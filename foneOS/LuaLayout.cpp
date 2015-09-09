@@ -73,7 +73,8 @@ void Lua_FoneOSButton_callbackHandler(FoneOSContainer* cont)
 	FoneOSButton* btn = (FoneOSButton*)cont;
 	lua_State * _L = (lua_State*)btn->metadata["state"];
 	lua_rawgeti(_L, LUA_REGISTRYINDEX, *(int*)btn->metadata["onActivate"]); // retrieve the function
-	int ret = lua_pcall(_L, 0, 0, 0);
+	luaW_push<FoneOSButton>(_L, btn);
+	int ret = lua_pcall(_L, 1, 0, 0);
 	if (ret != 0)
 	{
 		Logging::LogMessage(STR("Error occurred in app!"));
