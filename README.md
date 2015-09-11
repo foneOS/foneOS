@@ -1,4 +1,7 @@
 # foneOS
+
+[![Build Status](https://magnum.travis-ci.com/thatoddmailbox/foneOS.svg?token=qDVG4s5zNTf4WvjH4c5N&branch=master)](https://magnum.travis-ci.com/thatoddmailbox/foneOS)
+
 A simple phone "operating system", designed to run on the Intel Edison.
 
 Technically, this is *not* an operating system due to the fact that it runs on top of Linux (or your desktop OS, if using the simulator), so it does not handle low-level tasks.
