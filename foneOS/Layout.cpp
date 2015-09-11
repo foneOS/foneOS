@@ -503,7 +503,7 @@ void Layout::Init()
 				fontLabel->y = (fontNum * 25) + 30;
 				fontLabel->font = { FoneOSString(searchDir[i]->d_name), STR("Regular") };
 				fontLabel->Create();
-				Fonts.labels.push_back(fontLabel);
+				Fonts->labels.push_back(fontLabel);
 
 				fontNum++;
 				free(searchDir[i]);
