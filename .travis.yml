@@ -1,5 +1,7 @@
 language: cpp
 before_install:
- - travis_wait sudo apt-get install -qq cmake libfreetype6 libfreetype6-dev libsqlite3-0 libsqlite3-dev libsdl2-dev libluajit-5.1-dev libluajit-5.1.2 build-essential
+ - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty universe"
+ - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main"
+ - travis_wait sudo apt-get install cmake libfreetype6 libfreetype6-dev libsqlite3-0 libsqlite3-dev libsdl2-dev libluajit-5.1-dev libluajit-5.1.2 build-essential
 script: cmake . -DSDL2_INCLUDE_DIR=/usr/include/SDL2 -DFREETYPE_INCLUDE_DIR=/usr/include/freetype2 -DLUAJIT_INCLUDE_DIR=/usr/include/luajit-2.0 -DLUAJIT_LIBRARY_RELEASE=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DLUAJIT_LIBRARY_DEBUG=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DCMAKE_CXX_COMPILER=g++
 sudo: required
