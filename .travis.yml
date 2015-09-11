@@ -1,18 +1,13 @@
 language: cpp
-addons:
-  apt:
-    packages:
-    - cmake
-    - libfreetype6
-    - libfreetype6-dev
-    - libsqlite3-0
-    - libsqlite3-dev
-    - libsdl2-dev
-    - libluajit-5.1-2
-    - libluajit-5.1-dev
 before_install:
- - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty universe"
- - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main"
-# - travis_wait sudo apt-get install cmake libfreetype6 libfreetype6-dev libsqlite3-0 libsqlite3-dev libsdl2-dev libluajit-5.1-dev libluajit-5.1.2 build-essential
+# - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty universe"
+# - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main"
+ - travis_wait sudo apt-get install cmake libfreetype6 libfreetype6-dev libsqlite3-0 libsqlite3-dev libluajit-5.1-dev libluajit-5.1.2 build-essential
+ - wget http://libsdl.org/release/SDL2-2.0.3.tar.gz
+ - tar xvf SDL2-2.0.3.tar.gz
+ - cd SDL2-2.0.3
+ - travis_wait ./configure
+ - travis_wait make
+ - sudo make install
 script: cmake . -DSDL2_INCLUDE_DIR=/usr/include/SDL2 -DFREETYPE_INCLUDE_DIR=/usr/include/freetype2 -DLUAJIT_INCLUDE_DIR=/usr/include/luajit-2.0 -DLUAJIT_LIBRARY_RELEASE=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DLUAJIT_LIBRARY_DEBUG=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DCMAKE_CXX_COMPILER=g++
-#sudo: required
+sudo: required
