@@ -1,6 +1,4 @@
-# foneOS
-
-[![Build Status](https://magnum.travis-ci.com/thatoddmailbox/foneOS.svg?token=qDVG4s5zNTf4WvjH4c5N&branch=master)](https://magnum.travis-ci.com/thatoddmailbox/foneOS)
+# foneOS [![Build Status](https://magnum.travis-ci.com/thatoddmailbox/foneOS.svg?token=qDVG4s5zNTf4WvjH4c5N&branch=master)](https://magnum.travis-ci.com/thatoddmailbox/foneOS)
 
 A simple phone "operating system", designed to run on the Intel Edison.
 
@@ -12,9 +10,9 @@ Technically, this is *not* an operating system due to the fact that it runs on t
 * Basic settings page
 * Basic dialer
 * Simulator 
-* (soon) App support (using LuaJIT)
+* App support (using LuaJIT)
 
-### Sidenote
+### Note on apps
 It may seem like there are lots of applications missing. This is because lots of the planned internal apps (SMS, FM Radio, etc.) are all waiting on the app system to be working before they are developed.
 
 ## Hardware
