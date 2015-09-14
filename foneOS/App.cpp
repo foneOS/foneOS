@@ -101,6 +101,7 @@ void App::Start()
 
 	luaopen_Layout(_L);
 
+    Logging::LogMessage(STR("Running app..."));
 	FoneOSString path = Storage::GetFullPath(FoneOSString(STR("apps/")) + this->id + FoneOSString(STR("/lua/main.lua")));
 	int ret = luaL_dofile(_L,  (char*)path.c_str());
 

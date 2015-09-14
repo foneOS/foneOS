@@ -50,6 +50,18 @@ public:
     virtual void Update();
     virtual void Cleanup();
 private:
+    void WriteRegister8(uint8_t reg, uint8_t val);
+    uint8_t ReadRegister8(uint8_t reg);
+
+    void ReadData(uint16_t *x, uint16_t *y);
+
+    bool Touched(void);
+    FoneOSPoint GetPoint(void);
+
+    uint8_t touches;
+    uint16_t touchX[2], touchY[2], touchID[2];
+
+    mraa_i2c_context i2c;
 /*    std::map<unsigned int, mraa_gpio_context> pins;
     int _cs, _dc, _rst;
     mraa_spi_context _spi;
