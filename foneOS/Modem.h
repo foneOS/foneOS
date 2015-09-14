@@ -22,8 +22,12 @@ public:
     // Gets the IMEI of the modem.
     virtual FoneOSString GetIMEI() = 0;
 
-    // Gets the CCID of the modem SIM card.
-    virtual FoneOSString GetCCID() = 0;
+	// Gets the CCID of the modem SIM card.
+	virtual FoneOSString GetCCID() = 0;
+
+	// Calls
+	// Calls the specified phone number.
+	virtual void Call(FoneOSString number) = 0;
 
     // Frees memory associated with the modem.
     virtual void Cleanup() = 0;
@@ -39,6 +43,7 @@ public:
     virtual FoneOSString GetFWRev();
     virtual FoneOSString GetIMEI();
     virtual FoneOSString GetCCID();
+	virtual void Call(FoneOSString number);
     virtual void Cleanup();
 };
 
@@ -53,6 +58,7 @@ public:
     virtual FoneOSString GetFWRev();
     virtual FoneOSString GetIMEI();
     virtual FoneOSString GetCCID();
+	virtual void Call(FoneOSString number);
     virtual void Cleanup();
 private:
     mraa_uart_context _serial;

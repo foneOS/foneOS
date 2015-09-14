@@ -38,6 +38,11 @@ FoneOSString Modem_Fake::GetCCID()
     return STR("12345678901234567890");
 }
 
+void Modem_Fake::Call(FoneOSString number)
+{
+
+}
+
 void Modem_Fake::Cleanup()
 {
     _enabled = false;
@@ -167,6 +172,15 @@ FoneOSString Modem_SIM800::GetIMEI()
 FoneOSString Modem_SIM800::GetCCID()
 {
     return STR("12345678901234567890");
+}
+
+void Modem_SIM800::Call(FoneOSString number)
+{
+	mraa_uart_write(this->_serial, "ATD", strlen("ATD"));
+	char * cNumber = Utils::FoneOSStringToCharArray(number);
+	mraa_uart_write(this->_serial, cNumber, strlen(cNumber));
+	free(cNumber);
+	mraa_uart_write(this->_serial, ";\r\n", strlen("\r\n"));
 }
 
 void Modem_SIM800::Cleanup()

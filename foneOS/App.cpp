@@ -62,7 +62,8 @@ int Lua_layout_draw(lua_State * _L)
 
 int Lua_modem_call(lua_State * _L)
 {
-
+	const char * phoneNumber = luaL_checkstring(_L, 1);
+	HardwareManager::GetModem()->Call(Utils::CharArrayToFoneOSString((char*)phoneNumber));
 	return 0;
 }
 
