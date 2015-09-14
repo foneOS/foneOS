@@ -68,6 +68,13 @@ int Lua_FoneOSContainer_Create(lua_State * _L)
 	return 0;
 }
 
+int Lua_FoneOSContainer_Draw(lua_State * _L)
+{
+    FoneOSContainer* obj = luaW_check<FoneOSContainer>(_L, 1);
+    //obj->Draw();
+    return 0;
+}
+
 void Lua_FoneOSButton_callbackHandler(FoneOSContainer* cont)
 {
 	FoneOSButton* btn = (FoneOSButton*)cont;
@@ -108,7 +115,8 @@ static luaL_Reg FoneOSContainer_metatable[] =
 
 	{ "id", luaU_getset<FoneOSContainer, FoneOSString, &FoneOSContainer::id> },
 
-	{ "create", Lua_FoneOSContainer_Create },
+    { "create", Lua_FoneOSContainer_Create },
+    { "draw", Lua_FoneOSContainer_Draw },
 	{ NULL, NULL }
 };
 

@@ -1,5 +1,7 @@
 #pragma once
 
+class FoneOSScreen;\
+
 class FoneOSContainer {
 public:
 	FoneOSString id = STR("");
@@ -19,7 +21,7 @@ public:
 
 	virtual void handleTouch(FoneOSPoint point);
 
-	virtual void Draw(FoneOSContainer * scr);
+    virtual void Draw(FoneOSScreen * scr);
 
 	virtual void Create();
 private:
@@ -29,7 +31,7 @@ class FoneOSLabel : public FoneOSContainer {
 public:	FoneOSLabel();
 	FoneOSLabel(FoneOSString str, int xPos, int yPos);
 
-	virtual void Draw(FoneOSContainer * scr);
+    virtual void Draw(FoneOSScreen * scr);
 
 	virtual void Create();
 
@@ -49,7 +51,7 @@ public:
 	int width = 240;
 	int height = 25;
 
-	virtual void Draw(FoneOSContainer * scr);
+    virtual void Draw(FoneOSScreen * scr);
 
 	FoneOSString text;
 private:
@@ -61,7 +63,7 @@ public:
 	FoneOSButton(FoneOSString caption, int xPosition, int yPosition);
 
 	void handleTouch(FoneOSPoint point);
-	void Draw(FoneOSContainer * scr);
+    void Draw(FoneOSScreen * scr);
 	void Create();
 
 	int fontSize = 2;
@@ -71,7 +73,7 @@ private:
 
 class FoneOSImage : public FoneOSContainer {
 public:
-	virtual void Draw(FoneOSContainer * scr);
+    virtual void Draw(FoneOSScreen * scr);
 
 	int width = 100;
 	int height = 100;
@@ -85,7 +87,7 @@ public:
 	FoneOSKeyboard();
 
 	virtual void handleTouch(FoneOSPoint p);
-	virtual void Draw(FoneOSContainer * scr);
+    virtual void Draw(FoneOSScreen * scr);
 
 	int x = 0;
 	int y = 160;

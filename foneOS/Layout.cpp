@@ -16,10 +16,9 @@ FoneOSLabel::FoneOSLabel(FoneOSString str, int xPos, int yPos)
 	this->y = yPos;
 	this->Create();
 }
-void FoneOSLabel::Draw(FoneOSContainer * scr)
+void FoneOSLabel::Draw(FoneOSScreen * scr)
 {
-	FoneOSScreen * scrscr = (FoneOSScreen *)scr;
-	HardwareManager::GetDisplay()->DrawString(this->text, this->x, this->y, this->font, this->fontSize * 12, this->fgColor, scrscr->bgColor);
+    HardwareManager::GetDisplay()->DrawString(this->text, this->x, this->y, this->font, this->fontSize * 12, this->fgColor, scr->bgColor);
 }
 void FoneOSLabel::Create()
 {
@@ -35,7 +34,7 @@ void FoneOSLabel::Create()
 ////
 //// FoneOSTitle
 ////
-void FoneOSTitle::Draw(FoneOSContainer * scr)
+void FoneOSTitle::Draw(FoneOSScreen * scr)
 {
 	HardwareManager::GetDisplay()->FillRectangle(this->x, this->y, this->width, this->height, this->bgColor);
 	HardwareManager::GetDisplay()->DrawString(this->text, this->x + 2, this->y + 4, 2, this->fgColor, this->bgColor);
@@ -76,7 +75,7 @@ void FoneOSButton::handleTouch(FoneOSPoint p)
 		this->onActivate(this);
 	}
 }
-void FoneOSButton::Draw(FoneOSContainer * scr)
+void FoneOSButton::Draw(FoneOSScreen * scr)
 {
 	HardwareManager::GetDisplay()->FillRectangle(this->x + 2, this->y + 2, this->width, this->height, this->fgColor);
 	HardwareManager::GetDisplay()->FillRectangle(this->x, this->y, this->width, this->height, this->bgColor);
@@ -97,7 +96,7 @@ void FoneOSButton::Create()
 ////
 //// FoneOSImage
 ////
-void FoneOSImage::Draw(FoneOSContainer * scr)
+void FoneOSImage::Draw(FoneOSScreen * scr)
 {
 	if (!HardwareManager::GetDisplay()->DrawImage(this->path, this->x, this->y))
 	{
@@ -125,7 +124,7 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 {
 
 }
-void FoneOSKeyboard::Draw(FoneOSContainer * scr)
+void FoneOSKeyboard::Draw(FoneOSScreen * scr)
 {
 	HardwareManager::GetDisplay()->FillRectangle(this->x, this->y, this->width, this->height, COLOR_RED);
 
@@ -153,7 +152,7 @@ void FoneOSContainer::handleTouch(FoneOSPoint p)
 {
 
 }
-void FoneOSContainer::Draw(FoneOSContainer * scr)
+void FoneOSContainer::Draw(FoneOSScreen * scr)
 {
 
 }
@@ -195,7 +194,7 @@ void FoneOSScreen::handleTouch(FoneOSPoint p)
 	do { \
 		std::vector<t*> pointer = a; \
 		for (std::vector<t*>::iterator it = pointer.begin(); it != pointer.end(); ++it) { \
-			(*it)->Draw((FoneOSContainer *)this); \
+            (*it)->Draw(this); \
 		} \
 	} while (0)
 
