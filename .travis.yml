@@ -10,5 +10,5 @@ before_install:
  - travis_wait make
  - sudo make install
  - cd ../
-script: cmake . -DSDL2_INCLUDE_DIR=/usr/include/SDL2 -DFREETYPE_INCLUDE_DIR=/usr/include/freetype2 -DLUAJIT_INCLUDE_DIR=/usr/include/luajit-2.0 -DLUAJIT_LIBRARY_RELEASE=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DLUAJIT_LIBRARY_DEBUG=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DCMAKE_CXX_COMPILER=g++
+script: cmake . -DSDL2_INCLUDE_DIR=/usr/include/SDL2 -DFREETYPE_INCLUDE_DIR=/usr/include/freetype2 -DLUAJIT_INCLUDE_DIR=/usr/include/luajit-2.0 -DLUAJIT_LIBRARY_RELEASE=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DLUAJIT_LIBRARY_DEBUG=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DCMAKE_CXX_COMPILER=g++ && make
 sudo: required
