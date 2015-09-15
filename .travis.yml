@@ -15,5 +15,5 @@ before_install:
  - sudo make install
  - cd ../
  - ls /usr/local/include/SDL2
-script: cmake . -DSDL2_INCLUDE_DIR=/usr/local/include/SDL2 -DFREETYPE_INCLUDE_DIR=/usr/include/freetype2 -DLUAJIT_INCLUDE_DIR=/usr/include/luajit-2.0 -DLUAJIT_LIBRARY_RELEASE=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DLUAJIT_LIBRARY_DEBUG=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DCMAKE_CXX_COMPILER=g++-4.8 && make VERBOSE=1
+script: cmake . -DSDL2_INCLUDE_DIR=/usr/local/include/SDL2 -DFREETYPE_INCLUDE_DIR=/usr/include/freetype2 -DLUAJIT_INCLUDE_DIR=/usr/include/luajit-2.0 -DLUAJIT_LIBRARY_RELEASE=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DLUAJIT_LIBRARY_DEBUG=/usr/lib/x86_64-linux-gnu/libluajit-5.1.so -DCMAKE_CXX_COMPILER=g++-4.8 # && make VERBOSE=1
 sudo: required
