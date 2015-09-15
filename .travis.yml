@@ -3,6 +3,10 @@ before_install:
 # - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty universe"
 # - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main"
  - travis_wait sudo apt-get install cmake libfreetype6 libfreetype6-dev libsqlite3-0 libsqlite3-dev libluajit-5.1-dev libluajit-5.1.2 build-essential
+ - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+ - sudo apt-get update -qq
+ - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
+ - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
  - wget http://libsdl.org/release/SDL2-2.0.3.tar.gz
  - tar xvf SDL2-2.0.3.tar.gz
  - cd SDL2-2.0.3
