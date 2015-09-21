@@ -1,6 +1,22 @@
 #include "stdafx.h"
 #include "Display.h"
 
+/*
+ * This file is based off of the Adafruit_ILI9341 library, available here: https://github.com/adafruit/Adafruit_ILI9341
+ * The license header of that library is as follows:
+*/
+/***************************************************
+  This is our library for the Adafruit ILI9341 Breakout and Shield
+  ----> http://www.adafruit.com/products/1651
+  Check out the links above for our tutorials and wiring diagrams
+  These displays use SPI to communicate, 4 or 5 pins are required to
+  interface (RST is optional)
+  Adafruit invests time and resources providing this open source code,
+  please support Adafruit and open-source hardware by purchasing
+  products from Adafruit!
+  Written by Limor Fried/Ladyada for Adafruit Industries.
+  MIT license, all text above must be included in any redistribution
+ ****************************************************/
 
 /* TODO: Right now, it's assumed that the grayscale renderer for FreeType
 supports 256 shades of gray, but this should instead key off of num_grays
