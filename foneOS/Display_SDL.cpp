@@ -17,7 +17,7 @@ void Display_SDL::Init()
 	// TODO: Handle error- SDL_GetError()
 	SDL_Init(SDL_INIT_EVERYTHING);
 	_window = SDL_CreateWindow("foneOS", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 240, 320, 0);
-	_renderer = SDL_CreateRenderer(_window, -1, 0);
+	_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_SOFTWARE);
 }
 
 void Display_SDL::Clear(FoneOSColor color)
@@ -116,12 +116,29 @@ void Display_SDL::DrawString(FoneOSString string, int x, int y, int size, FoneOS
 void Display_SDL::Flush()
 {
 	SDL_UpdateWindowSurface(_window);
+	SDL_Surface * windowSurface = SDL_GetWindowSurface(_window);
+	
+	if (windowSurface == NULL)
+	{
+		Logging::LogMessage(Utils::CharArrayToFoneOSString((char*) SDL_GetError()));
+	}
+	
+	this->buf = SDL_ConvertSurface(windowSurface, windowSurface->format, 0); // duplicate window surface
+	
+	//Logging::LogMessage("hi3");
 	SDL_RenderPresent(_renderer);
+	
+	//SDL_SetRenderDrawColor(_renderer, 255, 0, 0, 255);
+	//SDL_RenderClear(_renderer);
+	//Logging::LogMessage("hi4");
+	SDL_BlitSurface(this->buf, NULL, windowSurface, NULL);
+	
+	SDL_FreeSurface(buf);
 }
 
 void Display_SDL::Update()
 {
-	this->Flush();
+	//this->Flush(); // disable auto-flush to better simulate non-auto-flush drivers and to stop flickering on Macs
 
 	SDL_Event event;
 	if (SDL_PollEvent(&event) != 0)

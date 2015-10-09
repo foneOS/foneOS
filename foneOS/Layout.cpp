@@ -69,6 +69,7 @@ void FoneOSButton::handleTouch(FoneOSPoint p)
 	HardwareManager::GetDisplay()->FillRectangle(this->x + this->width, this->y, 3, this->height + 3, COLOR_WHITE);
 
 	this->Draw(NULL);
+	HardwareManager::GetDisplay()->Flush();
 
 	if (this->onActivate != NULL)
 	{
@@ -563,6 +564,7 @@ void Layout::Draw()
 {
 	CurrentLayout->Draw();
 	Layout::DrawActionBar();
+	HardwareManager::GetDisplay()->Flush();
 }
 
 void Layout::Update()

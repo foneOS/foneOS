@@ -53,6 +53,7 @@ public:
 #ifdef SIMULATOR_BUILD
 class Display_SDL : public Display
 {
+public:
 	virtual void Init();
 	virtual void Clear(FoneOSColor color);
 	virtual void DrawRectangle(int x, int y, int w, int h, FoneOSColor color);
@@ -67,6 +68,8 @@ class Display_SDL : public Display
 	virtual int GetVertDPI();
     virtual int GetWidth();
     virtual int GetHeight();
+private:
+	SDL_Surface * buf;
 };
 #endif
 
