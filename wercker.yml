@@ -25,3 +25,10 @@ build:
         name: Make
         code: |
           make VERBOSE=1
+
+deploy:
+  steps:
+    - script:
+        name: Upload
+        code: |
+          azure storage blob upload foneOS unstable-binaries "#{WERCKER_GIT_COMMIT:0:7}-linux"
