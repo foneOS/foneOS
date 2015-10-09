@@ -1,5 +1,7 @@
 # use ubuntu trusty
-box: ubuntu:14.04
+box:
+  id: thatoddmailbox/friendly-docker-container
+  tag: latest
 # You can also use services such as databases. Read more on our dev center:
 # http://devcenter.wercker.com/docs/services/index.html
 # services:
@@ -13,9 +15,9 @@ box: ubuntu:14.04
 # Read more about pipelines on our dev center
 # http://devcenter.wercker.com/docs/pipelines/index.html
 build:
-  box:
-    id: thatoddmailbox/friendly-docker-container
-    tag: latest
+#  box:
+#    id: thatoddmailbox/friendly-docker-container
+#    tag: latest
   steps:
     - script:
         name: CMake
