@@ -472,7 +472,7 @@ void Layout::Init()
 		int fontNum = 0;
 		do
 		{
-			if (FoneOSString(findFileData.cFileName) != STR(".") && FoneOSString(findFileData.cFileName) != STR(".."))
+			if (FoneOSString(findFileData.cFileName) != STR(".") && FoneOSString(findFileData.cFileName) != STR("..") && FoneOSString(findFileData.cFileName) != STR("LICENSE.md"))
 			{
 				FoneOSLabel * fontLabel = new FoneOSLabel();
 				fontLabel->text = FoneOSString(findFileData.cFileName);
@@ -495,7 +495,7 @@ void Layout::Init()
 		{
 			// TODO: Unify this with the Windows version.
 
-			if (FoneOSString(searchDir[i]->d_name) != STR(".") && FoneOSString(searchDir[i]->d_name) != STR(".."))
+			if (FoneOSString(searchDir[i]->d_name) != STR(".") && FoneOSString(searchDir[i]->d_name) != STR("..") && FoneOSString(searchDir[i]->d_name) != STR("LICENSE.md"))
 			{
 				FoneOSLabel * fontLabel = new FoneOSLabel();
 				fontLabel->text = FoneOSString(searchDir[i]->d_name);

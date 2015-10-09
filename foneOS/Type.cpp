@@ -36,6 +36,12 @@ bool Type::ForceFontLoad(FoneFontDesc desc)
 		fullPath_c,
 		0,
 		&fonts[desc]);
+	if (err != 0)
+	{
+		Logging::LogMessage("Font load error");
+		Logging::LogMessage(desc.Name);
+		Logging::LogMessage(Utils::IntToString(err));
+	}
 	free(fullPath_c);
 	return (err == 0);
 }
