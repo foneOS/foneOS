@@ -101,8 +101,15 @@ void App::Start()
 
 	luaopen_Layout(_L);
 
-    Logging::LogMessage(STR("Running app..."));
-	FoneOSString path = Storage::GetFullPath(FoneOSString(STR("apps/")) + this->id + FoneOSString(STR("/lua/main.lua")));
+	Logging::LogMessage(STR("Running app..."));
+	std::string path = Storage::GetFullPath(FoneOSString(STR("apps/")) + this->id + FoneOSString(STR("/lua/main.lua")));
+	if (!Storage::FileExists(path))
+	{
+		Logging::LogMessage(STR("Error occurred in app!"));
+		Logging::LogMessage(STR("App main.lua does not exist"));
+		return;
+	}
+	
 	int ret = luaL_dofile(_L,  (char*)path.c_str());
 
 	if (ret != 0)
