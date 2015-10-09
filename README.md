@@ -1,4 +1,4 @@
-# foneOS [![Build Status](https://magnum.travis-ci.com/thatoddmailbox/foneOS.svg?token=qDVG4s5zNTf4WvjH4c5N&branch=master)](https://magnum.travis-ci.com/thatoddmailbox/foneOS)
+# foneOS [![Build Status](https://img.shields.io/wercker/ci/foneOS/foneOS.svg)](https://app.wercker.com/foneOS/foneOS)
 
 A simple phone "operating system", designed to run on the Intel Edison.
 
