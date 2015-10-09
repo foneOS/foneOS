@@ -18,7 +18,9 @@ public:
 	std::map<std::string, void*> metadata = std::map<std::string, void*>();
 
 	void(*onActivate)(FoneOSContainer * cont) = 0;
-
+	
+	virtual ~FoneOSContainer() {}
+	
 	virtual void handleTouch(FoneOSPoint point);
 
     virtual void Draw(FoneOSScreen * scr);

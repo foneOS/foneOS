@@ -70,7 +70,8 @@ int Lua_FoneOSContainer_Create(lua_State * _L)
 
 int Lua_FoneOSContainer_Draw(lua_State * _L)
 {
-    FoneOSContainer* obj = luaW_check<FoneOSContainer>(_L, 1);
+	// no-op because you should not draw containers alone
+    //FoneOSContainer* obj = luaW_check<FoneOSContainer>(_L, 1);
     //obj->Draw();
     return 0;
 }
