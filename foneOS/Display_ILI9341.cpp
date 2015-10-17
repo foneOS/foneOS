@@ -46,6 +46,20 @@ void Display_ILI9341::Init()
 {
     this->pins = std::map<unsigned int, mraa_gpio_context>();
 
+    // create buffers
+    int width = 320;
+    int height = 240;
+
+    this->curBuf = new FoneOSColor*[width];
+    this->curBuf[0] = new FoneOSColor[width * height];//(255, 0, 0, 255);
+    for (int i = 1; i < width; i++)
+        this->curBuf[i] = this->curBuf[i-1] + height;
+
+    this->backBuf = new FoneOSColor*[width];
+    this->backBuf[0] = new FoneOSColor[width * height];//(255, 0, 0, 255);
+    for (int i = 1; i < width; i++)
+        this->backBuf[i] = this->backBuf[i-1] + height;
+
     // hardware SPI and pinout is always assumed
     _cs   = 10;//cs;
     _dc   = 9;//dc;
@@ -333,6 +347,7 @@ void Display_ILI9341::bmpdraw(std::ifstream * bmpFile, int x, int y)
     char sdbuffer[3 * BUFFPIXEL];  // 3 * pixels to buffer
     uint8_t buffidx = 3*BUFFPIXEL;
 
+    this->SPIBegin();
     for (i=0; i< ibmpHeight; i++)
     {
         int yayPos = y+(ibmpHeight-i);
@@ -365,6 +380,7 @@ void Display_ILI9341::bmpdraw(std::ifstream * bmpFile, int x, int y)
             this->PushColor(p);
         }
     }
+    this->SPIEnd();
 }
 
 bool Display_ILI9341::DrawImage(FoneOSString filename, int x, int y)
@@ -561,11 +577,15 @@ void Display_ILI9341::SetAddrWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint1
     this->WriteData(x1 >> 8);
     this->WriteData(x1 & 0xFF);     // XEND
 
+    Utils::Delay(1);
+
     this->WriteCommand(ILI9341_PASET); // Row addr set
     this->WriteData(y0>>8);
     this->WriteData(y0);     // YSTART
     this->WriteData(y1>>8);
     this->WriteData(y1);     // YEND
+
+    Utils::Delay(1);
 
     this->WriteCommand(ILI9341_RAMWR); // write to RAM
 }

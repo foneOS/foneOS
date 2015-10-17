@@ -204,6 +204,9 @@ public:
     virtual int GetWidth();
     virtual int GetHeight();
 private:
+    FoneOSColor ** curBuf = NULL;
+    FoneOSColor ** backBuf = NULL;
+
     std::map<unsigned int, mraa_gpio_context> pins;
     int _cs, _dc, _rst;
     mraa_spi_context _spi;
