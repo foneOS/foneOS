@@ -152,4 +152,6 @@
 
 #include "App.h"
 
+#include "AppManager.h"
+
 #include "Core.h"

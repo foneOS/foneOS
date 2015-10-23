@@ -14,7 +14,7 @@ public:
 	FoneOSString name;
 	FoneOSString id;
 	std::map<FoneOSString, FoneOSScreen> Layouts = {};
-        std::stack<FoneOSScreen *> Stack;
+	std::stack<FoneOSScreen *> Stack;
 private:
 	lua_State * _L;
 };

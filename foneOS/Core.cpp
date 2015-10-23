@@ -45,6 +45,7 @@ void Core::Init()
 
 	Input::Init();
 	HardwareManager::GetModem()->Init();
+	AppManager::Init();
 
 	Utils::Delay(2000); // TODO: Actually load.
 
@@ -76,9 +77,7 @@ void Core::Init()
 
 	HardwareManager::GetDisplay()->Flush();
 
-	App app = App(STR("foneOS.dialer"));
-	app.Start();
-	//app.Stop();
+	AppManager::OpenApp(STR("foneOS.dialer"));
 }
 
 void Core::Update()
