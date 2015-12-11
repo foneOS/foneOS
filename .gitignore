@@ -211,3 +211,4 @@ QtCreatorDeployment.txt
 *.autosave
 foneOS/foneOS
 foneOS/foneOS
+build_scripts/foneOS.app
