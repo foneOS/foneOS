@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.8.4)
 set(EDISON_BUILD OFF CACHE BOOL "Controls if the build is targeting the Intel Edison.")
 
 if(EDISON_BUILD)
-        include(${CMAKE_SOURCE_DIR}/Edison.cmake)
+	include(${CMAKE_SOURCE_DIR}/Edison.cmake)
 endif(EDISON_BUILD)
 
 project (foneOS)
@@ -24,6 +24,16 @@ endif()
 find_package(FreeType REQUIRED)
 find_package(Sqlite3 REQUIRED)
 find_package(LuaJIT REQUIRED)
+
+# why is this needed
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+	set(CMAKE_SYSROOT ${CMAKE_OSX_SYSROOT})
+	set(CMAKE_FIND_ROOT_PATH ${CMAKE_SYSROOT})
+	set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+	set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+	set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+	set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 # The version number.
 #set (FONEOSVERSION "v0.1.2d")
