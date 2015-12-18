@@ -58,7 +58,7 @@ void Core::Init()
 		{
 			if (
 				!Database::ProvDB(STR("db/callLog.sqlite3"), STR("provscripts/db/callLog.sql"))
-				
+
 				)
 			{
 				HardwareManager::GetDisplay()->FillRectangle(0, 305, 240, 12, COLOR_WHITE);
@@ -76,8 +76,6 @@ void Core::Init()
 	//Layout::Draw();
 
 	HardwareManager::GetDisplay()->Flush();
-
-	AppManager::OpenApp(STR("foneOS.dialer"));
 }
 
 void Core::Update()

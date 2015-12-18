@@ -229,7 +229,8 @@ void HandleLaunchpadTap(FoneOSContainer * cont)
 
 	if (button->text == STR("Dialer"))
 	{
-		Layout::SetCurrentLayout(Dialer, true);
+		//Layout::SetCurrentLayout(Dialer, true);
+		AppManager::OpenApp(STR("foneOS.dialer"));
 	}
 	else if (button->text == STR("SMS"))
 	{
@@ -378,11 +379,11 @@ void Layout::Init()
 		FoneOSButton * no1 = new FoneOSButton(STR("1"), dialerOffsetX, dialerOffsetY);
 		FoneOSButton * no2 = new FoneOSButton(STR("2"), dialerOffsetX + 60, dialerOffsetY);
 		FoneOSButton * no3 = new FoneOSButton(STR("3"), dialerOffsetX + 120, dialerOffsetY);
-	   
+
 		FoneOSButton * no4 = new FoneOSButton(STR("4"), dialerOffsetX, dialerOffsetY + 45);
 		FoneOSButton * no5 = new FoneOSButton(STR("5"), dialerOffsetX + 60, dialerOffsetY + 45);
 		FoneOSButton * no6 = new FoneOSButton(STR("6"), dialerOffsetX + 120, dialerOffsetY + 45);
-	   
+
 		FoneOSButton * no7 = new FoneOSButton(STR("7"), dialerOffsetX, dialerOffsetY + 90);
 		FoneOSButton * no8 = new FoneOSButton(STR("8"), dialerOffsetX + 60, dialerOffsetY + 90);
 		FoneOSButton * no9 = new FoneOSButton(STR("9"), dialerOffsetX + 120, dialerOffsetY + 90);
@@ -595,7 +596,7 @@ void Layout::Update()
 			else if (CurrentLayout != LockScreen && CurrentLayout != Launchpad)
 			{
 				Layout::SetCurrentLayout(Launchpad, true);
-				Layout::Draw();			
+				Layout::Draw();
 			}
 		}
 		p = Input::GetTouch();
