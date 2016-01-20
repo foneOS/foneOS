@@ -177,13 +177,13 @@ void FoneOSKeyboard::Draw(FoneOSScreen * scr)
 {
 	
 	for(int i=0;i<10;i++){
-  		this->topRow[i].Draw();
+  		this->topRow[i].Draw(scr);
 	}
 	for(int i=0;i<9;i++){
-  		this->middleRow[i].Draw();
+  		this->middleRow[i].Draw(scr);
 	}
 	for(int i=0;i<7;i++){
-  		this->bottomRow[i].Draw();
+  		this->bottomRow[i].Draw(scr);
 	}
 	
 }
