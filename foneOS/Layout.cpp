@@ -130,7 +130,7 @@ FoneOSKeyboard::FoneOSKeyboard()
 	int bottomRowHeight = screenHeight - (screenHeight/9 * 8);
 	for(int i = 0; i < 10; i++){
 		topRow[i] = FoneOSButton();
-		topRow[i].text = STR(line);
+		topRow[i].text = STR(line1[i]);
 		topRow[i].x = screenWidth/10 * i;
 		topRow[i].y = topRowHeight;
 		topRow[i].width = screenWidth/10;
@@ -139,16 +139,16 @@ FoneOSKeyboard::FoneOSKeyboard()
 	}
 	for(int j = 0; j<9;j++){
 		middleRow[i] = FoneOSButton();
-		middleRow[i].text = STR(line);
+		middleRow[i].text = STR(line2[i]);
 		middleRow[i].x = screenWidth/9 * i;
 		middleRow[i].y = middleRowHeight;
 		middleRow[i].width = screenWidth/9;
 		middleRow[i].height = screenHeight/9;
 		middleRow[i].onActivate = FoneOSKeyboard_callback;
 	}
-	for(int k = 0; j<7;j++){
+	for(int k = 0; k<7;k++){
 		bottomRow[i] = FoneOSButton();
-		bottomRow[i].text = STR(line);
+		bottomRow[i].text = STR(line3[i]);
 		bottomRow[i].x = screenWidth/9 * i;
 		bottomRow[i].y = bottomRowHeight;
 		bottomRow[i].width = screenWidth/9;
