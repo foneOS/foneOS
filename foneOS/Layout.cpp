@@ -76,6 +76,10 @@ void FoneOSButton::handleTouch(FoneOSPoint p)
 		this->onActivate(this);
 	}
 }
+
+
+
+//i fixed it and hexed tim
 void FoneOSButton::Draw(FoneOSScreen * scr)
 {
 	HardwareManager::GetDisplay()->FillRectangle(this->x + 2, this->y + 2, this->width, this->height, this->fgColor);
