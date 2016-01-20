@@ -111,8 +111,8 @@ void FoneOSImage::Draw(FoneOSScreen * scr)
 ////
 //// FoneOSKeyboard
 ////
-void FoneOSKeyboard_callback(FoneOSButton * btn){
-	Logging::LogMessage(btn->text);
+void FoneOSKeyboard_callback(FoneOSContainer * btn){
+	Logging::LogMessage(((FoneOSButton *)btn)->text);
 }
 FoneOSKeyboard::FoneOSKeyboard()
 {
@@ -137,7 +137,7 @@ FoneOSKeyboard::FoneOSKeyboard()
 		topRow[i].height = screenHeight/9;
 		topRow[i].onActivate = FoneOSKeyboard_callback;
 	}
-	for(i = 0; i<9;i++){
+	for(i = 0; i<9 ; i++){
 		middleRow[i] = FoneOSButton();
 		middleRow[i].text = STR(line2[i]);
 		middleRow[i].x = screenWidth/9 * i;
@@ -146,7 +146,7 @@ FoneOSKeyboard::FoneOSKeyboard()
 		middleRow[i].height = screenHeight/9;
 		middleRow[i].onActivate = FoneOSKeyboard_callback;
 	}
-	for(i = 0; i<7;i++){
+	for(i = 0; i<7 ; i++){
 		bottomRow[i] = FoneOSButton();
 		bottomRow[i].text = STR(line3[i]);
 		bottomRow[i].x = screenWidth/9 * i;
