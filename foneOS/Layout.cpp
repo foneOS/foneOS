@@ -120,13 +120,13 @@ FoneOSKeyboard::FoneOSKeyboard()
 	int screenHeight = HardwareManager::GetDisplay()->GetHeight();
 	
 	char line1[] = {'q','w','e','r','t','y','u','i','o','p'};
-	FoneOSButton topRow[10];
+	//FoneOSButton topRow[10];
 	int topRowHeight = screenHeight - (screenHeight/9 * 6);
 	char line2[] = {'a','s','d','f','g','h','j','k','l'};
-	FoneOSButton middleRow[9];
+	//FoneOSButton middleRow[9];
 	int middleRowHeight = screenHeight - (screenHeight/9 * 7);
 	char line3[] = {'z','x','c','v','b','n','m'};
-	FoneOSButton bottomRow[7];
+	//FoneOSButton bottomRow[7];
 	int bottomRowHeight = screenHeight - (screenHeight/9 * 8);
 	for(int i = 0; i < 10; i++){
 		topRow[i] = FoneOSButton();
