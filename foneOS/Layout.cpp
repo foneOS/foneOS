@@ -159,27 +159,27 @@ FoneOSKeyboard::FoneOSKeyboard()
 
 void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 {
-	for(int i=0;i<this->topRow.size();i++){
+	for(int i=0;i<10;i++){
   		this->topRow[i].handleTouch(p);
 	}
-	for(int i=0;i<this->middleRow.size();i++){
+	for(int i=0;i<9;i++){
   		this->middleRow[i].handleTouch(p);
 	}
-	for(int i=0;i<this->bottomRow.size();i++){
+	for(int i=0;i<7;i++){
   		this->bottomRow[i].handleTouch(p);
 	}
 }
 void FoneOSKeyboard::Draw(FoneOSScreen * scr)
 {
 	
-	for(int i=0;i<this->topRow.size();i++){
-  		this->topRow[i].draw();
+	for(int i=0;i<10;i++){
+  		this->topRow[i].Draw();
 	}
-	for(int i=0;i<this->middleRow.size();i++){
-  		this->middleRow[i].draw();
+	for(int i=0;i<9;i++){
+  		this->middleRow[i].Draw();
 	}
-	for(int i=0;i<this->bottomRow.size();i++){
-  		this->bottomRow[i].draw();
+	for(int i=0;i<7;i++){
+  		this->bottomRow[i].Draw();
 	}
 	
 }
