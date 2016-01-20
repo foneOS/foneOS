@@ -137,7 +137,7 @@ FoneOSKeyboard::FoneOSKeyboard()
 		topRow[i].height = screenHeight/9;
 		topRow[i].onActivate = FoneOSKeyboard_callback;
 	}
-	for(i = 0; i<9 ; i++){
+	for(int i = 0; i<9; i++){
 		middleRow[i] = FoneOSButton();
 		middleRow[i].text = STR(line2[i]);
 		middleRow[i].x = screenWidth/9 * i;
@@ -146,7 +146,7 @@ FoneOSKeyboard::FoneOSKeyboard()
 		middleRow[i].height = screenHeight/9;
 		middleRow[i].onActivate = FoneOSKeyboard_callback;
 	}
-	for(i = 0; i<7 ; i++){
+	for(int i = 0; i<7; i++){
 		bottomRow[i] = FoneOSButton();
 		bottomRow[i].text = STR(line3[i]);
 		bottomRow[i].x = screenWidth/9 * i;
@@ -156,7 +156,7 @@ FoneOSKeyboard::FoneOSKeyboard()
 		bottomRow[i].onActivate = FoneOSKeyboard_callback;
 	}
 }
-​
+
 void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 {
 	for(i=0;i<topRow.size();i++){
