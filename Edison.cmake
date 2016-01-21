@@ -78,8 +78,4 @@ if(EDISON_BUILD AND (NOT ${CMAKE_SYSTEM_VERSION} EQUAL 3.10.17-poky-edison+))
 			add_deployment_file("${filename}" "${DEST}/${path}")
 		endforeach(filename)
 	endmacro()
-else()
-	macro(add_deployment_file SRC DEST)
-		# no-op, we don't need Qt deployment
-	endmacro()
 endif(EDISON_BUILD AND (NOT ${CMAKE_SYSTEM_VERSION} EQUAL 3.10.17-poky-edison+))
