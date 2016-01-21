@@ -159,6 +159,7 @@ static luaL_Reg FoneOSScreen_metatable[] =
 	{ "addLabel", Lua_FoneOSScreen_AddLabel },
 	{ "addTitle", Lua_FoneOSScreen_AddTitle },
 	{ "addButton", Lua_FoneOSScreen_AddButton },
+	{ "addKeyboard", Lua_FoneOSScreen_AddKeyboard },
 
 	{ "draw", Lua_FoneOSScreen_Draw },
 
