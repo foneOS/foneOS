@@ -132,7 +132,10 @@ FoneOSKeyboard::FoneOSKeyboard()
 	char line3[] = {'z','x','c','v','b','n','m'};
 	//FoneOSButton bottomRow[7];
 	int bottomRowHeight = screenHeight - (screenHeight/9 * 8);
+	FoneOSPoint pt1 = FoneOSPoint();
+	FoneOSPoint pt2 = FoneOSPoint();
 	for(int i = 0; i < 10; i++){
+
 		topRow[i] = FoneOSButton();
 		topRow[i].text = STR(line1[i]);
 		topRow[i].x = screenWidth/10 * i;
@@ -164,13 +167,33 @@ FoneOSKeyboard::FoneOSKeyboard()
 void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 {
 	for(int i=0;i<10;i++){
-  		this->topRow[i].handleTouch(p);
+		if (	p.x > this->topRow[i].x &&
+    			p.x < (this->topRow[i].x + this->topRow[i].width) &&
+    			p.y > this->topRow[i].y &&
+    			p.y < (this->topRow[i].y + this->topRow[i].height)){
+  				this->topRow[i].handleTouch(p);
+  				
+    			}
 	}
 	for(int i=0;i<9;i++){
-  		this->middleRow[i].handleTouch(p);
+  		
+  		if (	p.x > this->middleRow[i].x &&
+    			p.x < (this->middleRow[i].x + this->middleRow.width) &&
+    			p.y > this->middleRow[i].y &&
+    			p.y < (this->middleRow[i].y + this->middleRow[i].height)){
+  				this->middleRow[i].handleTouch(p);
+  				
+    			}
 	}
 	for(int i=0;i<7;i++){
-  		this->bottomRow[i].handleTouch(p);
+  		
+  		if (	p.x > this->bottomRow[i].x &&
+    			p.x < (this->bottomRow[i].x + this->bottomRow.width) &&
+    			p.y > this->bottomRow[i].y &&
+    			p.y < (this->bottomRow[i].y + this->bottomRow[i].height)){
+  				this->bottomRow[i].handleTouch(p);
+  				
+    			}
 	}
 }
 void FoneOSKeyboard::Draw(FoneOSScreen * scr)
