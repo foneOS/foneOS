@@ -163,7 +163,6 @@ FoneOSString Modem_SIM800::GetFWRev()
 {
     this->WriteLine("AT+CGMR");
     FoneOSString fwRev = FoneOSString(STR(this->Read().c_str()));
-    this->Read(); // extra line
     this->Read(); // extra OK
     return fwRev;
 }
@@ -172,7 +171,6 @@ FoneOSString Modem_SIM800::GetIMEI()
 {
     this->WriteLine("AT+GSN");
     FoneOSString imei = FoneOSString(STR(this->Read().c_str()));
-    this->Read(); // extra line
     this->Read(); // extra OK
     return imei;
 }
