@@ -282,6 +282,10 @@ void HandleLaunchpadTap(FoneOSContainer * cont)
 	{
 		Layout::SetCurrentLayout(More, true);
 	}
+	else if (button->text == STR("Open demoapp"))
+	{
+		AppManager::OpenApp(STR("foneOS.demoApp"));
+	}
 }
 
 void HandleDialerTap(FoneOSContainer * cont)
@@ -397,6 +401,10 @@ void Layout::Init()
 		FoneOSButton * more = new FoneOSButton(STR("More"), 5, 120);
 		more->onActivate = &HandleLaunchpadTap;
 		Launchpad->buttons.push_back(more);
+
+		FoneOSButton * demoApp = new FoneOSButton(STR("Open demoapp"), 5, 165);
+		demoApp->onActivate = &HandleLaunchpadTap;
+		Launchpad->buttons.push_back(demoApp);
 
 		FoneOSButton * lock = new FoneOSButton(STR("Lock phone"), 5, 240);
 		lock->onActivate = &LockPhone;
