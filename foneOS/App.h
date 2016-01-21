@@ -8,6 +8,9 @@ public:
 	// Starts the application.
 	void Start();
 
+	// Switches to the application.
+	void SwitchTo();
+
 	// Stops the application.
 	void Stop();
 

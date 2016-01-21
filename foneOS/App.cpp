@@ -109,7 +109,7 @@ void App::Start()
 		Logging::LogMessage(STR("App main.lua does not exist"));
 		return;
 	}
-	
+
 	int ret = luaL_dofile(_L,  (char*)Storage::GetFullPath(path).c_str());
 
 	if (ret != 0)
@@ -124,6 +124,10 @@ void App::Start()
 	}*/
 }
 
+void App::SwitchTo()
+{
+
+}
 
 void App::Stop()
 {
