@@ -165,7 +165,9 @@ FoneOSKeyboard::FoneOSKeyboard()
 }
 
 void FoneOSKeyboard::handleTouch(FoneOSPoint p)
+
 {
+	
 	for(int i=0;i<10;i++){
 		if (	p.x > this->topRow[i].x &&
     			p.x < (this->topRow[i].x + this->topRow[i].width) &&
@@ -198,6 +200,10 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 }
 void FoneOSKeyboard::Draw(FoneOSScreen * scr)
 {
+	int screenWidth = HardwareManager::GetDisplay()->GetWidth();
+	int screenHeight = HardwareManager::GetDisplay()->GetHeight();
+	
+	HardwareManager::GetDisplay()->DrawRectangle(0, screenHeight - (screenHeight/9 * 3) + 10, screenWidth, screenHeight, COLOR_WHITE);
 	
 	for(int i=0;i<10;i++){
   		this->topRow[i].Draw(scr);
@@ -210,13 +216,12 @@ void FoneOSKeyboard::Draw(FoneOSScreen * scr)
 	}
 	space = FoneOSButton();
 	space.text = " ";
-	space.x = this->bottomline[1].x;
-	space.y = this->bottomRowHeight;
-	space.width = this->screenWidth/10*5;
+	space.x = screenWidth/10 * 2 + 3*(screenWidth/10/2);
+	space.y = screenHeight - (screenHeight/9 * 1);
+	space.width = screenWidth/10*5;
 	space.height = screenHeight/9;
 	space.onActivate.onActivate = FoneOSKeyboard_callback;
 	space.Draw(scr);
-	HardwareManager::GetDisplay()->DrawRectangle(this->line1[0].x, this->line1[0].y, this->screenWidth, this->screenHeight, COLOR_WHITE);
 	
 }
 
