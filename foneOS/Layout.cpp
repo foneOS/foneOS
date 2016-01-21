@@ -115,7 +115,8 @@ void FoneOSImage::Draw(FoneOSScreen * scr)
 ////
 //// FoneOSKeyboard
 ////
-void FoneOSKeyboard_callback(FoneOSContainer * btn){
+void FoneOSKeyboard_callback(FoneOSContainer * btn)
+{
 	Logging::LogMessage(((FoneOSButton *)btn)->text);
 }
 FoneOSKeyboard::FoneOSKeyboard()
@@ -123,12 +124,17 @@ FoneOSKeyboard::FoneOSKeyboard()
 	int screenWidth = HardwareManager::GetDisplay()->GetWidth();
 	int screenHeight = HardwareManager::GetDisplay()->GetHeight();
 
+	this->x = 0;
+	this->y = screenHeight - (screenHeight/9 * 5) + 10;
+	this->width = screenWidth;
+	this->height = screenHeight;
+
 	char line1[] = {'q','w','e','r','t','y','u','i','o','p'};
 	//FoneOSButton topRow[10];
-	int topRowHeight = screenHeight - (screenHeight/9 * 5);
+	int topRowHeight = screenHeight - (screenHeight/9 * 5) - 6;
 	char line2[] = {'a','s','d','f','g','h','j','k','l'};
 	//FoneOSButton middleRow[9];
-	int middleRowHeight = screenHeight - (screenHeight/9 * 4);
+	int middleRowHeight = screenHeight - (screenHeight/9 * 4) - 3;
 	char line3[] = {'z','x','c','v','b','n','m'};
 	//FoneOSButton bottomRow[7];
 	int bottomRowHeight = screenHeight - (screenHeight/9 * 3);
@@ -171,8 +177,6 @@ FoneOSKeyboard::FoneOSKeyboard()
 	space.width = screenWidth/2;
 	space.height = screenHeight/9;
 	space.onActivate = FoneOSKeyboard_callback;
-
-
 }
 
 void FoneOSKeyboard::handleTouch(FoneOSPoint p)
@@ -182,9 +186,9 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 		if (p.x > this->topRow[i].x &&
 			p.x < (this->topRow[i].x + this->topRow[i].width) &&
 			p.y > this->topRow[i].y &&
-			p.y < (this->topRow[i].y + this->topRow[i].height)){
+			p.y < (this->topRow[i].y + this->topRow[i].height))
+			{
 				this->topRow[i].handleTouch(p);
-
 			}
 		}
 		for(int i=0;i<9;i++){
@@ -220,7 +224,7 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 					int screenWidth = HardwareManager::GetDisplay()->GetWidth();
 					int screenHeight = HardwareManager::GetDisplay()->GetHeight();
 
-					HardwareManager::GetDisplay()->FillRectangle(0, screenHeight - (screenHeight/9 * 5) + 10, screenWidth, screenHeight, FoneOSColor(148, 44, 246, 255));
+					HardwareManager::GetDisplay()->FillRectangle(this->x, this->y, this->width, this->height, FoneOSColor(150, 150, 150, 255));
 
 					for(int i = 0; i < 10; i++)
 					{
@@ -265,12 +269,32 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 
 				void FoneOSScreen::handleTouch(FoneOSPoint p)
 				{
-					if (this->buttons.size() == 0)
+					if (this->keyboards.size() == 0 && this->buttons.size() == 0)
+					{
+						return;
+					}
+					std::vector<FoneOSKeyboard*> k_childrenPointer = this->keyboards;
+					bool keyboardPressed = false;
+					for (std::vector<FoneOSKeyboard*>::iterator it = k_childrenPointer.begin(); it != k_childrenPointer.end(); ++it)
+					{
+						FoneOSKeyboard * thingy = *it;
+						if (
+							p.x > thingy->x &&
+							p.x < (thingy->x + thingy->width) &&
+							p.y > thingy->y &&
+							p.y < (thingy->y + thingy->height)
+						) {
+							thingy->handleTouch(p);
+							keyboardPressed = true;
+						}
+					}
+					if (keyboardPressed)
 					{
 						return;
 					}
 					std::vector<FoneOSButton*> childrenPointer = this->buttons;
-					for (std::vector<FoneOSButton*>::iterator it = childrenPointer.begin(); it != childrenPointer.end(); ++it) {
+					for (std::vector<FoneOSButton*>::iterator it = childrenPointer.begin(); it != childrenPointer.end(); ++it)
+					{
 						FoneOSButton * thingy = *it;
 						if (
 							p.x > thingy->x &&
@@ -280,11 +304,6 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 						) {
 							thingy->handleTouch(p);
 						}
-					}
-					std::vector<FoneOSKeyboard*> k_childrenPointer = this->keyboards;
-					for (std::vector<FoneOSKeyboard*>::iterator it = k_childrenPointer.begin(); it != k_childrenPointer.end(); ++it) {
-						FoneOSKeyboard * thingy = *it;
-						thingy->handleTouch(p); // keyboards do additional checks, it's ok
 					}
 				}
 
