@@ -32,7 +32,7 @@ int Lua_FoneOSScreen_AddKeyboard(lua_State * _L)
 {
 	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
 	FoneOSKeyboard* kbd = luaW_check<FoneOSKeyboard>(_L, 2);
-	obj->buttons.push_back(kbd);
+	obj->keyboards.push_back(kbd);
 	return 0;
 }
 
