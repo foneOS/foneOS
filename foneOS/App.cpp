@@ -117,16 +117,15 @@ void App::Start()
 		Logging::LogMessage(STR("Error occurred in app!"));
 		Logging::LogMessage(Utils::CharArrayToFoneOSString((char*)lua_tostring(_L, -1)));
 	}
-/*
-	if (luaL_dostring(_L, "fone.layout.test('Hello from lua!')") == 1)
-	{
-		Logging::LogMessage(Utils::CharArrayToFoneOSString((char*)lua_tostring(_L, -1)));
-	}*/
 }
 
 void App::SwitchTo()
 {
-
+	if (luaL_dostring(_L, "switchTo()") == 1)
+	{
+		Logging::LogMessage(STR("Error occurred in app!"));
+		Logging::LogMessage(Utils::CharArrayToFoneOSString((char*)lua_tostring(_L, -1)));
+	}
 }
 
 void App::Stop()

@@ -5,7 +5,7 @@ public:
 	static void Init();
 
 	// Opens the requested application.
-	static void OpenApp(FoneOSString id);
+	static void OpenApp(FoneOSString id, bool shouldRestart);
 
 	// Terminates the requested application.
 	static void TerminateApp(FoneOSString id);

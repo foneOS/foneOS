@@ -328,7 +328,7 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 					if (button->text == STR("Dialer"))
 					{
 						//Layout::SetCurrentLayout(Dialer, true);
-						AppManager::OpenApp(STR("foneOS.dialer"));
+						AppManager::OpenApp(STR("foneOS.dialer"), false);
 					}
 					else if (button->text == STR("SMS"))
 					{
@@ -340,7 +340,7 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 					}
 					else if (button->text == STR("Open demoapp"))
 					{
-						AppManager::OpenApp(STR("foneOS.demoApp"));
+						AppManager::OpenApp(STR("foneOS.demoApp"), true);
 					}
 				}
 
