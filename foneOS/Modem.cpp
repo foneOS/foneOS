@@ -161,12 +161,20 @@ int Modem_SIM800::GetRSSI()
 
 FoneOSString Modem_SIM800::GetFWRev()
 {
-    return STR("FAKECO-1.2.3-456");
+    this->WriteLine("AT+CGMR");
+    FoneOSString fwRev = FoneOSString(STR(this->Read().c_str()));
+    this->Read(); // extra line
+    this->Read(); // extra OK
+    return fwRev;
 }
 
 FoneOSString Modem_SIM800::GetIMEI()
 {
-    return STR("123456789012345");
+    this->WriteLine("AT+GSN");
+    FoneOSString imei = FoneOSString(STR(this->Read().c_str()));
+    this->Read(); // extra line
+    this->Read(); // extra OK
+    return imei;
 }
 
 FoneOSString Modem_SIM800::GetCCID()
