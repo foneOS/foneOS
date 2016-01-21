@@ -101,6 +101,7 @@ public:
 	FoneOSButton topRow[10];
 	FoneOSButton middleRow[9];
 	FoneOSButton bottomRow[7];
+	FoneOSButton space;
 private:
 };
 
