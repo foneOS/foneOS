@@ -214,7 +214,7 @@ void FoneOSKeyboard::Draw(FoneOSScreen * scr)
 	for(int i=0;i<7;i++){
   		this->bottomRow[i].Draw(scr);
 	}
-	space = FoneOSButton();
+	FoneOSButton space = FoneOSButton();
 	space.text = " ";
 	space.x = screenWidth/10 * 2 + 3*(screenWidth/10/2);
 	space.y = screenHeight - (screenHeight/9 * 1);
