@@ -254,8 +254,8 @@ void FoneOSScreen::handleTouch(FoneOSPoint p)
 			thingy->handleTouch(p);
 		}
 	}
-	std::vector<FoneOSKeyboard*> childrenPointer = this->keyboards;
-	for (std::vector<FoneOSKeyboard*>::iterator it = childrenPointer.begin(); it != childrenPointer.end(); ++it) {
+	std::vector<FoneOSKeyboard*> k_childrenPointer = this->keyboards;
+	for (std::vector<FoneOSKeyboard*>::iterator it = k_childrenPointer.begin(); it != k_childrenPointer.end(); ++it) {
 		FoneOSKeyboard * thingy = *it;
 		thingy->handleTouch(p); // keyboards do additional checks, it's ok
 	}
