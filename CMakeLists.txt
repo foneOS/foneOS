@@ -2,11 +2,11 @@ cmake_minimum_required (VERSION 2.8.4)
 
 set(EDISON_BUILD OFF CACHE BOOL "Controls if the build is targeting the Intel Edison.")
 
+project (foneOS)
+
 if(EDISON_BUILD)
 	include(${CMAKE_SOURCE_DIR}/Edison.cmake)
 endif(EDISON_BUILD)
-
-project (foneOS)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
