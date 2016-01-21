@@ -1,4 +1,4 @@
-if(EDISON_BUILD)
+if(EDISON_BUILD AND (NOT ${CMAKE_SYSTEM_VERSION} EQUAL 3.10.17-poky-edison+))
 	#Are you using the 32 or the 64 bits version of the SDK?.
 	set(SDK_32bits FALSE) #Use this line for the 64 bits SDK
 	#set(SDK_32bits TRUE) #Use this line for the 32 bits SDK
@@ -29,7 +29,7 @@ if(EDISON_BUILD)
 			set(CMAKE_MAKE_PROGRAM "C:/Program Files (x86)/mingw-w64/i686-4.9.2-posix-dwarf-rt_v3-rev1/mingw32/bin/mingw32-make.exe")
 		endif()
 		set(CMAKE_C_COMPILER ${cross_compiler_sysroot}/usr/bin/i586-poky-linux/i586-poky-linux-gcc.exe)
-		set(CMAKE_CXX_COMPILER ${cross_compiler_sysroot}/usr/bin/i586-poky-linux/i586-poky-linux-g++.exe)	
+		set(CMAKE_CXX_COMPILER ${cross_compiler_sysroot}/usr/bin/i586-poky-linux/i586-poky-linux-g++.exe)
 	else()
 		#Linux host
 		if(${SDK_32bits})
@@ -42,7 +42,7 @@ if(EDISON_BUILD)
 			set(cross_compiler_sysroot ${edison_sdk_root}/sysroots/x86_64-pokysdk-linux)
 		endif()
 		set(CMAKE_C_COMPILER ${cross_compiler_sysroot}/usr/bin/i586-poky-linux/i586-poky-linux-gcc)
-		set(CMAKE_CXX_COMPILER ${cross_compiler_sysroot}/usr/bin/i586-poky-linux/i586-poky-linux-g++)	
+		set(CMAKE_CXX_COMPILER ${cross_compiler_sysroot}/usr/bin/i586-poky-linux/i586-poky-linux-g++)
 	ENDIF(WIN32)
 
 
