@@ -178,7 +178,7 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 	for(int i=0;i<9;i++){
   		
   		if (	p.x > this->middleRow[i].x &&
-    			p.x < (this->middleRow[i].x + this->middleRow.width) &&
+    			p.x < (this->middleRow[i].x + this->middleRow[i].width) &&
     			p.y > this->middleRow[i].y &&
     			p.y < (this->middleRow[i].y + this->middleRow[i].height)){
   				this->middleRow[i].handleTouch(p);
@@ -188,7 +188,7 @@ void FoneOSKeyboard::handleTouch(FoneOSPoint p)
 	for(int i=0;i<7;i++){
   		
   		if (	p.x > this->bottomRow[i].x &&
-    			p.x < (this->bottomRow[i].x + this->bottomRow.width) &&
+    			p.x < (this->bottomRow[i].x + this->bottomRow[i].width) &&
     			p.y > this->bottomRow[i].y &&
     			p.y < (this->bottomRow[i].y + this->bottomRow[i].height)){
   				this->bottomRow[i].handleTouch(p);
