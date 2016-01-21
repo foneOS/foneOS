@@ -203,7 +203,7 @@ void FoneOSKeyboard::Draw(FoneOSScreen * scr)
 	int screenWidth = HardwareManager::GetDisplay()->GetWidth();
 	int screenHeight = HardwareManager::GetDisplay()->GetHeight();
 	
-	HardwareManager::GetDisplay()->DrawRectangle(0, screenHeight - (screenHeight/9 * 3) + 10, screenWidth, screenHeight, FoneOSColor(148, 44, 246, 255));
+	HardwareManager::GetDisplay()->FillRectangle(0, screenHeight - screenHeight - (screenHeight/9 * 5) + 10, screenWidth, screenHeight, FoneOSColor(148, 44, 246, 255));
 	
 	for(int i=0;i<10;i++){
   		this->topRow[i].Draw(scr);
@@ -216,9 +216,9 @@ void FoneOSKeyboard::Draw(FoneOSScreen * scr)
 	}
 	FoneOSButton space = FoneOSButton();
 	space.text = " ";
-	space.x = screenWidth/10 * 2 + 3*(screenWidth/10/2);
-	space.y = screenHeight - (screenHeight/9 * 1);
-	space.width = screenWidth/10*5;
+	space.x = screenWidth/4;
+	space.y = screenHeight - (screenHeight/9 * 2);
+	space.width = screenWidth/2;
 	space.height = screenHeight/9;
 	space.onActivate = FoneOSKeyboard_callback;
 	space.Draw(scr);
