@@ -249,6 +249,7 @@ void FoneOSScreen::Draw()
 	DrawAllOfType(FoneOSTitle, this->titles);
 	DrawAllOfType(FoneOSLabel, this->labels);
 	DrawAllOfType(FoneOSButton, this->buttons);
+	DrawAllOfType(FoneOSKeyboard, this->keyboards);
 }
 
 int count = 0;
