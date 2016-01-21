@@ -220,7 +220,7 @@ void FoneOSKeyboard::Draw(FoneOSScreen * scr)
 	space.y = screenHeight - (screenHeight/9 * 1);
 	space.width = screenWidth/10*5;
 	space.height = screenHeight/9;
-	space.onActivate.onActivate = FoneOSKeyboard_callback;
+	space.onActivate = FoneOSKeyboard_callback;
 	space.Draw(scr);
 	
 }
