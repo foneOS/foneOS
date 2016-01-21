@@ -28,6 +28,14 @@ int Lua_FoneOSScreen_AddButton(lua_State * _L)
 	return 0;
 }
 
+int Lua_FoneOSScreen_AddKeyboard(lua_State * _L)
+{
+	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
+	FoneOSKeyboard* kbd = luaW_check<FoneOSKeyboard>(_L, 2);
+	obj->buttons.push_back(kbd);
+	return 0;
+}
+
 int Lua_FoneOSScreen_Draw(lua_State * _L)
 {
 	FoneOSScreen* obj = luaW_check<FoneOSScreen>(_L, 1);
@@ -56,6 +64,7 @@ int Lua_FoneOSScreen_GetId(lua_State * _L)
 	SearchAllOfType(FoneOSTitle, obj->titles);
 	SearchAllOfType(FoneOSLabel, obj->labels);
 	SearchAllOfType(FoneOSButton, obj->buttons);
+	SearchAllOfType(FoneOSKeyboard, obj->keyboards);
 
 	lua_pushnil(_L);
 	return 1;
@@ -116,8 +125,8 @@ static luaL_Reg FoneOSContainer_metatable[] =
 
 	{ "id", luaU_getset<FoneOSContainer, FoneOSString, &FoneOSContainer::id> },
 
-    { "create", Lua_FoneOSContainer_Create },
-    { "draw", Lua_FoneOSContainer_Draw },
+	{ "create", Lua_FoneOSContainer_Create },
+	{ "draw", Lua_FoneOSContainer_Draw },
 	{ NULL, NULL }
 };
 
@@ -137,6 +146,11 @@ static luaL_Reg FoneOSButton_metatable[] =
 {
 	{ "text", luaU_getset<FoneOSButton, FoneOSString, &FoneOSButton::text> },
 	{ "onActivate", Lua_FoneOSButton_onActivate },
+	{ NULL, NULL }
+};
+
+static luaL_Reg FoneOSKeyboard_metatable[] =
+{
 	{ NULL, NULL }
 };
 
@@ -174,6 +188,9 @@ int luaopen_Layout(lua_State* L)
 
 	luaW_register<FoneOSButton>(L, "FoneOSButton", FoneOSContainer_table, FoneOSButton_metatable);
 	luaW_extend<FoneOSButton, FoneOSContainer>(L); // FoneOSButton inherits FoneOSContainer
+	
+	luaW_register<FoneOSKeyboard>(L, "FoneOSKeyboard", FoneOSContainer_table, FoneOSKeyboard_metatable);
+	luaW_extend<FoneOSKeyboard, FoneOSContainer>(L); // FoneOSKeyboard inherits FoneOSContainer
 
 	luaW_register<FoneOSScreen>(L, "FoneOSScreen", FoneOSContainer_table, FoneOSScreen_metatable);
 
