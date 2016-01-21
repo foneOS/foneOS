@@ -161,7 +161,7 @@ FoneOSKeyboard::FoneOSKeyboard()
 		bottomRow[i].height = screenHeight/9;
 		bottomRow[i].onActivate = FoneOSKeyboard_callback;
 	}
-	FoneOSButton space = FoneOSButton();
+	 this->space = FoneOSButton();
 	space.text = " ";
 	space.x = screenWidth/4;
 	space.y = screenHeight - (screenHeight/9 * 7);
