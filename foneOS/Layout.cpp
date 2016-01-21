@@ -125,13 +125,13 @@ FoneOSKeyboard::FoneOSKeyboard()
 	
 	char line1[] = {'q','w','e','r','t','y','u','i','o','p'};
 	//FoneOSButton topRow[10];
-	int topRowHeight = screenHeight - (screenHeight/9 * 6);
+	int topRowHeight = screenHeight - (screenHeight/9 * 3);
 	char line2[] = {'a','s','d','f','g','h','j','k','l'};
 	//FoneOSButton middleRow[9];
-	int middleRowHeight = screenHeight - (screenHeight/9 * 5);
+	int middleRowHeight = screenHeight - (screenHeight/9 * 2);
 	char line3[] = {'z','x','c','v','b','n','m'};
 	//FoneOSButton bottomRow[7];
-	int bottomRowHeight = screenHeight - (screenHeight/9 * 4);
+	int bottomRowHeight = screenHeight - (screenHeight/9 * 1);
 	FoneOSPoint pt1 = FoneOSPoint();
 	FoneOSPoint pt2 = FoneOSPoint();
 	for(int i = 0; i < 10; i++){
@@ -161,6 +161,7 @@ FoneOSKeyboard::FoneOSKeyboard()
 		bottomRow[i].height = screenHeight/9;
 		bottomRow[i].onActivate = FoneOSKeyboard_callback;
 	}
+	
 }
 
 void FoneOSKeyboard::handleTouch(FoneOSPoint p)
@@ -207,6 +208,15 @@ void FoneOSKeyboard::Draw(FoneOSScreen * scr)
 	for(int i=0;i<7;i++){
   		this->bottomRow[i].Draw(scr);
 	}
+	space = FoneOSButton();
+	space.text = " ";
+	space.x = this->bottomline[1].x;
+	space.y = this->bottomRowHeight;
+	space.width = this->screenWidth/10*5;
+	space.height = screenHeight/9;
+	space.onActivate.onActivate = FoneOSKeyboard_callback;
+	space.Draw(scr);
+	HardwareManager::GetDisplay()->DrawRectangle(this->line1[0].x, this->line1[0].y, this->screenWidth, this->screenHeight, COLOR_WHITE);
 	
 }
 
