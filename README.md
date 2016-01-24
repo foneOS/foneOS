@@ -11,9 +11,10 @@ Technically, this is *not* an operating system due to the fact that it runs on t
 * Basic dialer
 * Simulator 
 * App support (using LuaJIT)
+* Can run on actual hardware
 
 ### Note on apps
-It may seem like there are lots of applications missing. This is because lots of the planned internal apps (SMS, FM Radio, etc.) are all waiting on the app system to be working before they are developed.
+It may seem like there are lots of applications missing. This is because they must be downloaded separately. You can find foneOS apps at the [foneOS organization page](https://github.com/foneOS).
 
 ## Hardware
 FoneOS currently supports the following hardware:
@@ -47,5 +48,5 @@ Note that while foneOS has been tested working on the Intel Edison, it should te
 ### For simulator builds
 * SDL2
 
-### For production builds
+### For non-simulated builds
 * [MRAA](https://github.com/intel-iot-devkit/mraa)
